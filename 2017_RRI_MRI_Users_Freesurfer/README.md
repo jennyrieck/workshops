@@ -1,7 +1,9 @@
-# Freesurfer for Structural MRI
+# Freesurfer for Structural NeuroImaging
 ## Jenny Rieck
-## Workshop for the Rotman Research Institute MRI Users Group
-## Fall 2017
+
+Workshop for the Rotman Research Institute MRI Users Group
+
+Fall 2017
 
 
 ### Workshop Objectives:
