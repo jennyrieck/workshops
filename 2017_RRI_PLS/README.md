@@ -1,7 +1,9 @@
 # Almost everything you need to know about Partial Least Squares (PLS)
 ## Jenny Rieck & Derek Beaton 
-## Workshop for the Research Training Centre at the Rotman Research Institute
-## Fall 2017
+
+Workshop for the Research Training Centre at the Rotman Research Institute
+
+Fall 2017
   
 ### Workshop Objectives:
 
