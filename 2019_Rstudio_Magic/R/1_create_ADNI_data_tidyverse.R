@@ -10,22 +10,6 @@ adnimerge %>%
 ## bring in modified hachinksi 
 amerge_subset <- inner_join(amerge_subset, modhach[,c("RID","HMSCORE")])
 
-## make more tidyverse
-amerge_subset$PTEDUCAT <- ifelse(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) #recode()
-amerge_subset$PTETHCAT <- recode(amerge_subset$PTETHCAT, `Hisp/Latino`= "Hisp/Latino",  .default = "Not Hisp/Latino")
-amerge_subset$PTRACCAT <- recode(amerge_subset$PTRACCAT, White="White", Black="Black", Asian="Asian", .default = "Other")
-amerge_subset$CDRSB <- ifelse(amerge_subset$CDRSB>=5.5, 5.5, amerge_subset$CDRSB) #recode()
-amerge_subset$HMSCORE <- ifelse(amerge_subset$HMSCORE>=3, 3, amerge_subset$HMSCORE) #recode()
-
-
-
-###########################
-###########################
-
-
-## take a quick look at what these originally were:
-unlist(lapply(amerge_subset,function(x){y<-class(x); y[length(y)]}))
-
 ## manually change types for now
 amerge_subset$RID <- as.character(amerge_subset$RID)
 amerge_subset$VISCODE <- as.character(amerge_subset$VISCODE)
@@ -47,9 +31,28 @@ amerge_subset$MidTemp <- as.numeric(amerge_subset$MidTemp)
 amerge_subset$mPACCtrailsB <- as.numeric(amerge_subset$mPACCtrailsB)
 amerge_subset$HMSCORE <- as.numeric(amerge_subset$HMSCORE)
 
-
 rownames(amerge_subset) <- amerge_subset$RID
 amerge_subset <- amerge_subset[,-c(1:2)]
+
+
+
+## make more tidyverse
+## There are multiple recode() functions across R packages and base; specifiy which package you want with ::
+#amerge_subset$PTEDUCAT <- ifelse(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) #recode()
+amerge_subset$PTEDUCAT <- if_else(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) #recode()
+amerge_subset$PTETHCAT <- dplyr::recode(amerge_subset$PTETHCAT, `Hisp/Latino`= "Hisp/Latino",  .default = "Not Hisp/Latino")
+amerge_subset$PTRACCAT <- dplyr::recode(amerge_subset$PTRACCAT, White="White", Black="Black", Asian="Asian", .default = "Other")
+amerge_subset$CDRSB <- ifelse(amerge_subset$CDRSB>=5.5, 5.5, amerge_subset$CDRSB) #recode()
+amerge_subset$HMSCORE <- ifelse(amerge_subset$HMSCORE>=3, 3, amerge_subset$HMSCORE) #recode()
+
+
+
+###########################
+###########################
+
+
+## take a quick look at what these originally were:
+unlist(lapply(amerge_subset,function(x){y<-class(x); y[length(y)]}))
 
 ## make a map of variables to types
 variable_type_map <- matrix(0, nrow=ncol(amerge_subset), ncol = 3)
