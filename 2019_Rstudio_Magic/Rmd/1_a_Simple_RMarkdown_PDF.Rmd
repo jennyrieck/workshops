@@ -19,6 +19,7 @@ require(tidyverse)
 require(ExPosition)
 require(GSVD)
 require(knitr)
+require(reticulate)
 
 if(!require(covstatis)){
   install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
@@ -54,6 +55,79 @@ In general for this RMarkdown file we follow Emily's fourth example with a direc
 
 Most of the RMarkdown files in this directory will show generally the same content, but help highlight the different ways you can use RMarkdown, `knitr`, `pandoc`, `LateX`, and various package built for those, such as `beamer` (`LateX`) for presentations, and [`papaja`](https://github.com/crsh/papaja) & [`rticles`](https://github.com/rstudio/rticles) (R/RMarkdown) for writing manuscripts that export to `LaTeX` or MS Word. If you decide to write MS Word documents through RMarkdown, you should also use the [`redoc` package](https://github.com/noamross/redoc). 
 
+## R chunks: A word of caution
+
+It is good practice to name your `R` chunks. If you do not, then the `R` chunks will still produce the intended material. However, when you do name them, you should ensure they have unique names (else, you will likely see some cryptic and not always informative error messages).
+
+
 # Tables
 
-There are multiple approaches and packages to help visualize tables or tabular information. 
+There are multiple approaches and packages to help visualize tables or tabular information. Let's start by looking at a simple summary of all the continuous variables. First, we will visualize the summary table through two methods within R: `knitr::kable` and the `kablExtra` package, followed by `grid` and `gridExtra`. Next, we will use the same data and illustrate what happens when we pass it to Python through `reticulate`. 
+
+In this section we wil also show the code chunks that generate these tables and visuals, which are embedded in the RMarkdown document. 
+
+## knitr and kableExtra
+
+To make HTML and LaTeX tables in RMarkdown, one of the easiest and most common options is through `knitr`. The `knitr` package is, effectively, the tool to make RMarkdown documents go from R & RMarkdown (plus other code and LaTeX) into PDFs or HTML pages. We'll start with the `knitr::kable()`.
+
+
+```{r knitr_table_setup}
+
+example_table <- amerge_subset[,c("AGE","MOCA","CDRSB","WholeBrain","Hippocampus","MidTemp")]
+example_table_Dx <- amerge_subset[,c("DX","AGE","MOCA","CDRSB","WholeBrain","Hippocampus","MidTemp")]
+
+```
+
+```{r knitr_kable_example}
+
+kable(summary(example_table))
+
+```
+
+But that is not particularly nice looking. So we can use some parameters to make this table look better (which depend on having LaTeX).
+
+
+```{r knitr_kable_nicer_example}
+
+kable(summary(example_table), format="latex", booktabs=T) 
+
+```
+
+With `booktabs` and `latex` format, we've made the table look a little better. But can we make it look even better than that? We can with `kableExtra`. 
+
+```{r knitr_kableExtra_example}
+
+kable(summary(example_table), format="latex", booktabs=T) %>% kable_styling(font_size=10, position = "center")
+
+```
+
+We can take the table look even further with additional options, like "stripes".
+
+```{r knitr_kableExtra_better_example}
+
+kable(summary(example_table), format="latex", booktabs=T) %>% kable_styling(font_size=10, position = "center", latex_options = "striped")
+
+```
+
+Given that we have redundant information in the table (min/max, etc...) we can do a better job and make an even nicer table with an `apply()`, and then use multiple `kable` and `kableExtra` features to make a really nice table.
+
+```{r kniter_even_better_example}
+
+better_example_table <- apply(example_table, 2, summary)
+
+kable(better_example_table, format="latex", booktabs=T, digits=2) %>% 
+  kableExtra::add_header_above(c("Statistic" = 1, "Demographic" = 1, "Clinical" = 2, "Brain" = 3)) %>%
+  kable_styling(font_size=10, position = "center", latex_options = "striped") %>%
+  row_spec(0, angle = 15, bold=T)
+
+```
+
+
+## grid and gridExtra
+
+
+## Python via reticulate
+
+
+
+

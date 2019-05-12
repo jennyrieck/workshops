@@ -33,6 +33,46 @@
             urlcolor=blue,
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -136,8 +176,198 @@ MS Word. If you decide to write MS Word documents through RMarkdown, you
 should also use the
 \href{https://github.com/noamross/redoc}{\texttt{redoc} package}.
 
+\hypertarget{r-chunks-a-word-of-caution}{%
+\subsection{R chunks: A word of
+caution}\label{r-chunks-a-word-of-caution}}
+
+It is good practice to name your \texttt{R} chunks. If you do not, then
+the \texttt{R} chunks will still produce the intended material. However,
+when you do name them, you should ensure they have unique names (else,
+you will likely see some cryptic and not always informative error
+messages).
+
 \hypertarget{tables}{%
 \section{Tables}\label{tables}}
+
+There are multiple approaches and packages to help visualize tables or
+tabular information. Let's start by looking at a simple summary of all
+the continuous variables. First, we will visualize the summary table
+through two methods within R: \texttt{knitr::kable} and the
+\texttt{kablExtra} package, followed by \texttt{grid} and
+\texttt{gridExtra}. Next, we will use the same data and illustrate what
+happens when we pass it to Python through \texttt{reticulate}.
+
+In this section we wil also show the code chunks that generate these
+tables and visuals, which are embedded in the RMarkdown document.
+
+\hypertarget{knitr-and-kableextra}{%
+\subsection{knitr and kableExtra}\label{knitr-and-kableextra}}
+
+To make HTML and LaTeX tables in RMarkdown, one of the easiest and most
+common options is through \texttt{knitr}. The \texttt{knitr} package is,
+effectively, the tool to make RMarkdown documents go from R \& RMarkdown
+(plus other code and LaTeX) into PDFs or HTML pages. We'll start with
+the \texttt{knitr::kable()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{example_table <-}\StringTok{ }\NormalTok{amerge_subset[, }\KeywordTok{c}\NormalTok{(}\StringTok{"AGE"}\NormalTok{, }\StringTok{"MOCA"}\NormalTok{, }\StringTok{"CDRSB"}\NormalTok{, }\StringTok{"WholeBrain"}\NormalTok{, }
+    \StringTok{"Hippocampus"}\NormalTok{, }\StringTok{"MidTemp"}\NormalTok{)]}
+\NormalTok{example_table_Dx <-}\StringTok{ }\NormalTok{amerge_subset[, }\KeywordTok{c}\NormalTok{(}\StringTok{"DX"}\NormalTok{, }\StringTok{"AGE"}\NormalTok{, }\StringTok{"MOCA"}\NormalTok{, }\StringTok{"CDRSB"}\NormalTok{, }
+    \StringTok{"WholeBrain"}\NormalTok{, }\StringTok{"Hippocampus"}\NormalTok{, }\StringTok{"MidTemp"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{summary}\NormalTok{(example_table))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|l|l|l|l|l|l}
+\hline
+  &      AGE &      MOCA &     CDRSB &   WholeBrain &  Hippocampus &    MidTemp\\
+\hline
+ & Min.   :55.00 & Min.   :16.00 & Min.   :0.000 & Min.   : 817421 & Min.   : 3731 & Min.   :12213\\
+\hline
+ & 1st Qu.:67.20 & 1st Qu.:22.00 & 1st Qu.:0.000 & 1st Qu.: 984410 & 1st Qu.: 6510 & 1st Qu.:18535\\
+\hline
+ & Median :71.90 & Median :24.00 & Median :1.000 & Median :1051621 & Median : 7223 & Median :20186\\
+\hline
+ & Mean   :71.92 & Mean   :23.89 & Mean   :1.202 & Mean   :1057026 & Mean   : 7150 & Mean   :20302\\
+\hline
+ & 3rd Qu.:76.60 & 3rd Qu.:26.00 & 3rd Qu.:2.000 & 3rd Qu.:1120570 & 3rd Qu.: 7834 & 3rd Qu.:22088\\
+\hline
+ & Max.   :89.60 & Max.   :30.00 & Max.   :5.500 & Max.   :1486036 & Max.   :10602 & Max.   :32189\\
+\hline
+\end{tabular}
+
+But that is not particularly nice looking. So we can use some parameters
+to make this table look better (which depend on having LaTeX).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{summary}\NormalTok{(example_table), }\DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{lllllll}
+\toprule
+  &      AGE &      MOCA &     CDRSB &   WholeBrain &  Hippocampus &    MidTemp\\
+\midrule
+ & Min.   :55.00 & Min.   :16.00 & Min.   :0.000 & Min.   : 817421 & Min.   : 3731 & Min.   :12213\\
+ & 1st Qu.:67.20 & 1st Qu.:22.00 & 1st Qu.:0.000 & 1st Qu.: 984410 & 1st Qu.: 6510 & 1st Qu.:18535\\
+ & Median :71.90 & Median :24.00 & Median :1.000 & Median :1051621 & Median : 7223 & Median :20186\\
+ & Mean   :71.92 & Mean   :23.89 & Mean   :1.202 & Mean   :1057026 & Mean   : 7150 & Mean   :20302\\
+ & 3rd Qu.:76.60 & 3rd Qu.:26.00 & 3rd Qu.:2.000 & 3rd Qu.:1120570 & 3rd Qu.: 7834 & 3rd Qu.:22088\\
+ & Max.   :89.60 & Max.   :30.00 & Max.   :5.500 & Max.   :1486036 & Max.   :10602 & Max.   :32189\\
+\bottomrule
+\end{tabular}
+
+With \texttt{booktabs} and \texttt{latex} format, we've made the table
+look a little better. But can we make it look even better than that? We
+can with \texttt{kableExtra}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{summary}\NormalTok{(example_table), }\DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{position =} \StringTok{"center"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[H]
+\centering\begingroup\fontsize{10}{12}\selectfont
+
+\begin{tabular}{lllllll}
+\toprule
+  &      AGE &      MOCA &     CDRSB &   WholeBrain &  Hippocampus &    MidTemp\\
+\midrule
+ & Min.   :55.00 & Min.   :16.00 & Min.   :0.000 & Min.   : 817421 & Min.   : 3731 & Min.   :12213\\
+ & 1st Qu.:67.20 & 1st Qu.:22.00 & 1st Qu.:0.000 & 1st Qu.: 984410 & 1st Qu.: 6510 & 1st Qu.:18535\\
+ & Median :71.90 & Median :24.00 & Median :1.000 & Median :1051621 & Median : 7223 & Median :20186\\
+ & Mean   :71.92 & Mean   :23.89 & Mean   :1.202 & Mean   :1057026 & Mean   : 7150 & Mean   :20302\\
+ & 3rd Qu.:76.60 & 3rd Qu.:26.00 & 3rd Qu.:2.000 & 3rd Qu.:1120570 & 3rd Qu.: 7834 & 3rd Qu.:22088\\
+ & Max.   :89.60 & Max.   :30.00 & Max.   :5.500 & Max.   :1486036 & Max.   :10602 & Max.   :32189\\
+\bottomrule
+\end{tabular}\endgroup{}
+\end{table}
+
+We can take the table look even further with additional options, like
+``stripes''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{summary}\NormalTok{(example_table), }\DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{position =} \StringTok{"center"}\NormalTok{, }\DataTypeTok{latex_options =} \StringTok{"striped"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[H]
+\centering\begingroup\fontsize{10}{12}\selectfont
+\rowcolors{2}{gray!6}{white}
+
+\begin{tabular}{lllllll}
+\hiderowcolors
+\toprule
+  &      AGE &      MOCA &     CDRSB &   WholeBrain &  Hippocampus &    MidTemp\\
+\midrule
+\showrowcolors
+ & Min.   :55.00 & Min.   :16.00 & Min.   :0.000 & Min.   : 817421 & Min.   : 3731 & Min.   :12213\\
+ & 1st Qu.:67.20 & 1st Qu.:22.00 & 1st Qu.:0.000 & 1st Qu.: 984410 & 1st Qu.: 6510 & 1st Qu.:18535\\
+ & Median :71.90 & Median :24.00 & Median :1.000 & Median :1051621 & Median : 7223 & Median :20186\\
+ & Mean   :71.92 & Mean   :23.89 & Mean   :1.202 & Mean   :1057026 & Mean   : 7150 & Mean   :20302\\
+ & 3rd Qu.:76.60 & 3rd Qu.:26.00 & 3rd Qu.:2.000 & 3rd Qu.:1120570 & 3rd Qu.: 7834 & 3rd Qu.:22088\\
+ & Max.   :89.60 & Max.   :30.00 & Max.   :5.500 & Max.   :1486036 & Max.   :10602 & Max.   :32189\\
+\bottomrule
+\end{tabular}
+\rowcolors{2}{white}{white}\endgroup{}
+\end{table}
+
+Given that we have redundant information in the table (min/max,
+etc\ldots{}) we can do a better job and make an even nicer table with an
+\texttt{apply()}, and then use multiple \texttt{kable} and
+\texttt{kableExtra} features to make a really nice table.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{better_example_table <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(example_table, }\DecValTok{2}\NormalTok{, summary)}
+
+\KeywordTok{kable}\NormalTok{(better_example_table, }\DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{kableExtra}\OperatorTok{::}\KeywordTok{add_header_above}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DataTypeTok{Statistic =} \DecValTok{1}\NormalTok{, }\DataTypeTok{Demographic =} \DecValTok{1}\NormalTok{, }
+        \DataTypeTok{Clinical =} \DecValTok{2}\NormalTok{, }\DataTypeTok{Brain =} \DecValTok{3}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{10}\NormalTok{, }
+    \DataTypeTok{position =} \StringTok{"center"}\NormalTok{, }\DataTypeTok{latex_options =} \StringTok{"striped"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{row_spec}\NormalTok{(}\DecValTok{0}\NormalTok{, }
+    \DataTypeTok{angle =} \DecValTok{15}\NormalTok{, }\DataTypeTok{bold =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[H]
+\centering\begingroup\fontsize{10}{12}\selectfont
+\rowcolors{2}{gray!6}{white}
+
+\begin{tabular}{lrrrrrr}
+\hiderowcolors
+\toprule
+\multicolumn{1}{c}{Statistic} & \multicolumn{1}{c}{Demographic} & \multicolumn{2}{c}{Clinical} & \multicolumn{3}{c}{Brain} \\
+\cmidrule(l{2pt}r{2pt}){1-1} \cmidrule(l{2pt}r{2pt}){2-2} \cmidrule(l{2pt}r{2pt}){3-4} \cmidrule(l{2pt}r{2pt}){5-7}
+\rotatebox{15}{\textbf{ }} & \rotatebox{15}{\textbf{AGE}} & \rotatebox{15}{\textbf{MOCA}} & \rotatebox{15}{\textbf{CDRSB}} & \rotatebox{15}{\textbf{WholeBrain}} & \rotatebox{15}{\textbf{Hippocampus}} & \rotatebox{15}{\textbf{MidTemp}}\\
+\midrule
+\showrowcolors
+Min. & 55.00 & 16.00 & 0.0 & 817421.2 & 3731.00 & 12213.00\\
+1st Qu. & 67.20 & 22.00 & 0.0 & 984409.9 & 6510.00 & 18535.00\\
+Median & 71.90 & 24.00 & 1.0 & 1051621.3 & 7223.00 & 20186.00\\
+Mean & 71.92 & 23.89 & 1.2 & 1057025.6 & 7149.61 & 20301.93\\
+3rd Qu. & 76.60 & 26.00 & 2.0 & 1120569.5 & 7834.00 & 22088.00\\
+Max. & 89.60 & 30.00 & 5.5 & 1486035.6 & 10602.00 & 32189.00\\
+\bottomrule
+\end{tabular}
+\rowcolors{2}{white}{white}\endgroup{}
+\end{table}
+
+\hypertarget{grid-and-gridextra}{%
+\subsection{grid and gridExtra}\label{grid-and-gridextra}}
+
+\hypertarget{python-via-reticulate}{%
+\subsection{Python via reticulate}\label{python-via-reticulate}}
 
 
 \end{document}
