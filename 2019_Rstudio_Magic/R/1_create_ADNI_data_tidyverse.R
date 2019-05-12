@@ -1,64 +1,56 @@
-library(tidyverse)
 library(ADNIMERGE)
+library(tidyverse)
+library(magrittr)
 
+###########################
+### Load and clean data
+###########################
+
+## 1.1 Specify the column names you want and filter those participants at baseline with MOCA>=16 and complete data
 adnimerge %>%
   dplyr::select(RID, VISCODE, DX, AGE, PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, APOE4, FDG, AV45, CDRSB, ADAS13, MOCA, WholeBrain, Hippocampus, MidTemp, mPACCtrailsB) %>%
   filter(VISCODE == "bl") %>%
   filter(MOCA >= 16) %>%
   drop_na() -> amerge_subset
 
-## bring in modified hachinksi 
-amerge_subset <- inner_join(amerge_subset, modhach[,c("RID","HMSCORE")])
+## 1.2 Bring in modified hachinksi 
+amerge_subset %<>% inner_join(modhach[,c("RID","HMSCORE")])
 
-## manually change types for now
-amerge_subset$RID <- as.character(amerge_subset$RID)
-amerge_subset$VISCODE <- as.character(amerge_subset$VISCODE)
-amerge_subset$DX <- as.character(amerge_subset$DX)
-amerge_subset$AGE <- as.numeric(amerge_subset$AGE)
-amerge_subset$PTGENDER <- as.character(amerge_subset$PTGENDER)
-amerge_subset$PTEDUCAT <- as.numeric(amerge_subset$PTEDUCAT)
-amerge_subset$PTETHCAT <- as.character(amerge_subset$PTETHCAT)
-amerge_subset$PTRACCAT <- as.character(amerge_subset$PTRACCAT)
-amerge_subset$APOE4 <- as.numeric(amerge_subset$APOE4)
-amerge_subset$FDG <- as.numeric(amerge_subset$FDG)
-amerge_subset$AV45 <- as.numeric(amerge_subset$AV45)
-amerge_subset$CDRSB <- as.numeric(amerge_subset$CDRSB)
-amerge_subset$ADAS13 <- as.numeric(amerge_subset$ADAS13)
-amerge_subset$MOCA <- as.numeric(amerge_subset$MOCA)
-amerge_subset$WholeBrain <- as.numeric(amerge_subset$WholeBrain)
-amerge_subset$Hippocampus <- as.numeric(amerge_subset$Hippocampus)
-amerge_subset$MidTemp <- as.numeric(amerge_subset$MidTemp)
-amerge_subset$mPACCtrailsB <- as.numeric(amerge_subset$mPACCtrailsB)
-amerge_subset$HMSCORE <- as.numeric(amerge_subset$HMSCORE)
+## 1.3 Manually change variable classes (remove class 'labelled')
+char.cols<-c('RID', 'VISCODE', 'DX', 'PTGENDER','PTETHCAT', 'PTRACCAT')
+amerge_subset[,char.cols] %<>% lapply(function(x) as.character(x))
+num.cols<-c('AGE', 'PTEDUCAT', 'APOE4', 'FDG','AV45', 'CDRSB', 'ADAS13', 'MOCA','WholeBrain','Hippocampus','MidTemp','mPACCtrailsB','HMSCORE')
+amerge_subset[,num.cols] %<>% lapply(function(x) as.numeric(x))
 
+### 1.4 Add rownames and remove first 2 (ID) columns
 rownames(amerge_subset) <- amerge_subset$RID
-amerge_subset <- amerge_subset[,-c(1:2)]
+amerge_subset %<>% select(-RID, -VISCODE)
 
+## 1.5 Recode some of the variables to eliminate low frequency responses/values
+##### Use if_else() to rescore numeric values in a particular range (ie, a T/F vector)
+##### if_else() in dplyr is identical to the base funciton ifselse()
+amerge_subset$PTEDUCAT <- if_else(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) 
+amerge_subset$CDRSB <- if_else(amerge_subset$CDRSB>=5.5, 5.5, amerge_subset$CDRSB)
+amerge_subset$HMSCORE <- if_else(amerge_subset$HMSCORE>=3, 3, amerge_subset$HMSCORE)
 
-
-## make more tidyverse
-## There are multiple recode() functions across R packages and base; specifiy which package you want with ::
-#amerge_subset$PTEDUCAT <- ifelse(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) #recode()
-amerge_subset$PTEDUCAT <- if_else(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) #recode()
+##### Use recode() to recode string variables
+##### There are multiple recode() functions across R packages (ie, car); specifiy which package you want to call with ::
 amerge_subset$PTETHCAT <- dplyr::recode(amerge_subset$PTETHCAT, `Hisp/Latino`= "Hisp/Latino",  .default = "Not Hisp/Latino")
-amerge_subset$PTRACCAT <- dplyr::recode(amerge_subset$PTRACCAT, White="White", Black="Black", Asian="Asian", .default = "Other")
-amerge_subset$CDRSB <- ifelse(amerge_subset$CDRSB>=5.5, 5.5, amerge_subset$CDRSB) #recode()
-amerge_subset$HMSCORE <- ifelse(amerge_subset$HMSCORE>=3, 3, amerge_subset$HMSCORE) #recode()
+## an alternate recode() with piping
+amerge_subset %<>% mutate(PTETHCAT = recode(PTETHCAT, `Hisp/Latino`= "Hisp/Latino",  .default = "Not Hisp/Latino"))
 
+################################
+### Create variable type mapping
+################################
 
-
-###########################
-###########################
-
-
-## take a quick look at what these originally were:
+## 1.6 Take a quick look at what these originally were:
 unlist(lapply(amerge_subset,function(x){y<-class(x); y[length(y)]}))
 
-## make a map of variables to types
-variable_type_map <- matrix(0, nrow=ncol(amerge_subset), ncol = 3)
-colnames(variable_type_map) <- c("Continuous","Categorical","Ordinal")
-rownames(variable_type_map) <- colnames(amerge_subset)
-
+## 1.7 Make a map of variables to types
+matrix(0, nrow=ncol(amerge_subset), ncol = 3) %>%
+  `colnames<-`(c("Continuous","Categorical","Ordinal")) %>%
+  `rownames<-`(colnames(amerge_subset)) ->
+  variable_type_map
 
 ## some *very* good arguments can (should) be made that these are not necessarily continuous.
 ## some are counts or count-like and most are by definition strictly non-negative.
@@ -73,5 +65,6 @@ variable_type_map[strictly_ordinal_items,"Ordinal"] <- 1
 variable_type_map[categorical_or_ordinal_items,"Categorical"] <- 1
 variable_type_map[categorical_or_ordinal_items,"Ordinal"] <- 1
 
+## 1.8 Save our cleaned ADNI dataset and variale type mapping
 #save(amerge_subset, file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset.rda"))
 #save(variable_type_map, file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
