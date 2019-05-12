@@ -8,9 +8,52 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   pdf_document:
     keep_tex: true
+urlcolor: blue
 ---
 
+```{r libraries, echo=FALSE, message=FALSE}
+
+require(kableExtra)
+require(gridExtra)
+require(tidyverse)
+require(ExPosition)
+require(GSVD)
+require(knitr)
+
+if(!require(covstatis)){
+  install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
+  library(covstatis)
+}
+
+```
+
+```{r rmarkdown_setup, echo=FALSE, message=FALSE}
+
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+
+```
+
+```{r source_functions, echo=FALSE, message=FALSE}
+
+
+
+```
+
+```{r load_data, echo=FALSE, message=FALSE}
+
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset.rda"))
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
+
+```
 
 # Introduction
 
-For
+For reference, see [RMarkdown Driven Development](https://emilyriederer.netlify.com/post/rmarkdown-driven-development/) by Emily Riederer for a comprehensive overview of how to best structure RMarkdown for projects, packages, and other development-driven tasks. 
+
+In general for this RMarkdown file we follow Emily's fourth example with a directory structure, minimized redundancies, and heavy-duty code elsewhere. This RMarkdown, generally, serves as place to describe, analyze, and visualize our data. Thus, this text is shown at the top of the output, but actually appears after several `R` code chunks, which exist between the `Introduction` heading and YAML header information (which you see as title, authors, dates, etc...).
+
+Most of the RMarkdown files in this directory will show generally the same content, but help highlight the different ways you can use RMarkdown, `knitr`, `pandoc`, `LateX`, and various package built for those, such as `beamer` (`LateX`) for presentations, and [`papaja`](https://github.com/crsh/papaja) & [`rticles`](https://github.com/rstudio/rticles) (R/RMarkdown) for writing manuscripts that export to `LaTeX` or MS Word. If you decide to write MS Word documents through RMarkdown, you should also use the [`redoc` package](https://github.com/noamross/redoc). 
+
+# Tables
+
+There are multiple approaches and packages to help visualize tables or tabular information. 

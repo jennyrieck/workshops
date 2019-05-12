@@ -23,10 +23,14 @@
 }{}
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 \hypersetup{unicode=true,
             pdftitle={Simple Markdown Example},
             pdfauthor={Jenny Rieck; Derek Beaton},
-            pdfborder={0 0 0},
+            colorlinks=true,
+            linkcolor=Maroon,
+            citecolor=Blue,
+            urlcolor=blue,
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \usepackage{graphicx,grffile}
@@ -85,14 +89,55 @@
   \postdate{\par}
     \date{May 12, 2019}
 
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
 
 \begin{document}
 \maketitle
 
-\hypertarget{hello}{%
-\section{Hello}\label{hello}}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
 
-Hi.
+For reference, see
+\href{https://emilyriederer.netlify.com/post/rmarkdown-driven-development/}{RMarkdown
+Driven Development} by Emily Riederer for a comprehensive overview of
+how to best structure RMarkdown for projects, packages, and other
+development-driven tasks.
+
+In general for this RMarkdown file we follow Emily's fourth example with
+a directory structure, minimized redundancies, and heavy-duty code
+elsewhere. This RMarkdown, generally, serves as place to describe,
+analyze, and visualize our data. Thus, this text is shown at the top of
+the output, but actually appears after several \texttt{R} code chunks,
+which exist between the \texttt{Introduction} heading and YAML header
+information (which you see as title, authors, dates, etc\ldots{}).
+
+Most of the RMarkdown files in this directory will show generally the
+same content, but help highlight the different ways you can use
+RMarkdown, \texttt{knitr}, \texttt{pandoc}, \texttt{LateX}, and various
+package built for those, such as \texttt{beamer} (\texttt{LateX}) for
+presentations, and
+\href{https://github.com/crsh/papaja}{\texttt{papaja}} \&
+\href{https://github.com/rstudio/rticles}{\texttt{rticles}}
+(R/RMarkdown) for writing manuscripts that export to \texttt{LaTeX} or
+MS Word. If you decide to write MS Word documents through RMarkdown, you
+should also use the
+\href{https://github.com/noamross/redoc}{\texttt{redoc} package}.
+
+\hypertarget{tables}{%
+\section{Tables}\label{tables}}
 
 
 \end{document}
