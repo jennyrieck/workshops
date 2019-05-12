@@ -1,0 +1,14 @@
+---
+title: "Simple Markdown Example"
+subtitle: "HTML version"
+author: 
+  - "Jenny Rieck"
+  - "Derek Beaton"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: html_document
+---
+
+
+# Hello
+
+Hi.

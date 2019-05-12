@@ -1,0 +1,16 @@
+---
+title: "Simple Markdown Example"
+subtitle: "PDF/LaTex version"
+author: 
+  - "Jenny Rieck"
+  - "Derek Beaton"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  pdf_document:
+    keep_tex: true
+---
+
+
+# Introduction
+
+For
