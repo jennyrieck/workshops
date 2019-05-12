@@ -1,5 +1,6 @@
-library(tidyverse)
 library(ADNIMERGE)
+library(tidyverse)
+library(magrittr)
 
 adnimerge %>%
   dplyr::select(RID, VISCODE, DX, AGE, PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, APOE4, FDG, AV45, CDRSB, ADAS13, MOCA, WholeBrain, Hippocampus, MidTemp, mPACCtrailsB) %>%
@@ -8,44 +9,30 @@ adnimerge %>%
   drop_na() -> amerge_subset
 
 ## bring in modified hachinksi 
-amerge_subset <- inner_join(amerge_subset, modhach[,c("RID","HMSCORE")])
+amerge_subset %<>% inner_join(modhach[,c("RID","HMSCORE")])
 
-## manually change types for now
-amerge_subset$RID <- as.character(amerge_subset$RID)
-amerge_subset$VISCODE <- as.character(amerge_subset$VISCODE)
-amerge_subset$DX <- as.character(amerge_subset$DX)
-amerge_subset$AGE <- as.numeric(amerge_subset$AGE)
-amerge_subset$PTGENDER <- as.character(amerge_subset$PTGENDER)
-amerge_subset$PTEDUCAT <- as.numeric(amerge_subset$PTEDUCAT)
-amerge_subset$PTETHCAT <- as.character(amerge_subset$PTETHCAT)
-amerge_subset$PTRACCAT <- as.character(amerge_subset$PTRACCAT)
-amerge_subset$APOE4 <- as.numeric(amerge_subset$APOE4)
-amerge_subset$FDG <- as.numeric(amerge_subset$FDG)
-amerge_subset$AV45 <- as.numeric(amerge_subset$AV45)
-amerge_subset$CDRSB <- as.numeric(amerge_subset$CDRSB)
-amerge_subset$ADAS13 <- as.numeric(amerge_subset$ADAS13)
-amerge_subset$MOCA <- as.numeric(amerge_subset$MOCA)
-amerge_subset$WholeBrain <- as.numeric(amerge_subset$WholeBrain)
-amerge_subset$Hippocampus <- as.numeric(amerge_subset$Hippocampus)
-amerge_subset$MidTemp <- as.numeric(amerge_subset$MidTemp)
-amerge_subset$mPACCtrailsB <- as.numeric(amerge_subset$mPACCtrailsB)
-amerge_subset$HMSCORE <- as.numeric(amerge_subset$HMSCORE)
+## manually change variable classes (remove class 'labelled')
+char.cols<-c('RID', 'VISCODE', 'DX', 'PTGENDER','PTETHCAT', 'PTRACCAT')
+amerge_subset[,char.cols] %<>% lapply(function(x) as.character(x))
+num.cols<-c('AGE', 'PTEDUCAT', 'APOE4', 'FDG','AV45', 'CDRSB', 'ADAS13', 
+            'MOCA','WholeBrain','Hippocampus','MidTemp','mPACCtrailsB','HMSCORE')
+amerge_subset[,num.cols] %<>% lapply(function(x) as.numeric(x))
 
+### Add rownames and remove first 2 (ID) columns
 rownames(amerge_subset) <- amerge_subset$RID
-amerge_subset <- amerge_subset[,-c(1:2)]
+amerge_subset %<>% select(-RID, -VISCODE)
 
+## Recode some of the variables to eliminate low frequency responses/values
+##### Use if_else() to rescore numeric values in a particular range (ie, a T/F vector)
+amerge_subset$PTEDUCAT <- if_else(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) 
+amerge_subset$CDRSB <- if_else(amerge_subset$CDRSB>=5.5, 5.5, amerge_subset$CDRSB)
+amerge_subset$HMSCORE <- if_else(amerge_subset$HMSCORE>=3, 3, amerge_subset$HMSCORE)
 
-
-## make more tidyverse
-## There are multiple recode() functions across R packages and base; specifiy which package you want with ::
-#amerge_subset$PTEDUCAT <- ifelse(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) #recode()
-amerge_subset$PTEDUCAT <- if_else(amerge_subset$PTEDUCAT<=12, 12, amerge_subset$PTEDUCAT) #recode()
+#### Use recode() to recode string variables
+##### There are multiple recode() functions across R packages and base; specifiy which package you want with ::
 amerge_subset$PTETHCAT <- dplyr::recode(amerge_subset$PTETHCAT, `Hisp/Latino`= "Hisp/Latino",  .default = "Not Hisp/Latino")
-amerge_subset$PTRACCAT <- dplyr::recode(amerge_subset$PTRACCAT, White="White", Black="Black", Asian="Asian", .default = "Other")
-amerge_subset$CDRSB <- ifelse(amerge_subset$CDRSB>=5.5, 5.5, amerge_subset$CDRSB) #recode()
-amerge_subset$HMSCORE <- ifelse(amerge_subset$HMSCORE>=3, 3, amerge_subset$HMSCORE) #recode()
-
-
+## an alternate recode() with piping
+amerge_subset %<>% mutate(PTETHCAT = recode(PTETHCAT, `Hisp/Latino`= "Hisp/Latino",  .default = "Not Hisp/Latino"))
 
 ###########################
 ###########################
