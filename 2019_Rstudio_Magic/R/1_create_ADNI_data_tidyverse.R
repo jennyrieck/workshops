@@ -36,8 +36,9 @@ amerge_subset$HMSCORE <- if_else(amerge_subset$HMSCORE>=3, 3, amerge_subset$HMSC
 ##### Use recode() to recode string variables
 ##### There are multiple recode() functions across R packages (ie, car); specifiy which package you want to call with ::
 amerge_subset$PTETHCAT <- dplyr::recode(amerge_subset$PTETHCAT, `Hisp/Latino`= "Hisp/Latino",  .default = "Not Hisp/Latino")
-## an alternate recode() with piping
-amerge_subset %<>% mutate(PTETHCAT = recode(PTETHCAT, `Hisp/Latino`= "Hisp/Latino",  .default = "Not Hisp/Latino"))
+amerge_subset$PTRACCAT <- dplyr::recode(amerge_subset$PTRACCAT, White="White", Black="Black", Asian="Asian", .default = "Other")
+## an alternate recode() with piping -- but this removes rownames so don't do it.
+#amerge_subset %<>% mutate(PTRACCAT = recode(PTRACCAT, White="White", Black="Black", Asian="Asian", .default = "Other"))
 
 ################################
 ### Create variable type mapping

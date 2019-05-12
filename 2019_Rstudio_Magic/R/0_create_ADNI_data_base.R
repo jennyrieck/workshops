@@ -43,7 +43,7 @@ amerge_subset <- amerge_subset[,-c(1:2)]
 ## 0.5 Recode some of the variables to rescore low frequency responses/values
 amerge_subset$PTEDUCAT[amerge_subset$PTEDUCAT<=12] <- 12
 amerge_subset$PTETHCAT[amerge_subset$PTETHCAT!='Hisp/Latino']<-'Not Hisp/Latino'
-amerge_subset$PTRACCAT[amerge_subset$PTRACCAT!='Black'&amerge_subset$PTRACCAT!='White'&amerge_subset$PTRACCAT!='Asian']<-'Other'
+amerge_subset$PTRACCAT[amerge_subset$PTRACCAT!='Black' & amerge_subset$PTRACCAT!='White' & amerge_subset$PTRACCAT!='Asian']<-'Other'
 
 #### ifelse() is a base function that can also recode a variable
 amerge_subset$CDRSB<-ifelse(amerge_subset$CDRSB>=5.5, 5.5, amerge_subset$CDRSB)
