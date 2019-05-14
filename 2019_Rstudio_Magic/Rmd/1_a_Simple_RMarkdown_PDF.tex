@@ -127,7 +127,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{May 12, 2019}
+    \date{May 13, 2019}
 
 \usepackage{booktabs}
 \usepackage{longtable}
@@ -366,8 +366,197 @@ Max. & 89.60 & 30.00 & 5.5 & 1486035.6 & 10602.00 & 32189.00\\
 \hypertarget{grid-and-gridextra}{%
 \subsection{grid and gridExtra}\label{grid-and-gridextra}}
 
+Sometimes we need tables to be graphics. This is where the \texttt{grid}
+and \texttt{gridExtra} packages come in. The \texttt{grid} package uses
+\texttt{grob}s to turn items---tables, figures, all sorts of
+things---into configurable parts of a figure.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{grid.table}\NormalTok{(better_example_table)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/grid_and_gridExtra-1.pdf}
+
+But it's clear we have a few extra things we should do to make this
+figure of a table look better.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{better_example_table_round <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(better_example_table, }\DecValTok{2}\NormalTok{, }
+\NormalTok{    format, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{, }\DataTypeTok{nsmall =} \DecValTok{2}\NormalTok{)}
+
+\KeywordTok{grid.table}\NormalTok{(better_example_table_round)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/grid_and_gridExtra_round-1.pdf}
+
+However, the \texttt{grid} and \texttt{gridExtra} packages can be
+difficult to customize many of the pieces. Therefore it might be easier
+to stick to the \texttt{LaTeX} approaches with \texttt{kable} or it is
+well worth checking out the
+\href{https://github.com/rstudio/gt}{\texttt{gt} package}.
+
 \hypertarget{python-via-reticulate}{%
 \subsection{Python via reticulate}\label{python-via-reticulate}}
+
+What if you now love RMarkdown but are still really into Python? Not a
+problem. The
+\href{https://rstudio.github.io/reticulate/}{\texttt{reticulate}
+package} has you covered. It's an R package to connect to your
+\texttt{Python} installation and bring the data or results back into
+\texttt{R}, but with some of the same features as you're used to in
+either \texttt{Python} or \texttt{R}. Let's start out with a \emph{head
+to head} of \texttt{R}'s \texttt{head()} vs.~\texttt{Python}'s
+\texttt{.head()}.
+
+In \texttt{R} we write the call in RMarkdown as if we would normally in
+\texttt{R}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(example_table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       AGE MOCA CDRSB WholeBrain Hippocampus MidTemp
+## 2002 64.8   28   2.5  1135556.6        7960   21867
+## 2003 63.6   24   2.0  1070369.5        7611   21580
+## 2007 83.4   23   2.5   920710.1        5614   20567
+## 2010 62.9   27   0.5   986402.9        8004   20358
+## 2011 69.9   25   1.5   987822.5        6686   20366
+## 2018 76.4   26   1.5  1004817.0        7774   19531
+\end{verbatim}
+
+Unlike the previous code chunks, we have to tell RMarkdown that the
+language it should expect is \texttt{python} instead of \texttt{R}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(r.example_table.head())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        AGE  MOCA  CDRSB    WholeBrain  Hippocampus  MidTemp
+## 2002  64.8  28.0    2.5  1.135557e+06       7960.0  21867.0
+## 2003  63.6  24.0    2.0  1.070369e+06       7611.0  21580.0
+## 2007  83.4  23.0    2.5  9.207101e+05       5614.0  20567.0
+## 2010  62.9  27.0    0.5  9.864029e+05       8004.0  20358.0
+## 2011  69.9  25.0    1.5  9.878225e+05       6686.0  20366.0
+\end{verbatim}
+
+For \texttt{Python} via \texttt{R} we also need to use the \texttt{.}
+(dot notation) because of \texttt{Python}'s object oriented approach.
+From the \texttt{r} object, we get the \texttt{example\_table} attribute
+and then perform the \texttt{head} method. That's because
+\texttt{Python} needs to know about the object coming from \texttt{R}.
+
+\hypertarget{here-be-.dragons}{%
+\subsubsection{Here be .dragons}\label{here-be-.dragons}}
+
+For those more familiar with \texttt{R} style that stems from the
+\href{}{\texttt{S} language origin} or \href{}{Google's style guide},
+the \texttt{.} can be a substantial source of confusion both here and in
+the \texttt{tidyverse}. In base \texttt{R}, it is a valid character for
+user defined items. But in base \texttt{R} it is \emph{also} used for
+objects and classes (see, e.g., \texttt{.print()}). In the
+\texttt{tidyverse} the \texttt{.} has a special purpose when alone (not
+amongst other characters), often as a placeholder for where to pass a
+variable as an argument into a function.
+
+In \texttt{R}: use \texttt{.} either with caution or reckless abandon.
+
+\hypertarget{passsssing-back-and-forth}{%
+\subsubsection{Passsssing back and
+foRth}\label{passsssing-back-and-forth}}
+
+That subtitle is a stretch! With the \texttt{reticulate} package and
+\texttt{R} we can pass items between the the two languages/environments.
+And, depending on which language, we use that language's
+preferred/standard approach of referring to attributes or objects. In
+this next example we call into the \texttt{.describe()} method in
+\texttt{Python}, which is similar to \texttt{R}'s \texttt{summary()},
+but allows/requires us to define certain parameters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{perc }\OperatorTok{=}\NormalTok{ [.}\DecValTok{25}\NormalTok{, }\FloatTok{.50}\NormalTok{, }\FloatTok{.75}\NormalTok{] }
+\NormalTok{desc }\OperatorTok{=}\NormalTok{ r.example_table.describe(percentiles }\OperatorTok{=}\NormalTok{ perc)}
+\BuiltInTok{print}\NormalTok{(desc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               AGE        MOCA       CDRSB    WholeBrain   Hippocampus  \
+## count  665.000000  665.000000  665.000000  6.650000e+02    665.000000   
+## mean    71.922556   23.890226    1.202256  1.057026e+06   7149.613534   
+## std      6.868621    3.279405    1.343238  1.036727e+05   1086.040463   
+## min     55.000000   16.000000    0.000000  8.174212e+05   3731.000000   
+## 25%     67.200000   22.000000    0.000000  9.844099e+05   6510.000000   
+## 50%     71.900000   24.000000    1.000000  1.051621e+06   7223.000000   
+## 75%     76.600000   26.000000    2.000000  1.120569e+06   7834.000000   
+## max     89.600000   30.000000    5.500000  1.486036e+06  10602.000000   
+## 
+##             MidTemp  
+## count    665.000000  
+## mean   20301.933835  
+## std     2675.571327  
+## min    12213.000000  
+## 25%    18535.000000  
+## 50%    20186.000000  
+## 75%    22088.000000  
+## max    32189.000000
+\end{verbatim}
+
+We can visualize the results directly using the \texttt{print()} method.
+But like previous results shown in \texttt{R}, we can do a lot better.
+We can pass the \texttt{desc} object back to \texttt{R} with the
+\texttt{\$} notation (generally for lists or simple classes in
+\texttt{R}). When we retrieve an object from python (via \texttt{py\$}),
+we can then do what we would usually do in \texttt{R}. Here, we go back
+to \texttt{kable()} and \texttt{kable\_styling()} with some of the
+parameters to make very nice looking \texttt{LaTeX} tables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(py}\OperatorTok{$}\NormalTok{desc, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{, }\DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{font_size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{position =} \StringTok{"center"}\NormalTok{, }\DataTypeTok{latex_options =} \StringTok{"striped"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[H]
+\centering\begingroup\fontsize{10}{12}\selectfont
+\rowcolors{2}{gray!6}{white}
+
+\begin{tabular}{lrrrrrr}
+\hiderowcolors
+\toprule
+  & AGE & MOCA & CDRSB & WholeBrain & Hippocampus & MidTemp\\
+\midrule
+\showrowcolors
+count & 665.00 & 665.00 & 665.00 & 665.0 & 665.00 & 665.00\\
+mean & 71.92 & 23.89 & 1.20 & 1057025.6 & 7149.61 & 20301.93\\
+std & 6.87 & 3.28 & 1.34 & 103672.7 & 1086.04 & 2675.57\\
+min & 55.00 & 16.00 & 0.00 & 817421.2 & 3731.00 & 12213.00\\
+25\% & 67.20 & 22.00 & 0.00 & 984409.9 & 6510.00 & 18535.00\\
+\addlinespace
+50\% & 71.90 & 24.00 & 1.00 & 1051621.3 & 7223.00 & 20186.00\\
+75\% & 76.60 & 26.00 & 2.00 & 1120569.5 & 7834.00 & 22088.00\\
+max & 89.60 & 30.00 & 5.50 & 1486035.6 & 10602.00 & 32189.00\\
+\bottomrule
+\end{tabular}
+\rowcolors{2}{white}{white}\endgroup{}
+\end{table}
+
+\hypertarget{analyses}{%
+\section{Analyses}\label{analyses}}
+
+\hypertarget{visualizations-graphics}{%
+\section{Visualizations \& Graphics}\label{visualizations-graphics}}
 
 
 \end{document}

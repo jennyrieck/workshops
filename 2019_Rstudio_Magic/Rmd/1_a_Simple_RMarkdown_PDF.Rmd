@@ -125,9 +125,76 @@ kable(better_example_table, format="latex", booktabs=T, digits=2) %>%
 
 ## grid and gridExtra
 
+Sometimes we need tables to be graphics. This is where the `grid` and `gridExtra` packages come in. The `grid` package uses `grob`s to turn items---tables, figures, all sorts of things---into configurable parts of a figure.
+
+```{r grid_and_gridExtra}
+
+grid.table(better_example_table)
+
+```
+
+But it's clear we have a few extra things we should do to make this figure of a table look better.
+
+```{r grid_and_gridExtra_round}
+
+better_example_table_round <- apply(better_example_table, 2, format, digits=2, nsmall=2)
+
+grid.table(better_example_table_round)
+
+```
+
+However, the `grid` and `gridExtra` packages can be difficult to customize many of the pieces. Therefore it might be easier to stick to the `LaTeX` approaches with `kable` or it is well worth checking out the [`gt` package](https://github.com/rstudio/gt).
+
 
 ## Python via reticulate
 
+What if you now love RMarkdown but are still really into Python? Not a problem. The [`reticulate` package](https://rstudio.github.io/reticulate/) has you covered. It's an R package to connect to your `Python` installation and bring the data or results back into `R`, but with some of the same features as you're used to in either `Python` or `R`. Let's start out with a *head to head* of `R`'s `head()` vs. `Python`'s `.head()`.
 
+In `R` we write the call in RMarkdown as if we would normally in `R`:
+
+```{r r_head_example}
+head(example_table)
+```
+
+Unlike the previous code chunks, we have to tell RMarkdown that the language it should expect is `python` instead of `R`. 
+
+```{python r_python_example}
+print(r.example_table.head())
+```
+
+For `Python` via `R` we also need to use the `.` (dot notation) because of `Python`'s object oriented approach.  From the `r` object, we get the `example_table` attribute and then perform the `head` method. That's because `Python` needs to know about the object coming from `R`. 
+
+
+### Here be .dragons
+
+For those more familiar with `R` style that stems from the [`S` language origin]() or [Google's style guide](), the `.` can be a substantial source of confusion both here and in the `tidyverse`. In base `R`, it is a valid character for user defined items. But in base `R` it is *also* used for objects and classes (see, e.g., `.print()`). In the `tidyverse` the `.` has a special purpose when alone (not amongst other characters), often as a placeholder for where to pass a variable as an argument into a function. 
+
+In `R`: use `.` either with caution or reckless abandon.
+
+
+### Passsssing back and foRth
+
+That subtitle is a stretch! With the `reticulate` package and `R` we can pass items between the the two languages/environments. And, depending on which language, we use that language's preferred/standard approach of referring to attributes or objects. In this next example we call into the `.describe()` method in `Python`, which is similar to `R`'s `summary()`, but allows/requires us to define certain parameters. 
+
+```{python describe_example}
+perc = [.25, .50, .75] 
+desc = r.example_table.describe(percentiles = perc)
+
+print(desc)
+
+```
+
+We can visualize the results directly using the `print()` method. But like previous results shown in `R`, we can do a lot better. We can pass the `desc` object back to `R` with the `$` notation (generally for lists or simple classes in `R`). When we retrieve an object from python (via `py$`), we can then do what we would usually do in `R`. Here, we go back to `kable()` and `kable_styling()` with some of the parameters to make very nice looking `LaTeX` tables.
+
+
+```{r python_describe_via_kable}
+kable(py$desc, digits = 2, format="latex", booktabs=T) %>% kable_styling(font_size=10, position = "center", latex_options = "striped")
+```
+
+
+# Analyses
+
+
+# Visualizations & Graphics
 
 
