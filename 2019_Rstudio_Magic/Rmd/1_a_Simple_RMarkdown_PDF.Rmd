@@ -17,14 +17,27 @@ require(kableExtra)
 require(gridExtra)
 require(tidyverse)
 require(ExPosition)
-require(GSVD)
 require(knitr)
 require(reticulate)
+require(here)
+require(factoextra)
 
 if(!require(covstatis)){
   install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
   library(covstatis)
 }
+
+if(!require(ours)){
+  devtools::install_github("derekbeaton/OuRS", subdir = "/OuRS")
+  library(ours)
+}
+
+if(!require(GSVD)){
+  devtools::install_github("derekbeaton/GSVD")
+  library(GSVD)
+}
+
+
 
 ```
 
@@ -174,7 +187,7 @@ In `R`: use `.` either with caution or reckless abandon.
 
 ### Passsssing back and foRth
 
-That subtitle is a stretch! With the `reticulate` package and `R` we can pass items between the the two languages/environments. And, depending on which language, we use that language's preferred/standard approach of referring to attributes or objects. In this next example we call into the `.describe()` method in `Python`, which is similar to `R`'s `summary()`, but allows/requires us to define certain parameters. 
+That subtitle is a stretch! With the `reticulate` package and `R` we can pass items between the the two languages/environments. And, depending on which language, we use that language's preferred/standard approach of referring to attributes or objects. In this next example we call into the `.describe()` method in `Python`, which is similar to `R`'s `summary()`, but allows/requires us to define certain parameters. We use the `r` object to pass `example_table` through to `Python` and call the `describe()` method. We can visualize the results directly using the `print()` method. 
 
 ```{python describe_example}
 perc = [.25, .50, .75] 
@@ -184,17 +197,112 @@ print(desc)
 
 ```
 
-We can visualize the results directly using the `print()` method. But like previous results shown in `R`, we can do a lot better. We can pass the `desc` object back to `R` with the `$` notation (generally for lists or simple classes in `R`). When we retrieve an object from python (via `py$`), we can then do what we would usually do in `R`. Here, we go back to `kable()` and `kable_styling()` with some of the parameters to make very nice looking `LaTeX` tables.
+But like previous results shown in `R`, we can do a lot better with how we display the table. We can pass the `desc` object from `Python` back to `R` with the `$` notation (generally for lists or certain classes in `R`). When we retrieve an object from python (via `py$`), we can then do what we would usually do in `R`. Here, we go back to `kable()` and `kable_styling()` with some of the parameters to make very nice looking `LaTeX` tables.
 
 
 ```{r python_describe_via_kable}
 kable(py$desc, digits = 2, format="latex", booktabs=T) %>% kable_styling(font_size=10, position = "center", latex_options = "striped")
 ```
 
+Et voila!
 
 # Analyses
+
+In order to make work more reproducible, most analyses can---and should---be performed each time we knit an RMarkdown document. Here we show two examples of how to do this: (1) directly in an `R` chunk and (2) calling a separate file from an `R` chunk. To note, this latter option is best done early in the `RMarkdown` file but is located here for illustrative purposes.
+
+```{r show_mca}
+
+continuous_data <- amerge_subset[,which(variable_type_map[,"Continuous"]==1)]
+ordinal_data <- amerge_subset[,which(variable_type_map[,"Ordinal"]==1 & variable_type_map[,"Categorical"]!=1)]
+categorical_data <- amerge_subset[,which(variable_type_map[,"Categorical"]==1)]
+  categorical_data <- categorical_data[,-c(which("DX" %in% colnames(categorical_data)))]
+
+continuous_escofier_data <- escofier.coding(continuous_data, scale=T)
+ordinal_thermometer_data <- thermometer.coding(ordinal_data)
+categorical_disjunctive_data <- make.data.nominal(categorical_data)
+mixed_data <- cbind(continuous_escofier_data,
+                    ordinal_thermometer_data,
+                    categorical_disjunctive_data)
+
+ca_results <- epCA(mixed_data, DESIGN = amerge_subset$DX, make_design_nominal = T, graphs=F)
+
+```
+
+We'll also introduce another package to help with reproducibility and sharing work across multiple places or individuals: the `here` package.
+
+```{r call_covstatis}
+
+source( here::here("R","2_covstatis_example.R") )
+
+```
+
+
+
 
 
 # Visualizations & Graphics
 
+
+```{r visualize_ca_scree}
+
+fviz_screeplot(ca_results, addlabels = TRUE)
+
+plus_minus <- ifelse(grepl("\\-",rownames(ca_results$ExPosition.Data$fj)),"-","+")
+ca_col <- fviz_ca_col(ca_results, alpha=0, labels=F, col.col = "white") +
+  geom_text(aes(label=rownames(ca_results$ExPosition.Data$fj), color=plus_minus)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        legend.position="none") +
+  xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) +
+  ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) +
+  xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) +
+  ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) +
+  ggtitle("CA:\nVariable Component Scores")
+
+```
+
+But we can make resize and align this figure, as well as provide a caption for it directly from the RMarkdown chunk. For this, we need to use the `fig.height`, `fig.width`, `fig.cap`, and `fig.align` parameters in the chunk header.
+
+```{r visualize_ca_scree_chunk_parameters, fig.height=4, fig.width=4, fig.cap="Scree plot that shows the explained variance per component.", fig.align="center"}
+
+fviz_screeplot(ca_results, addlabels = TRUE)
+
+```
+
+
+
+
+<!-- ```{r visualize_ca_plots} -->
+<!-- plus_minus <- ifelse(grepl("\\-",rownames(ca_results$ExPosition.Data$fj)),"-","+") -->
+<!-- ca_col <- fviz_ca_col(ca_results, alpha=0, labels=F, col.col = "white") + -->
+<!--   geom_text(aes(label=rownames(ca_results$ExPosition.Data$fj), color=plus_minus)) + -->
+<!--   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), -->
+<!--         axis.text.x=element_blank(), -->
+<!--         axis.ticks.x=element_blank(), -->
+<!--         axis.text.y=element_blank(), -->
+<!--         axis.ticks.y=element_blank(), -->
+<!--         legend.position="none") + -->
+<!--   xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) + -->
+<!--   ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) + -->
+<!--   xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) + -->
+<!--   ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) + -->
+<!--   ggtitle("CA:\nVariable Component Scores") -->
+<!-- ca_row <- fviz_ca_row(ca_results, alpha=0, labels=F, col.row = "white") + -->
+<!--   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), -->
+<!--         axis.text.x=element_blank(), -->
+<!--         axis.ticks.x=element_blank(), -->
+<!--         axis.text.y=element_blank(), -->
+<!--         axis.ticks.y=element_blank(), -->
+<!--         legend.title = element_blank()) + -->
+<!--   geom_point(aes(x=ca_results$ExPosition.Data$fi[,1], y = ca_results$ExPosition.Data$fi[,2], color=amerge_subset$DX)) +  -->
+<!--   xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) + -->
+<!--   ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) + -->
+<!--   xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) + -->
+<!--   ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) + -->
+<!--   ggtitle("CA:\nParticipants Component Scores") -->
+
+<!-- ``` -->
 

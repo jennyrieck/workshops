@@ -127,7 +127,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{May 13, 2019}
+    \date{May 14, 2019}
 
 \usepackage{booktabs}
 \usepackage{longtable}
@@ -480,7 +480,10 @@ And, depending on which language, we use that language's
 preferred/standard approach of referring to attributes or objects. In
 this next example we call into the \texttt{.describe()} method in
 \texttt{Python}, which is similar to \texttt{R}'s \texttt{summary()},
-but allows/requires us to define certain parameters.
+but allows/requires us to define certain parameters. We use the
+\texttt{r} object to pass \texttt{example\_table} through to
+\texttt{Python} and call the \texttt{describe()} method. We can
+visualize the results directly using the \texttt{print()} method.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -512,14 +515,14 @@ but allows/requires us to define certain parameters.
 ## max    32189.000000
 \end{verbatim}
 
-We can visualize the results directly using the \texttt{print()} method.
-But like previous results shown in \texttt{R}, we can do a lot better.
-We can pass the \texttt{desc} object back to \texttt{R} with the
-\texttt{\$} notation (generally for lists or simple classes in
-\texttt{R}). When we retrieve an object from python (via \texttt{py\$}),
-we can then do what we would usually do in \texttt{R}. Here, we go back
-to \texttt{kable()} and \texttt{kable\_styling()} with some of the
-parameters to make very nice looking \texttt{LaTeX} tables.
+But like previous results shown in \texttt{R}, we can do a lot better
+with how we display the table. We can pass the \texttt{desc} object from
+\texttt{Python} back to \texttt{R} with the \texttt{\$} notation
+(generally for lists or certain classes in \texttt{R}). When we retrieve
+an object from python (via \texttt{py\$}), we can then do what we would
+usually do in \texttt{R}. Here, we go back to \texttt{kable()} and
+\texttt{kable\_styling()} with some of the parameters to make very nice
+looking \texttt{LaTeX} tables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -552,11 +555,99 @@ max & 89.60 & 30.00 & 5.50 & 1486035.6 & 10602.00 & 32189.00\\
 \rowcolors{2}{white}{white}\endgroup{}
 \end{table}
 
+Et voila!
+
 \hypertarget{analyses}{%
 \section{Analyses}\label{analyses}}
 
+In order to make work more reproducible, most analyses can---and
+should---be performed each time we knit an RMarkdown document. Here we
+show two examples of how to do this: (1) directly in an \texttt{R} chunk
+and (2) calling a separate file from an \texttt{R} chunk. To note, this
+latter option is best done early in the \texttt{RMarkdown} file but is
+located here for illustrative purposes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{continuous_data <-}\StringTok{ }\NormalTok{amerge_subset[, }\KeywordTok{which}\NormalTok{(variable_type_map[, }
+    \StringTok{"Continuous"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)]}
+\NormalTok{ordinal_data <-}\StringTok{ }\NormalTok{amerge_subset[, }\KeywordTok{which}\NormalTok{(variable_type_map[, }\StringTok{"Ordinal"}\NormalTok{] }\OperatorTok{==}\StringTok{ }
+\StringTok{    }\DecValTok{1} \OperatorTok{&}\StringTok{ }\NormalTok{variable_type_map[, }\StringTok{"Categorical"}\NormalTok{] }\OperatorTok{!=}\StringTok{ }\DecValTok{1}\NormalTok{)]}
+\NormalTok{categorical_data <-}\StringTok{ }\NormalTok{amerge_subset[, }\KeywordTok{which}\NormalTok{(variable_type_map[, }
+    \StringTok{"Categorical"}\NormalTok{] }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)]}
+\NormalTok{categorical_data <-}\StringTok{ }\NormalTok{categorical_data[, }\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\KeywordTok{which}\NormalTok{(}\StringTok{"DX"} \OperatorTok{%in%}\StringTok{ }\KeywordTok{colnames}\NormalTok{(categorical_data)))]}
+
+\NormalTok{continuous_escofier_data <-}\StringTok{ }\KeywordTok{escofier.coding}\NormalTok{(continuous_data, }
+    \DataTypeTok{scale =}\NormalTok{ T)}
+\NormalTok{ordinal_thermometer_data <-}\StringTok{ }\KeywordTok{thermometer.coding}\NormalTok{(ordinal_data)}
+\NormalTok{categorical_disjunctive_data <-}\StringTok{ }\KeywordTok{make.data.nominal}\NormalTok{(categorical_data)}
+\NormalTok{mixed_data <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(continuous_escofier_data, ordinal_thermometer_data, }
+\NormalTok{    categorical_disjunctive_data)}
+
+\NormalTok{ca_results <-}\StringTok{ }\KeywordTok{epCA}\NormalTok{(mixed_data, }\DataTypeTok{DESIGN =}\NormalTok{ amerge_subset}\OperatorTok{$}\NormalTok{DX, }\DataTypeTok{make_design_nominal =}\NormalTok{ T, }
+    \DataTypeTok{graphs =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+We'll also introduce another package to help with reproducibility and
+sharing work across multiple places or individuals: the \texttt{here}
+package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{source}\NormalTok{(here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"R"}\NormalTok{, }\StringTok{"2_covstatis_example.R"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{visualizations-graphics}{%
 \section{Visualizations \& Graphics}\label{visualizations-graphics}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fviz_screeplot}\NormalTok{(ca_results, }\DataTypeTok{addlabels =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/visualize_ca_scree-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plus_minus <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{-"}\NormalTok{, }\KeywordTok{rownames}\NormalTok{(ca_results}\OperatorTok{$}\NormalTok{ExPosition.Data}\OperatorTok{$}\NormalTok{fj)), }
+    \StringTok{"-"}\NormalTok{, }\StringTok{"+"}\NormalTok{)}
+\NormalTok{ca_col <-}\StringTok{ }\KeywordTok{fviz_ca_col}\NormalTok{(ca_results, }\DataTypeTok{alpha =} \DecValTok{0}\NormalTok{, }\DataTypeTok{labels =}\NormalTok{ F, }\DataTypeTok{col.col =} \StringTok{"white"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \KeywordTok{rownames}\NormalTok{(ca_results}\OperatorTok{$}\NormalTok{ExPosition.Data}\OperatorTok{$}\NormalTok{fj), }
+        \DataTypeTok{color =}\NormalTok{ plus_minus)) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.grid.major =} \KeywordTok{element_blank}\NormalTok{(), }
+    \DataTypeTok{panel.grid.minor =} \KeywordTok{element_blank}\NormalTok{(), }\DataTypeTok{axis.text.x =} \KeywordTok{element_blank}\NormalTok{(), }
+    \DataTypeTok{axis.ticks.x =} \KeywordTok{element_blank}\NormalTok{(), }\DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(), }
+    \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{(), }\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{xlim}\NormalTok{(}\KeywordTok{c}\NormalTok{(ca_results}\OperatorTok{$}\NormalTok{Plotting.Data}\OperatorTok{$}\NormalTok{constraints}\OperatorTok{$}\NormalTok{minx, ca_results}\OperatorTok{$}\NormalTok{Plotting.Data}\OperatorTok{$}\NormalTok{constraints}\OperatorTok{$}\NormalTok{maxx)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{ylim}\NormalTok{(}\KeywordTok{c}\NormalTok{(ca_results}\OperatorTok{$}\NormalTok{Plotting.Data}\OperatorTok{$}\NormalTok{constraints}\OperatorTok{$}\NormalTok{miny, ca_results}\OperatorTok{$}\NormalTok{Plotting.Data}\OperatorTok{$}\NormalTok{constraints}\OperatorTok{$}\NormalTok{maxy)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{xlab}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"Component 1. Explained variance: "}\NormalTok{, }\KeywordTok{round}\NormalTok{(ca_results}\OperatorTok{$}\NormalTok{ExPosition.Data}\OperatorTok{$}\NormalTok{t[}\DecValTok{1}\NormalTok{], }
+        \DataTypeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{"%"}\NormalTok{)) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"Component 2. Explained variance: "}\NormalTok{, }
+    \KeywordTok{round}\NormalTok{(ca_results}\OperatorTok{$}\NormalTok{ExPosition.Data}\OperatorTok{$}\NormalTok{t[}\DecValTok{2}\NormalTok{], }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{"%"}\NormalTok{)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"CA:}\CharTok{\textbackslash{}n}\StringTok{Variable Component Scores"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+But we can make resize and align this figure, as well as provide a
+caption for it directly from the RMarkdown chunk. For this, we need to
+use the \texttt{fig.height}, \texttt{fig.width}, \texttt{fig.cap}, and
+\texttt{fig.align} parameters in the chunk header.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fviz_screeplot}\NormalTok{(ca_results, }\DataTypeTok{addlabels =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/visualize_ca_scree_chunk_parameters-1} 
+
+}
+
+\caption{Scree plot that shows the explained variance per component.}\label{fig:visualize_ca_scree_chunk_parameters}
+\end{figure}
 
 
 \end{document}
