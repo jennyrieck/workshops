@@ -43,7 +43,7 @@ if(!require(GSVD)){
 
 ```{r rmarkdown_setup, echo=FALSE, message=FALSE}
 
-opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE, fig.pos='H')
 
 ```
 
@@ -210,6 +210,10 @@ Et voila!
 
 In order to make work more reproducible, most analyses can---and should---be performed each time we knit an RMarkdown document. Here we show two examples of how to do this: (1) directly in an `R` chunk and (2) calling a separate file from an `R` chunk. To note, this latter option is best done early in the `RMarkdown` file but is located here for illustrative purposes.
 
+## Mixed data MCA
+
+Here we perform a small analyses of mixed data types (continuous, categorical, ordinal) through multiple correspondence analysis. For more information on this, see [this workshop](https://github.com/derekbeaton/Workshops/tree/master/RTC/PCA_MCA_Resampling). 
+
 ```{r show_mca}
 
 continuous_data <- amerge_subset[,which(variable_type_map[,"Continuous"]==1)]
@@ -228,20 +232,28 @@ ca_results <- epCA(mixed_data, DESIGN = amerge_subset$DX, make_design_nominal = 
 
 ```
 
-We'll also introduce another package to help with reproducibility and sharing work across multiple places or individuals: the `here` package.
+This code is shown, but is directly show in the RMarkdown besides the code within the chunk. This is because the values are stored in their respective variables, and none of these are visuals (e.g., tables, figures).
 
-```{r call_covstatis}
+
+
+## CovSTATIS
+
+Finally, we will also perform an analysis called 'covSTATIS', which is a multi-table PCA technique that allows us to peform the analysis of multiple correlation or covariance matrices. Here we have one correlation matrix per group in the data (control, MCI, AD). For this analysis, we will actually use the `R` chunk to call off to a script in the correct folder. We introduce another package to help with reproducibility and sharing work across multiple places or individuals: the `here` package. However, for this example, we will actually *hide* the code chunk with parameters in the chunk header: `echo=FALSE`. thus, in order to see this, you'll have to look at the .Rmd file, as it will not appear in the .pdf file.
+
+```{r call_covstatis, echo=FALSE}
 
 source( here::here("R","2_covstatis_example.R") )
 
 ```
 
 
-
-
-
 # Visualizations & Graphics
 
+RMarkdown also allows us to include graphics directly from the code. In the global settings for this document (see the top), we have to set a specific `knitr` flag (`fig.pos='H'`) which passes through to `LaTeX` to enforce that images appear in the document at their respective locations. Else, because of `LaTeX`'s magic, figures end up in slightly different places than expected (but still in order).
+
+In our first example, we performed MCA through the `ExPosition` package. We'd like to visualize these results, so, we will use a `ggplot2`-based package called `factoextra`, which provides standard visualizations for PCA-like techniques across multiple packages (e.g., `ExPosition`, `ade4`, `ca`, `FactoMineR`).
+
+First we show a scree plot (explained variance per component) completely as is. 
 
 ```{r visualize_ca_scree}
 
@@ -264,7 +276,7 @@ ca_col <- fviz_ca_col(ca_results, alpha=0, labels=F, col.col = "white") +
 
 ```
 
-But we can make resize and align this figure, as well as provide a caption for it directly from the RMarkdown chunk. For this, we need to use the `fig.height`, `fig.width`, `fig.cap`, and `fig.align` parameters in the chunk header.
+This image is a bit big. So, we can resize and align this figure, as well as provide a caption for it directly from the header of the RMarkdown chunk. For this, we need to use and set the following parameters: `fig.height=4`, `fig.width=4`, `fig.cap="Scree plot that shows the explained variance per component."`, and `fig.align="center"` parameters in the chunk header.
 
 ```{r visualize_ca_scree_chunk_parameters, fig.height=4, fig.width=4, fig.cap="Scree plot that shows the explained variance per component.", fig.align="center"}
 
@@ -272,37 +284,87 @@ fviz_screeplot(ca_results, addlabels = TRUE)
 
 ```
 
+That's much nicer! Next we have another hidden chunk (i.e., `echo=FALSE`) that performs required set up for the subsequent visuals.
 
 
+```{r visualize_ca_plots, echo=FALSE}
+plus_minus <- ifelse(grepl("\\-",rownames(ca_results$ExPosition.Data$fj)),"-","+")
 
-<!-- ```{r visualize_ca_plots} -->
-<!-- plus_minus <- ifelse(grepl("\\-",rownames(ca_results$ExPosition.Data$fj)),"-","+") -->
-<!-- ca_col <- fviz_ca_col(ca_results, alpha=0, labels=F, col.col = "white") + -->
-<!--   geom_text(aes(label=rownames(ca_results$ExPosition.Data$fj), color=plus_minus)) + -->
-<!--   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), -->
-<!--         axis.text.x=element_blank(), -->
-<!--         axis.ticks.x=element_blank(), -->
-<!--         axis.text.y=element_blank(), -->
-<!--         axis.ticks.y=element_blank(), -->
-<!--         legend.position="none") + -->
-<!--   xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) + -->
-<!--   ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) + -->
-<!--   xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) + -->
-<!--   ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) + -->
-<!--   ggtitle("CA:\nVariable Component Scores") -->
-<!-- ca_row <- fviz_ca_row(ca_results, alpha=0, labels=F, col.row = "white") + -->
-<!--   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), -->
-<!--         axis.text.x=element_blank(), -->
-<!--         axis.ticks.x=element_blank(), -->
-<!--         axis.text.y=element_blank(), -->
-<!--         axis.ticks.y=element_blank(), -->
-<!--         legend.title = element_blank()) + -->
-<!--   geom_point(aes(x=ca_results$ExPosition.Data$fi[,1], y = ca_results$ExPosition.Data$fi[,2], color=amerge_subset$DX)) +  -->
-<!--   xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) + -->
-<!--   ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) + -->
-<!--   xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) + -->
-<!--   ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) + -->
-<!--   ggtitle("CA:\nParticipants Component Scores") -->
+ca_col <- fviz_ca_col(ca_results, alpha=0, labels=F, col.col = "white") +
+  geom_text(aes(label=rownames(ca_results$ExPosition.Data$fj), color=plus_minus)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        legend.position="none") +
+  xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) +
+  ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) +
+  xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) +
+  ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) +
+  ggtitle("CA:\nVariable Component Scores")
 
-<!-- ``` -->
+
+ca_row <- fviz_ca_row(ca_results, alpha=0, labels=F, col.row = "white") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        legend.title = element_blank()) +
+  geom_point(aes(x=ca_results$ExPosition.Data$fi[,1], y = ca_results$ExPosition.Data$fi[,2], color=amerge_subset$DX)) +
+  xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) +
+  ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) +
+  xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) +
+  ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) +
+  ggtitle("CA:\nParticipants Component Scores")
+
+```
+
+The hidden code chunk makes graphics based on `factoextra` and `ggplot2`. To see this code, open this .Rmd file. From the chunks we can visualize multiple items, as opposed to just one at a time like we did with the tables and the screeplot. One way is to just directly call for the graphic in the chunk.
+
+```{r fig.width=4,fig.height=4, fig.align='center', fig.cap="Multiple ggplot2 graphics"}
+ 
+ ca_col
+ ca_row
+ 
+```
+
+But the above figure shows the code chunks and figures in order. To prevent this, we need to hide the chunk with `echo=FALSE`.
+
+```{r fig.width=4,fig.height=4, fig.align='center', fig.cap="Multiple ggplot2 graphics", echo=FALSE}
+ 
+ ca_col
+ ca_row
+ 
+```
+ 
+However, sometimes we may use "base" `R` or need much finer grained control over figure placements within the chunk. The subsequent chunk shows the results from the covSTATIS analysis, with the "compromise component scores" in each plot, but with each group in isolation with respect to the "compromise component scores", and then finally all items plotted at once.
+ 
+```{r fig.width=8, fig.height=8, fig.align='center', fig.cap="Using par() to make a layout of multiple base plots", echo=FALSE}
+ 
+
+par.opts <- par(mfrow=c(2,2))
+
+plot_covstatis(covstatis_results$compromise_component_scores, simplify2array(covstatis_results$partial_component_scores), display.fis.names = T)
+
+for(i in 1:length(covstatis_results$partial_component_scores)){
+  this_partial <- array(simplify2array(covstatis_results$partial_component_scores)[,,i], dim=c(nrow(covstatis_results$compromise_component_scores),ncol(covstatis_results$compromise_component_scores),1))
+  
+  rownames(this_partial) <- rownames(covstatis_results$compromise_component_scores)
+  dimnames(this_partial)[[3]] <- names(covstatis_results$partial_component_scores)[i]
+    
+  plot_covstatis(covstatis_results$compromise_component_scores, this_partial, display.fis.names = T)
+  
+}
+
+par(par.opts)
+ 
+``` 
+ 
+ 
+# Conclusions
+
+RMarkdown---and a number of other tools provided through RStudio---allow you to make relatively simple, integrated, and reproducible documents. This particular example includes a wide variety of tools (R, Python, multiple packages, in-chunk code, and external scripts), but relies only on relatively standard and simple RMarkdown options. 
+
 

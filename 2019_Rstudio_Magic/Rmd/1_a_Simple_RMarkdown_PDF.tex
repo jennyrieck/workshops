@@ -127,7 +127,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{May 14, 2019}
+    \date{May 15, 2019}
 
 \usepackage{booktabs}
 \usepackage{longtable}
@@ -260,6 +260,7 @@ to make this table look better (which depend on having LaTeX).
  & Median :71.90 & Median :24.00 & Median :1.000 & Median :1051621 & Median : 7223 & Median :20186\\
  & Mean   :71.92 & Mean   :23.89 & Mean   :1.202 & Mean   :1057026 & Mean   : 7150 & Mean   :20302\\
  & 3rd Qu.:76.60 & 3rd Qu.:26.00 & 3rd Qu.:2.000 & 3rd Qu.:1120570 & 3rd Qu.: 7834 & 3rd Qu.:22088\\
+\addlinespace
  & Max.   :89.60 & Max.   :30.00 & Max.   :5.500 & Max.   :1486036 & Max.   :10602 & Max.   :32189\\
 \bottomrule
 \end{tabular}
@@ -287,6 +288,7 @@ can with \texttt{kableExtra}.
  & Median :71.90 & Median :24.00 & Median :1.000 & Median :1051621 & Median : 7223 & Median :20186\\
  & Mean   :71.92 & Mean   :23.89 & Mean   :1.202 & Mean   :1057026 & Mean   : 7150 & Mean   :20302\\
  & 3rd Qu.:76.60 & 3rd Qu.:26.00 & 3rd Qu.:2.000 & 3rd Qu.:1120570 & 3rd Qu.: 7834 & 3rd Qu.:22088\\
+\addlinespace
  & Max.   :89.60 & Max.   :30.00 & Max.   :5.500 & Max.   :1486036 & Max.   :10602 & Max.   :32189\\
 \bottomrule
 \end{tabular}\endgroup{}
@@ -317,6 +319,7 @@ We can take the table look even further with additional options, like
  & Median :71.90 & Median :24.00 & Median :1.000 & Median :1051621 & Median : 7223 & Median :20186\\
  & Mean   :71.92 & Mean   :23.89 & Mean   :1.202 & Mean   :1057026 & Mean   : 7150 & Mean   :20302\\
  & 3rd Qu.:76.60 & 3rd Qu.:26.00 & 3rd Qu.:2.000 & 3rd Qu.:1120570 & 3rd Qu.: 7834 & 3rd Qu.:22088\\
+\addlinespace
  & Max.   :89.60 & Max.   :30.00 & Max.   :5.500 & Max.   :1486036 & Max.   :10602 & Max.   :32189\\
 \bottomrule
 \end{tabular}
@@ -357,6 +360,7 @@ Min. & 55.00 & 16.00 & 0.0 & 817421.2 & 3731.00 & 12213.00\\
 Median & 71.90 & 24.00 & 1.0 & 1051621.3 & 7223.00 & 20186.00\\
 Mean & 71.92 & 23.89 & 1.2 & 1057025.6 & 7149.61 & 20301.93\\
 3rd Qu. & 76.60 & 26.00 & 2.0 & 1120569.5 & 7834.00 & 22088.00\\
+\addlinespace
 Max. & 89.60 & 30.00 & 5.5 & 1486035.6 & 10602.00 & 32189.00\\
 \bottomrule
 \end{tabular}
@@ -567,6 +571,15 @@ and (2) calling a separate file from an \texttt{R} chunk. To note, this
 latter option is best done early in the \texttt{RMarkdown} file but is
 located here for illustrative purposes.
 
+\hypertarget{mixed-data-mca}{%
+\subsection{Mixed data MCA}\label{mixed-data-mca}}
+
+Here we perform a small analyses of mixed data types (continuous,
+categorical, ordinal) through multiple correspondence analysis. For more
+information on this, see
+\href{https://github.com/derekbeaton/Workshops/tree/master/RTC/PCA_MCA_Resampling}{this
+workshop}.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{continuous_data <-}\StringTok{ }\NormalTok{amerge_subset[, }\KeywordTok{which}\NormalTok{(variable_type_map[, }
@@ -589,18 +602,47 @@ located here for illustrative purposes.
 \end{Highlighting}
 \end{Shaded}
 
-We'll also introduce another package to help with reproducibility and
-sharing work across multiple places or individuals: the \texttt{here}
-package.
+This code is shown, but is directly show in the RMarkdown besides the
+code within the chunk. This is because the values are stored in their
+respective variables, and none of these are visuals (e.g., tables,
+figures).
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{source}\NormalTok{(here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"R"}\NormalTok{, }\StringTok{"2_covstatis_example.R"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
+\hypertarget{covstatis}{%
+\subsection{CovSTATIS}\label{covstatis}}
+
+Finally, we will also perform an analysis called `covSTATIS', which is a
+multi-table PCA technique that allows us to peform the analysis of
+multiple correlation or covariance matrices. Here we have one
+correlation matrix per group in the data (control, MCI, AD). For this
+analysis, we will actually use the \texttt{R} chunk to call off to a
+script in the correct folder. We introduce another package to help with
+reproducibility and sharing work across multiple places or individuals:
+the \texttt{here} package. However, for this example, we will actually
+\emph{hide} the code chunk with parameters in the chunk header:
+\texttt{echo=FALSE}. thus, in order to see this, you'll have to look at
+the .Rmd file, as it will not appear in the .pdf file.
 
 \hypertarget{visualizations-graphics}{%
 \section{Visualizations \& Graphics}\label{visualizations-graphics}}
+
+RMarkdown also allows us to include graphics directly from the code. In
+the global settings for this document (see the top), we have to set a
+specific \texttt{knitr} flag
+(\texttt{fig.pos=\textquotesingle{}H\textquotesingle{}}) which passes
+through to \texttt{LaTeX} to enforce that images appear in the document
+at their respective locations. Else, because of \texttt{LaTeX}'s magic,
+figures end up in slightly different places than expected (but still in
+order).
+
+In our first example, we performed MCA through the \texttt{ExPosition}
+package. We'd like to visualize these results, so, we will use a
+\texttt{ggplot2}-based package called \texttt{factoextra}, which
+provides standard visualizations for PCA-like techniques across multiple
+packages (e.g., \texttt{ExPosition}, \texttt{ade4}, \texttt{ca},
+\texttt{FactoMineR}).
+
+First we show a scree plot (explained variance per component) completely
+as is.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -629,10 +671,12 @@ package.
 \end{Highlighting}
 \end{Shaded}
 
-But we can make resize and align this figure, as well as provide a
-caption for it directly from the RMarkdown chunk. For this, we need to
-use the \texttt{fig.height}, \texttt{fig.width}, \texttt{fig.cap}, and
-\texttt{fig.align} parameters in the chunk header.
+This image is a bit big. So, we can resize and align this figure, as
+well as provide a caption for it directly from the header of the
+RMarkdown chunk. For this, we need to use and set the following
+parameters: \texttt{fig.height=4}, \texttt{fig.width=4},
+\texttt{fig.cap="Scree\ plot\ that\ shows\ the\ explained\ variance\ per\ component."},
+and \texttt{fig.align="center"} parameters in the chunk header.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -640,7 +684,7 @@ use the \texttt{fig.height}, \texttt{fig.width}, \texttt{fig.cap}, and
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
+\begin{figure}[H]
 
 {\centering \includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/visualize_ca_scree_chunk_parameters-1} 
 
@@ -648,6 +692,91 @@ use the \texttt{fig.height}, \texttt{fig.width}, \texttt{fig.cap}, and
 
 \caption{Scree plot that shows the explained variance per component.}\label{fig:visualize_ca_scree_chunk_parameters}
 \end{figure}
+
+That's much nicer! Next we have another hidden chunk (i.e.,
+\texttt{echo=FALSE}) that performs required set up for the subsequent
+visuals.
+
+The hidden code chunk makes graphics based on \texttt{factoextra} and
+\texttt{ggplot2}. To see this code, open this .Rmd file. From the chunks
+we can visualize multiple items, as opposed to just one at a time like
+we did with the tables and the screeplot. One way is to just directly
+call for the graphic in the chunk.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ca_col}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/unnamed-chunk-1-1} 
+
+}
+
+\caption{Multiple ggplot2 graphics}\label{fig:unnamed-chunk-11}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ca_row}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/unnamed-chunk-1-2} 
+
+}
+
+\caption{Multiple ggplot2 graphics}\label{fig:unnamed-chunk-12}
+\end{figure}
+
+But the above figure shows the code chunks and figures in order. To
+prevent this, we need to hide the chunk with \texttt{echo=FALSE}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/unnamed-chunk-2-1} 
+
+}
+
+\caption{Multiple ggplot2 graphics}\label{fig:unnamed-chunk-21}
+\end{figure}
+\begin{figure}[H]
+
+{\centering \includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/unnamed-chunk-2-2} 
+
+}
+
+\caption{Multiple ggplot2 graphics}\label{fig:unnamed-chunk-22}
+\end{figure}
+
+However, sometimes we may use ``base'' \texttt{R} or need much finer
+grained control over figure placements within the chunk. The subsequent
+chunk shows the results from the covSTATIS analysis, with the
+``compromise component scores'' in each plot, but with each group in
+isolation with respect to the ``compromise component scores'', and then
+finally all items plotted at once.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{1_a_Simple_RMarkdown_PDF_files/figure-latex/unnamed-chunk-3-1} 
+
+}
+
+\caption{Using par() to make a layout of multiple base plots}\label{fig:unnamed-chunk-3}
+\end{figure}
+
+\hypertarget{conclusions}{%
+\section{Conclusions}\label{conclusions}}
+
+RMarkdown---and a number of other tools provided through RStudio---allow
+you to make relatively simple, integrated, and reproducible documents.
+This particular example includes a wide variety of tools (R, Python,
+multiple packages, in-chunk code, and external scripts), but relies only
+on relatively standard and simple RMarkdown options.
 
 
 \end{document}
