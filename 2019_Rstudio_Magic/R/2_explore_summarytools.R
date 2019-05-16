@@ -1,9 +1,12 @@
-### Using the summary tools package
+############################################
+### Exploring your data with summarytools 
 ### See vignette: https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html
-load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset_base.rda"))
-load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map_base.rda"))
+############################################
 
 library(summarytools)
+
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset.rda"))
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
 
 ## 2.1 Frequency table
 ### set style to 'rmarkdown' for nicely formatted tables in rmd
