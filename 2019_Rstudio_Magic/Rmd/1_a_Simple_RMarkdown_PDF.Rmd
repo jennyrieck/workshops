@@ -23,7 +23,7 @@ require(here)
 require(factoextra)
 
 if(!require(covstatis)){
-  install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
+  devtools::install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
   library(covstatis)
 }
 
