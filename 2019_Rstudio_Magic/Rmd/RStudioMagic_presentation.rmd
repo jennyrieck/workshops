@@ -149,7 +149,7 @@ install.packages('/mypath/to/package/ADNIMERGE.tar.gz',
 #to install from a git  (requires the devtools package)
 dev.tools::install_github(Gibbsdavidl/CatterPlots) 
 ```
-* See [https://jennybc.github.io/2014-05-12-ubc/ r-setup](https://jennybc.github.io/2014-05-12-ubc/r-setup.html) for a detailed guide
+* See [https://jennybc.github.io/2014-05-12-ubc/r-setup](https://jennybc.github.io/2014-05-12-ubc/r-setup.html) for a detailed guide
 
 ## Rstudio Setup: Projects & Git
 
