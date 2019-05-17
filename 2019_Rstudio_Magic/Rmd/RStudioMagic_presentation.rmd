@@ -69,7 +69,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## R: Help!
 
-* [https://www.statmethods.net/](https://www.statmethods.net/)
+* https://www.statmethods.net/
 * Online forums (Stack Exchange, r-lists)
 * SpringerLink
     * All R books for free (pdf format) or for minimal cost (printed)
@@ -149,7 +149,7 @@ install.packages('/mypath/to/package/ADNIMERGE.tar.gz',
 #to install from a git  (requires the devtools package)
 dev.tools::install_github(Gibbsdavidl/CatterPlots) 
 ```
-* See [https://jennybc.github.io/2014-05-12-ubc/r-setup](https://jennybc.github.io/2014-05-12-ubc/r-setup.html) for a detailed guide
+* See https://jennybc.github.io/2014-05-12-ubc/r-setup.html for a detailed guide
 
 ## Rstudio Setup: Projects & Git
 
@@ -177,5 +177,55 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
     * In your project folder create a `.Renviron` file and define variables
 
 ![](../external/images/rstudio_setup_project_environ.PNG)
+
+## Explain/Walk through and Helpful Packages
+
+* ?!?
+
+
+## Part 6: A few of our favorite things
+
+* Fun R do-dads
+
+
+## CatterPlot for feline based graphics:
+
+* https://github.com/Gibbsdavidl/CatterPlots
+
+`dev.tools::install_github(Gibbsdavidl/CatterPlots)`
+
+![](../external/images/funR_1_catterplotter.png){width=250px}
+
+## What's a pirate's favorite programming language?
+
+* https://cran.r-project.org/web/packages/yarrr/vignettes/pirateplot.html
+
+`install.packages('yarrr')`
+
+![](../external/images/funR_2_pirate.png)
+
+## Color palettes to fit your ~mood~
+
+* https://github.com/karthik/wesanderson
+
+`dev.tools::install_github(karthik/wesanderson)`
+
+![](../external/images/funR_3_wes_anderson.png)
+
+## Mapping your Strava routes
+
+* https://www.r-bloggers.com/strava-rides-map-in-r/
+* ALSO https://marcusvolz.com/?p=4068
+    * `dev.tools::install_github(marcusvolz/strava)`
     
+![](../external/images/funR_4_strava_combo.png)
+
+## Make aRt!
+
+* R Graph Gallery
+    * http://www.r-graph-gallery.com/
+* Rtist: Gaston Sanchez
+    * http://gastonsanchez.com/Rtist/
+    
+![](../external/images/funR_5_aRt_pink_combo.png)
 
