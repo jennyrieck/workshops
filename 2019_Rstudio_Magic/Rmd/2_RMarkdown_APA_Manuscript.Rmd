@@ -18,7 +18,7 @@ authornote: |
 abstract: |
   This is a short example of a completely reproducible manuscript made entirely in RStudio with RMarkdown and various R scripts, functions, and packages. 
   
-keywords          : "reproducible, manuscript, multivariate"
+keywords          : "reproducible, manuscript, multivariate, APA, papaja, knitr, R, Rmarkdown"
 
 bibliography      : ["r-references.bib"]
 
@@ -27,12 +27,14 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 linenumbers       : no
+linkcolor         : "blue"
 mask              : no
 draft             : no
 graphics          : yes
 
 documentclass     : "apa6"
 classoption       : "man"
+# Use papaja::apa6_docx for Word documents
 output            : 
   papaja::apa6_pdf:
     number_sections: false
@@ -196,9 +198,11 @@ The `papaja` package includes the ability to generate a bibliography directly fr
 
 # Results
 
+Like in the other example RMarkdown file, we call off to an `R` script 
+
 ```{r call_covstatis, echo=FALSE}
 
-source( here::here("R","2_covstatis_example.R") )
+source( here::here("R","5_covstatis_example.R") )
 
 ```
 

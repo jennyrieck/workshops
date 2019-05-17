@@ -242,7 +242,7 @@ Finally, we will also perform an analysis called 'covSTATIS', which is a multi-t
 
 ```{r call_covstatis, echo=FALSE}
 
-source( here::here("R","2_covstatis_example.R") )
+source( here::here("R","5_covstatis_example.R") )
 
 ```
 

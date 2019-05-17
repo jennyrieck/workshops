@@ -22,11 +22,15 @@
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 \hypersetup{unicode=true,
             pdftitle={RMarkdown based APA Manuscript with `papaja'},
             pdfauthor={Jenny Rieck~\& Derek Beaton},
-            pdfkeywords={reproducible, manuscript, multivariate},
-            pdfborder={0 0 0},
+            pdfkeywords={reproducible, manuscript, multivariate, APA, papaja, knitr, R, Rmarkdown},
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=Blue,
+            urlcolor=Blue,
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \usepackage{color}
@@ -111,7 +115,7 @@
 \affiliation{
 \vspace{0.5cm}
 \textsuperscript{1} Rotman Research Institute}
-\keywords{reproducible, manuscript, multivariate}
+\keywords{reproducible, manuscript, multivariate, APA, papaja, knitr, R, Rmarkdown}
 \usepackage{csquotes}
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -342,6 +346,9 @@ all our analyses.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
+
+Like in the other example RMarkdown file, we call off to an \texttt{R}
+script
 
 \begin{figure}[H]
 
