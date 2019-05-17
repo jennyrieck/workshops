@@ -1,0 +1,24 @@
+rstudio_magic_part1_setup.rmd
+========================================================
+author: Jenny Rieck & Derek Beaton
+date: 22 May 2019
+autosize: true
+
+RStudio Console
+========================================================
+
+![]('../external/images/rstudio_terminal_1_CONSOLE.png')
+
+Slide With Code
+========================================================
+
+```{r}
+summary(cars)
+```
+
+Slide With Plot
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```

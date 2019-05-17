@@ -1,10 +1,10 @@
 ---
-title: "A whirlwind tour of Rstudio, R, and Rmarkdown Magic"
+title: "A whirlwind tour of Rstudio, R, and Rmarkdown Magic for behavioral and brain scientists"
 author: "Jenny Rieck & Derek Beaton"
-date: "May 29, 2019"
-output:
+date: '`r format(Sys.Date(), "%B %d %Y")`'
+output: 
     beamer_presentation:
-        fig_caption: false
+        keep_tex: true
 ---
 
 ```{r setup, include=FALSE}
@@ -47,7 +47,7 @@ knitr::opts_chunk$set(echo = FALSE)
 * R is an environment to inferface with the langauge
     * Console based
     * Type in commands
-    * no point-and-click
+    * No point-and-click
 * R is a collection of tools 
     * Pre-packaged software at your disposal
 * R is free (as in beer and speech)
@@ -149,7 +149,7 @@ install.packages('/mypath/to/package/ADNIMERGE.tar.gz',
 #to install from a git  (requires the devtools package)
 dev.tools::install_github(Gibbsdavidl/CatterPlots) 
 ```
-* See [https://jennybc.github.io/2014-05-12-ubc/r-setup.html](https://jennybc.github.io/2014-05-12-ubc/r-setup.html) for a detailed guide
+* See [https://jennybc.github.io/2014-05-12-ubc/ r-setup](https://jennybc.github.io/2014-05-12-ubc/r-setup.html) for a detailed guide
 
 ## Rstudio Setup: Projects & Git
 
@@ -158,7 +158,7 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 
 ## Rstudio Setup: Projects & Git
 
-* Create a New Project File
+* Create a new project File
 ![](../external/images/rstudio_setup_project.PNG)
 
 ## Format .gitignore
@@ -174,7 +174,8 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 ## Format environmental variables
 
 * Set environmental variables (ie, directory location of data) to make code generalizable across computers
-    * In your project folder create a .Renviron file and define variables
+    * In your project folder create a `.Renviron` file and define variables
+
 ![](../external/images/rstudio_setup_project_environ.PNG)
     
 
