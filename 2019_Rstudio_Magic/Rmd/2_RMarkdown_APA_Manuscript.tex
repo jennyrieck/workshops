@@ -187,9 +187,12 @@ in text, as opposed to the end.
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-We first make our data with R
+We first make our data with R. This will be followed by a paragraph
+break because this text precedes a chunk.
 
-Then call off to python for the \texttt{.describe()} method
+Then call off to python for the \texttt{.describe()} method. This, too,
+will be followed by a paragraph break because this text precedes a
+chunk.
 
 And then pass the \texttt{desc} object back to \texttt{R} and use the
 \texttt{kable()} and \texttt{kableExtra} packages to make a nice table
@@ -295,16 +298,17 @@ Define $\mathbf{S}_{[+]} = \mathbf{0}$
 \For{$k=1, \dots, K$}{
     ${\bf S}_{[k]} \leftarrow \frac{1}{2}{\boldsymbol \Xi}{\bf R}_{[k]}{\boldsymbol \Xi}$
 }
-$\mathbf{Z} \leftarrow [ \mathrm{vec\{ {\bf S}_{[1]}, \dots, {\bf S}_{[k]}, \dots, {\bf S}_{[K]}   \}} ]$ \\
-$\mathbf{U}\boldsymbol{\Delta}\mathbf{V}^{T} \leftarrow \mathrm{SVD(}\mathbf{Z}\mathrm{)}$ \\
-$\boldsymbol{\alpha} \leftarrow \mathbf{v}_{1}  \times (\mathbf{v}_{1}^{T}\mathbf{1})^{-1}$ \\
+$\mathbf{Z} \leftarrow [ \mathrm{vec\{ {\bf S}_{[1]}, \dots, {\bf S}_{[k]}, \dots, {\bf S}_{[K]}   \}} ]$
+
+$\mathbf{U}\boldsymbol{\Delta}\mathbf{V}^{T} \leftarrow \mathrm{SVD(}\mathbf{Z}\mathrm{)}$
+
+$\boldsymbol{\alpha} \leftarrow \mathbf{v}_{1}  \times (\mathbf{v}_{1}^{T}\mathbf{1})^{-1}$
+
 \For{$k=1, \dots, K$}{
     $\mathbf{S}_{[+]} \leftarrow \mathbf{S}_{[+]} + (\mathbf{S}_{[k]} \times \alpha_{[k]})$
 }
 
 $\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{T} \leftarrow \mathrm{EVD(}\mathbf{S}_{[+]}\mathrm{)}$
-  
-  
 \caption{CovSTATIS algorithm}
 \label{algo:covstatis}
 \end{algorithm}
@@ -314,16 +318,17 @@ $\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{T} \leftarrow \mathrm{EVD(}\mathbf{S}
 
 The \texttt{papaja} package includes the ability to generate a
 bibliography directly from all the loaded packages (via
-\texttt{cite\_r()}). We used R (Version 3.5.1; R Core Team, 2018) and
-the R-packages \emph{covstatis} (Version 0.1.0; it, n.d.), \emph{dplyr}
-(Version 0.7.6; Wickham et al., 2018), \emph{ExPosition} (Version
-2.8.23; Beaton et al., 2014a), \emph{factoextra} (Version 1.0.5;
-Kassambara \& Mundt, 2017), \emph{forcats} (Version 0.3.0; Wickham,
-2018a), \emph{ggplot2} (Version 3.0.0; Wickham, 2016), \emph{gridExtra}
-(Version 2.3; Auguie, 2017), \emph{GSVD} (Version 0.2.0; Beaton, n.d.),
-\emph{here} (Version 0.1; Müller, 2017), \emph{kableExtra} (Version
-0.9.0; Zhu, 2018), \emph{knitr} (Version 1.22.8; Xie, 2015), \emph{ours}
-(Version 0.0.0.9000; Sunderland \& Beaton, n.d.), \emph{papaja} (Version
+\texttt{cite\_r()}). This document includes R (Version 3.5.1; R Core
+Team, 2018) and the R-packages \emph{covstatis} (Version 0.1.0.0; it,
+n.d.), \emph{dplyr} (Version 0.7.6; Wickham et al., 2018),
+\emph{ExPosition} (Version 2.8.23; Beaton et al., 2014a),
+\emph{factoextra} (Version 1.0.5; Kassambara \& Mundt, 2017),
+\emph{forcats} (Version 0.3.0; Wickham, 2018a), \emph{ggplot2} (Version
+3.0.0; Wickham, 2016), \emph{gridExtra} (Version 2.3; Auguie, 2017),
+\emph{GSVD} (Version 0.2.0; Beaton, n.d.), \emph{here} (Version 0.1;
+Müller, 2017), \emph{kableExtra} (Version 0.9.0; Zhu, 2018),
+\emph{knitr} (Version 1.22.8; Xie, 2015), \emph{ours} (Version
+0.0.0.9000; Sunderland \& Beaton, n.d.), \emph{papaja} (Version
 0.1.0.9842; Aust \& Barth, 2018), \emph{prettyGraphs} (Version 2.1.6;
 Beaton et al., 2014b), \emph{purrr} (Version 0.2.5; Henry \& Wickham,
 2018), \emph{readr} (Version 1.1.1; Wickham et al., 2017),
@@ -338,7 +343,14 @@ all our analyses.
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-Need a scree plot here for covstatis\ldots{}
+\begin{figure}[H]
+
+{\centering \includegraphics{2_RMarkdown_APA_Manuscript_files/figure-latex/scree-1} 
+
+}
+
+\caption{Scree plot of the covSTATIS compromise results.}\label{fig:scree}
+\end{figure}
 
 \begin{figure}[H]
 
@@ -346,11 +358,19 @@ Need a scree plot here for covstatis\ldots{}
 
 }
 
-\caption{Using par() to make a layout of multiple base plots}\label{fig:unnamed-chunk-1}
+\caption{Component maps with the compromise (purple) and each group's results (green) projected onto the compromise.}\label{fig:unnamed-chunk-1}
 \end{figure}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
+
+This example manuscript provides an illustrative view of how to write a
+reproducible paper in RMarkdown with the help of various external tools
+(e.g., \texttt{LaTeX}, \texttt{Python}) and \texttt{R}/RStudio tools.
+References can be included in two ways: through \texttt{LaTeX}
+bibliography files or through the use of additional \texttt{R} packages
+and Rstudio plugins, such as
+\href{https://github.com/crsh/citr}{\texttt{citr}}.
 
 \newpage
 

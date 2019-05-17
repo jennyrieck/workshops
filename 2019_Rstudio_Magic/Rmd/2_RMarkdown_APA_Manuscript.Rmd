@@ -62,7 +62,7 @@ require(here)
 require(factoextra)
 
 if(!require(covstatis)){
-  install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
+  devtools::install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
   library(covstatis)
 }
 
@@ -112,7 +112,7 @@ In order to help make this manuscript look nicer, we are changing some of the YA
 # Methods
 
 
-We first make our data with R
+We first make our data with R. This will be followed by a paragraph break because this text precedes a chunk.
 
 ```{r make_example_table}
 
@@ -121,7 +121,7 @@ example_table_Dx <- amerge_subset[,c("DX","AGE","MOCA","CDRSB","WholeBrain","Hip
 
 ```
 
-Then call off to python for the `.describe()` method
+Then call off to python for the `.describe()` method. This, too, will be followed by a paragraph break because this text precedes a chunk.
 
 ```{python describe}
 perc = [.25, .50, .75] 
@@ -174,23 +174,24 @@ Define $\mathbf{S}_{[+]} = \mathbf{0}$
 \For{$k=1, \dots, K$}{
     ${\bf S}_{[k]} \leftarrow \frac{1}{2}{\boldsymbol \Xi}{\bf R}_{[k]}{\boldsymbol \Xi}$
 }
-$\mathbf{Z} \leftarrow [ \mathrm{vec\{ {\bf S}_{[1]}, \dots, {\bf S}_{[k]}, \dots, {\bf S}_{[K]}   \}} ]$ \\
-$\mathbf{U}\boldsymbol{\Delta}\mathbf{V}^{T} \leftarrow \mathrm{SVD(}\mathbf{Z}\mathrm{)}$ \\
-$\boldsymbol{\alpha} \leftarrow \mathbf{v}_{1}  \times (\mathbf{v}_{1}^{T}\mathbf{1})^{-1}$ \\
+$\mathbf{Z} \leftarrow [ \mathrm{vec\{ {\bf S}_{[1]}, \dots, {\bf S}_{[k]}, \dots, {\bf S}_{[K]}   \}} ]$
+
+$\mathbf{U}\boldsymbol{\Delta}\mathbf{V}^{T} \leftarrow \mathrm{SVD(}\mathbf{Z}\mathrm{)}$
+
+$\boldsymbol{\alpha} \leftarrow \mathbf{v}_{1}  \times (\mathbf{v}_{1}^{T}\mathbf{1})^{-1}$
+
 \For{$k=1, \dots, K$}{
     $\mathbf{S}_{[+]} \leftarrow \mathbf{S}_{[+]} + (\mathbf{S}_{[k]} \times \alpha_{[k]})$
 }
 
 $\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{T} \leftarrow \mathrm{EVD(}\mathbf{S}_{[+]}\mathrm{)}$
-  
-  
 \caption{CovSTATIS algorithm}
 \label{algo:covstatis}
 \end{algorithm}
 
 
 ## Data analysis
-The `papaja` package includes the ability to generate a bibliography directly from all the loaded packages (via `cite_r()`). We used `r cite_r("r-references.bib")` for all our analyses.
+The `papaja` package includes the ability to generate a bibliography directly from all the loaded packages (via `cite_r()`). This document includes `r cite_r("r-references.bib")` for all our analyses.
 
 
 # Results
@@ -201,9 +202,16 @@ source( here::here("R","2_covstatis_example.R") )
 
 ```
 
-Need a scree plot here for covstatis...
+```{r scree, echo=FALSE, fig.cap="Scree plot of the covSTATIS compromise results.", fig.align='center'}
 
-```{r fig.width=8, fig.height=8, fig.align='center', fig.cap="Using par() to make a layout of multiple base plots", echo=FALSE}
+percent_variance <- (covstatis_results$compromise_eigen$values / sum(covstatis_results$compromise_eigen$values))*100
+
+plot(percent_variance,type="l", ylab="Explained variance", xlab="Components", lty=1, lwd = 1)
+points(1:length(percent_variance), percent_variance, pch=20, col = "mediumorchid4", cex = 1.5)
+
+```
+
+```{r fig.width=7, fig.height=7, fig.align='center', fig.cap="Component maps with the compromise (purple) and each group's results (green) projected onto the compromise.", echo=FALSE}
  
 
 par.opts <- par(mfrow=c(2,2))
@@ -225,6 +233,8 @@ par(par.opts)
 ``` 
 
 # Discussion
+
+This example manuscript provides an illustrative view of how to write a reproducible paper in RMarkdown with the help of various external tools (e.g., `LaTeX`, `Python`) and `R`/RStudio tools. References can be included in two ways: through `LaTeX` bibliography files or through the use of additional `R` packages and Rstudio plugins, such as [`citr`](https://github.com/crsh/citr). 
 
 
 \newpage
