@@ -21,6 +21,7 @@ knitr::opts_chunk$set(echo = FALSE)
 * Part 5: Advanced R and beyond
 * Part 6: A few of our favorite things
 
+# Part 0: Background
 
 ## Part 0: Background and Community
 
@@ -87,6 +88,8 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Tidyverse
 * something here about tidy
 
+# Part 1: Rstudio
+
 ## Part 1: RStudio
 
 * Settings, a quit tour through stuff, features
@@ -127,6 +130,8 @@ knitr::opts_chunk$set(echo = FALSE)
 ## RStudio Resources
 ![](../external/images/rstudio_dot_com_3_cheats.PNG)
 
+# Part 2: Setup
+
 ## Part 2: Project and Environment Setup
 
 * Hidden files & whatnot
@@ -154,12 +159,12 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 ## Rstudio Setup: Projects & Git
 
 * Download git and link to RStudio 
-![](../external/images/rstudio_setup_git.PNG)
+![](../external/images/setup_1_rstudio_git.PNG){width=75%} 
 
 ## Rstudio Setup: Projects & Git
 
 * Create a new project File
-![](../external/images/rstudio_setup_project.PNG)
+![](../external/images/setup_2_rstudio_project.PNG){width=75%} 
 
 ## Format .gitignore
 
@@ -176,12 +181,71 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 * Set environmental variables (ie, directory location of data) to make code generalizable across computers
     * In your project folder create a `.Renviron` file and define variables
 
-![](../external/images/rstudio_setup_project_environ.PNG)
+![](../external/images/setup_3_rstudio_project_environ.PNG)
 
-## Explain/Walk through and Helpful Packages
+## Organize your project folders and markdown
 
-* ?!?
+*https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
+![](../external/images/setup_4_markdown_project.PNG)
 
+
+## Organize your project folders and markdown
+
+![](../external/images/setup_5_git.PNG)
+
+# Part 3: R et al
+
+## Part 3: R et al
+* A bit of background, including idiosyncrasies and unique things about R
+    * Especially packages & three ways to install (somehwhat covered above)
+			CRAN, Locally,  Git & others (devtools)
+    * It’s a functional language
+    * Data types Including data frames & alts like tibbles
+* Read/explore
+    * explore .R scripts
+* Clean/export
+    * Show 0_Create from PCA/MCA with
+			Base, Tidyverse, Plyr (NOT dplyr), data.table
+	* Reimport?
+	* Analyze
+		With MCA & covstatis
+
+# Part 4: RMarkdown
+
+## Part 4: RMarkdown
+
+* What it is /why to use it
+* A short deviation for LaTeX, and new helpers: kable & kableExtra
+	* A taxonomy and how to approach this
+	*Tying it all together through here
+		1: simple RMD
+*Plot-based visuals
+		* Base, gt, ggplot, grobTable()/grid/gridExtra
+		* 2: Slides (these ones here)
+		* 3: Manuscripts!!
+* Reporting/presentin
+
+## RMarkdown Don(u)'ts
+
+* Don't hardcode values
+* Don't hardcode absolute fire paths
+* Don't do complicated database queries
+* Don't litter
+    * avoid `eval=FALSE`
+    * reduce repeated code by making functions
+* Don't load unneccesary libraries
+* More at: https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
+
+# Part 5: Advanced R
+
+## Part 5: Some advanced/other things we’re not covering
+* package development
+* Shiny
+* SQL
+* C/C++
+* R2D3
+
+# Part 6: Extras
 
 ## Part 6: A few of our favorite things
 
@@ -194,7 +258,7 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 
 `dev.tools::install_github(Gibbsdavidl/CatterPlots)`
 
-![](../external/images/funR_1_catterplotter.png){width=250px}
+![](../external/images/funR_1_catterplotter.png){width=60%}
 
 ## What's a pirate's favorite programming language?
 
@@ -202,7 +266,7 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 
 `install.packages('yarrr')`
 
-![](../external/images/funR_2_pirate.png)
+![](../external/images/funR_2_pirate.png){width=75%}
 
 ## Color palettes to fit your ~mood~
 

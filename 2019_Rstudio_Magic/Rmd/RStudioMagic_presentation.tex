@@ -1,83 +1,43 @@
 \PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 %
-\documentclass[
-  ignorenonframetext,
-]{beamer}
+\documentclass[ignorenonframetext,]{beamer}
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
 \beamertemplatenavigationsymbolsempty
-% Prevent slide breaks in the middle of a paragraph:
-\widowpenalties 1 10000
-\raggedbottom
-\setbeamertemplate{part page}{
-  \centering
-  \begin{beamercolorbox}[sep=16pt,center]{part title}
-    \usebeamerfont{part title}\insertpart\par
-  \end{beamercolorbox}
-}
-\setbeamertemplate{section page}{
-  \centering
-  \begin{beamercolorbox}[sep=12pt,center]{part title}
-    \usebeamerfont{section title}\insertsection\par
-  \end{beamercolorbox}
-}
-\setbeamertemplate{subsection page}{
-  \centering
-  \begin{beamercolorbox}[sep=8pt,center]{part title}
-    \usebeamerfont{subsection title}\insertsubsection\par
-  \end{beamercolorbox}
-}
-\AtBeginPart{
-  \frame{\partpage}
-}
-\AtBeginSection{
-  \ifbibliography
-  \else
-    \frame{\sectionpage}
-  \fi
-}
-\AtBeginSubsection{
-  \frame{\subsectionpage}
-}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provides euro and other symbols
 \else % if luatex or xelatex
   \usepackage{unicode-math}
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
 \hypersetup{
-  pdftitle={A whirlwind tour of Rstudio, R, and Rmarkdown Magic for behavioral and brain scientists},
-  pdfauthor={Jenny Rieck \& Derek Beaton},
-  pdfborder={0 0 0},
-  breaklinks=true}
+            pdftitle={A whirlwind tour of Rstudio, R, and Rmarkdown Magic for behavioral and brain scientists},
+            pdfauthor={Jenny Rieck \& Derek Beaton},
+            pdfborder={0 0 0},
+            breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \newif\ifbibliography
 \usepackage{color}
@@ -129,16 +89,50 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+\centering
+\begin{beamercolorbox}[sep=16pt,center]{part title}
+  \usebeamerfont{part title}\insertpart\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+\centering
+\begin{beamercolorbox}[sep=12pt,center]{part title}
+  \usebeamerfont{section title}\insertsection\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+\centering
+\begin{beamercolorbox}[sep=8pt,center]{part title}
+  \usebeamerfont{subsection title}\insertsubsection\par
+\end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-2}
+\setcounter{secnumdepth}{0}
 
 % set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
 
+\usepackage{beamerthemeshadow}
 
 \title{A whirlwind tour of Rstudio, R, and Rmarkdown Magic for behavioral and
 brain scientists}
@@ -171,8 +165,12 @@ brain scientists}
 
 \end{frame}
 
+\hypertarget{part-0-background-and-community}{%
+\section{Part 0: Background and
+Community}\label{part-0-background-and-community}}
+
 \begin{frame}{Part 0: Background and Community}
-\protect\hypertarget{part-0-background-and-community}{}
+\protect\hypertarget{part-0-background-and-community-1}{}
 
 \begin{itemize}
 \tightlist
@@ -368,8 +366,11 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
+\hypertarget{part-1-rstudio}{%
+\section{Part 1: Rstudio}\label{part-1-rstudio}}
+
 \begin{frame}{Part 1: RStudio}
-\protect\hypertarget{part-1-rstudio}{}
+\protect\hypertarget{part-1-rstudio-1}{}
 
 \begin{itemize}
 \tightlist
@@ -470,6 +471,9 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
+\hypertarget{part-2-setup}{%
+\section{Part 2: Setup}\label{part-2-setup}}
+
 \begin{frame}{Part 2: Project and Environment Setup}
 \protect\hypertarget{part-2-project-and-environment-setup}{}
 
@@ -526,7 +530,7 @@ look somewhat like S. We call the result ``R''.}
 \tightlist
 \item
   Download git and link to RStudio
-  \includegraphics{../external/images/rstudio_setup_git.PNG}
+  \includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/setup_1_rstudio_git.PNG}
 \end{itemize}
 
 \end{frame}
@@ -538,7 +542,7 @@ look somewhat like S. We call the result ``R''.}
 \tightlist
 \item
   Create a new project File
-  \includegraphics{../external/images/rstudio_setup_project.PNG}
+  \includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/setup_2_rstudio_project.PNG}
 \end{itemize}
 
 \end{frame}
@@ -589,9 +593,131 @@ look somewhat like S. We call the result ``R''.}
   \end{itemize}
 \end{itemize}
 
-\includegraphics{../external/images/rstudio_setup_project_environ.PNG}
+\includegraphics{../external/images/setup_3_rstudio_project_environ.PNG}
 
 \end{frame}
+
+\begin{frame}{Organize your project folders and markdown}
+\protect\hypertarget{organize-your-project-folders-and-markdown}{}
+
+*\url{https://emilyriederer.netlify.com/post/rmarkdown-driven-development/}
+\includegraphics{../external/images/setup_4_markdown_project.PNG}
+
+\end{frame}
+
+\begin{frame}{Organize your project folders and markdown}
+\protect\hypertarget{organize-your-project-folders-and-markdown-1}{}
+
+\includegraphics{../external/images/setup_5_git.PNG}
+
+\end{frame}
+
+\hypertarget{part-3-r-et-al}{%
+\section{Part 3: R et al}\label{part-3-r-et-al}}
+
+\begin{frame}{Part 3: R et al}
+\protect\hypertarget{part-3-r-et-al-1}{}
+
+\begin{itemize}
+\tightlist
+\item
+  A bit of background, including idiosyncrasies and unique things about
+  R
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Especially packages \& three ways to install (somehwhat covered
+    above) CRAN, Locally, Git \& others (devtools)
+  \item
+    It's a functional language
+  \item
+    Data types Including data frames \& alts like tibbles
+  \end{itemize}
+\item
+  Read/explore
+
+  \begin{itemize}
+  \tightlist
+  \item
+    explore .R scripts
+  \end{itemize}
+\item
+  Clean/export
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Show 0\_Create from PCA/MCA with Base, Tidyverse, Plyr (NOT dplyr),
+    data.table
+  \item
+    Reimport?
+  \item
+    Analyze With MCA \& covstatis
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\hypertarget{part-4-rmarkdown}{%
+\section{Part 4: RMarkdown}\label{part-4-rmarkdown}}
+
+\begin{frame}{Part 4: RMarkdown}
+\protect\hypertarget{part-4-rmarkdown-1}{}
+
+\begin{itemize}
+\tightlist
+\item
+  What it is /why to use it
+\item
+  A short deviation for LaTeX, and new helpers: kable \& kableExtra
+
+  \begin{itemize}
+  \tightlist
+  \item
+    A taxonomy and how to approach this \emph{Tying it all together
+    through here 1: simple RMD }Plot-based visuals
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Base, gt, ggplot, grobTable()/grid/gridExtra
+    \item
+      2: Slides (these ones here)
+    \item
+      3: Manuscripts!!
+    \end{itemize}
+  \end{itemize}
+\item
+  Reporting/presentin
+\end{itemize}
+
+\end{frame}
+
+\hypertarget{part-5-advanced-r}{%
+\section{Part 5: Advanced R}\label{part-5-advanced-r}}
+
+\begin{frame}{Part 5: Some advanced/other things we're not covering}
+\protect\hypertarget{part-5-some-advancedother-things-were-not-covering}{}
+
+\begin{itemize}
+\tightlist
+\item
+  package development
+\item
+  Shiny
+\item
+  SQL
+\item
+  C/C++
+\item
+  R2D3
+\end{itemize}
+
+\end{frame}
+
+\hypertarget{part-6-extras}{%
+\section{Part 6: Extras}\label{part-6-extras}}
 
 \begin{frame}{Part 6: A few of our favorite things}
 \protect\hypertarget{part-6-a-few-of-our-favorite-things}{}
@@ -615,7 +741,7 @@ look somewhat like S. We call the result ``R''.}
 
 \texttt{dev.tools::install\_github(Gibbsdavidl/CatterPlots)}
 
-\includegraphics[width=2.60417in,height=\textheight]{../external/images/funR_1_catterplotter.png}
+\includegraphics[width=0.6\textwidth,height=\textheight]{../external/images/funR_1_catterplotter.png}
 
 \end{frame}
 
@@ -630,7 +756,7 @@ look somewhat like S. We call the result ``R''.}
 
 \texttt{install.packages(\textquotesingle{}yarrr\textquotesingle{})}
 
-\includegraphics{../external/images/funR_2_pirate.png}
+\includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/funR_2_pirate.png}
 
 \end{frame}
 
