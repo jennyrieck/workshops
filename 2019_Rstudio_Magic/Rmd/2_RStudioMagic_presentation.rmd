@@ -1,7 +1,9 @@
 ---
-title: "A whirlwind tour of Rstudio, R, and Rmarkdown for reproducible (and collaborative) science"
+title: "Reproducible (and collaborative) science through RStudio"
+subtitle: "A whirlwind tour with R, RMarkdown, Python, LaTeX, and more"
 author: "Jenny Rieck & Derek Beaton"
 date: '`r format(Sys.Date(), "%B %d %Y")`'
+urlcolor: blue
 output: 
     beamer_presentation:
         keep_tex: true
@@ -13,26 +15,216 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## The big outline
 
-* Part 0: Background and Community
-* Part 1: Rstudio
-* Part 2: Project and environment setup
-* Part 3: R (et al., eg Python)
-* Part 4: Rmarkdown
-* Part 5: Advanced R and beyond
-* Part 6: A few of our favorite things
+* Part 0: Introduction, background, & RStudio
+* Part 1: Setup & R
+* Part 2: RMarkdown & more
+* Part 3: Advanced, beyond, & our favorites
 
-# Part 0: Background
+# Part 0: Introduction, Background, & RStudio
 
-## Part 0: Background and Community
+## To dive right in
 
-* What this is & isn’t; a bunch of things we aren’t covering but you should be aware of
-    * This is a taste and to bring you into a bigger world
-* Centralization, standards
-* Help
-* Including rigor & reproducibility of packages
-* The “tidyverse”
-    * Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
+If you want to skip over the background & RStudio, go straight to [Part 1: Setup & R]
+
+## Background
+
+* This is a taste and to bring you into a bigger world
+  * R, Python, SQL, and JavaScript are critical data science tools/languages
+* R (language and community) strongly emphasizes 
+  * Centralization & standards
+  * Rigor & reproducibility (packages, RMarkdown)
+* An interesting language
+  * Functional
+  * With a sublanguage (or dialect?): the `tidyverse`
+
+
+## R is a community (actually many communities!)
+
+* Help and resources
+* Package development and distribution
+* An ideal example
+  * Not quite always that way
+  * Strong communal presence
+
+## R: Help!
+
+* So many websites e.g., https://www.statmethods.net/
+* Online forums (Stack Exchange, r-lists)
+* SpringerLink
+  * All R books for free (pdf format) or for minimal cost (printed)
+* Vignettes
+  * step-by-step instruction guides for packages
+* Git
+  * With open books (via bookdown)
+* Twitter #rstats
+* RStudio (website)
+  * Videos, cheat sheets
+
+## R Packages
+
+* Packages are bundles of code made by someone (or many people) for everyone to use
+  * There are packages for everything
+  * We'll cover some of the diversity throughout
+* Comprehensive & Reproducible
+* Available primarily on CRAN
+  * But also github (less so: r-forge)
+
+## RStudio
+
+* IDE: Integrated development environment
+* RStudio: Does so much
+  * We scratch the surface here
+* Quick walk through
+* Followed by specific set up 
+  * Generally, but
+  * Also for this workshop
+
+## RStudio Environment
+
+![](../external/images/rstudio_0_terminal_code.PNG)
+
+
+## RStudio Environment
+![](../external/images/rstudio_terminal_1_CONSOLE.png)
+
+## RStudio Environment 
+![](../external/images/rstudio_terminal_2_FILES.png)
+
+## RStudio Environment 
+![](../external/images/rstudio_terminal_3_ENV.png)
+
+## RStudio Environment 
+![](../external/images/rstudio_terminal_4_CODE.png)
+
+## RStudio Environment 
+![](../external/images/rstudio_terminal_5_DATA.png)
+
+## Some benefits of RStudio
+
+* Built-in integration with version control (git or SVN)
+* Package and documentation generation
+* Reproducible science!
+  * R Markdown documents
+    * Save and execute code
+    * Generate high quality reports that can be shared
+  * Create presentations (like this one!)
+  * Even write papers
+  * Python, D3 (JavaScript), SQL, Shiny, LaTeX, Git/SVN, HTML/CSS, and so much more.
+* This workshop
+  * Will walk you through some of this (and more)
+  * See https://github.com/jennyrieck/workshops/tree/master/2019_Rstudio_Magic
+
+## RStudio is more
+
+* Not just an IDE
+* A company
+* A community
+* A conference
+* A centralized resource
+
+
+## RStudio Resources
+![](../external/images/rstudio_dot_com_1_main.PNG)
+
+## RStudio Resources
+![](../external/images/rstudio_dot_com_2_learning.PNG)
+
+## RStudio Resources
+![](../external/images/rstudio_dot_com_3_cheats.PNG)
+
+# Part 1: Setup & R
+
+## Project and Environment Setup
+
+Somethign...?
+
+## Project and Environment Setup
+
+* Hidden files & whatnot
+* Have a structure ready to go on Github
+* Explain/walk through
+* Discuss the helpful packages above
+
+
+## RStudio Setup
+
+* See https://jennybc.github.io/2014-05-12-ubc/r-setup.html for a detailed guide
+
+## For safety & collaboration 
+
+* Projects
+  * SOMETHING?
+  
+## Git & Projects
+
+* Git
+  * Download git and link executable within RStudio 
+  ![](../external/images/setup_1_rstudio_git.PNG){width=60%} 
+
+## Projects through Git
+
+* Create a new project File
+![](../external/images/setup_2_rstudio_project.PNG){width=75%} 
+
+## Format .gitignore
+
+* File types to ignore via version control
+  * `**` before each extentions will match directories anywhere in the repo
+  
+  ![](../external/images/gitignore.PNG){width=75%} 
     
+## Format environmental variables
+
+* Set environmental variables (ie, directory location of data) to make code generalizable across computers
+  * Don't commit or share these
+* In **your** project folder create a `.Renviron` file and define variables
+  * Jenny's:
+  
+  ![](../external/images/setup_3_rstudio_project_environ.PNG){width=60%}
+  
+  * Derek's:
+  
+  ![](../external/images/setup_3_rstudio_project_environ2.PNG){width=80%}
+
+## Organize your project folders and markdown
+
+*https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
+![](../external/images/setup_4_markdown_project.PNG)
+
+
+## Organize your project folders and markdown
+
+!!PICK UP HERE!!
+![](../external/images/setup_5_git.PNG)
+
+## Organize your project folders and markdown
+
+SHOW R
+
+![](../external/images/setup_5_git.PNG)
+
+## Organize your project folders and markdown
+
+
+SHOW RMD
+
+![](../external/images/setup_5_git.PNG)
+
+## RStudio Setup
+
+* Download R and Rstudio
+* Add-on packages
+
+```{r install_packages, echo=T, eval=F}
+#to install from CRAN
+install.pacakges('devtools', depenedencies = TRUE)
+#to install from a file
+install.packages('/mypath/to/package/ADNIMERGE.tar.gz', 
+                 type='source', repos=NULL) 
+#to install from a git  (requires the devtools package)
+dev.tools::install_github(Gibbsdavidl/CatterPlots) 
+```
+
 ## R Background
 
 * Created in 1992 by Gentleman & Ihaka
@@ -53,150 +245,30 @@ knitr::opts_chunk$set(echo = FALSE)
     * Pre-packaged software at your disposal
 * R is free (as in beer and speech)
     * No cost, no restrictions
-
-## R is a bit ugly
-![](../external/images/intro_rgui.PNG)
     
-## But R has many interfaces
+## A little bit more about beer
 
-* Today we focus on RStudio (MatLab-like)
-* But see also Deducer, RCommander (SPSS-like)
-![](../external/images/intro_rgui_2.PNG)
+* R is free (as in beer and speech)
+    * No cost, no restrictions
+    * Revolution/MRAN
+    * etc...
 
-## R is a community (actually many communities!)
+## R et al
+* A bit of background, including idiosyncrasies and unique things about R
+    * Especially packages & three ways to install (somewhat covered above)
+			CRAN, Locally,  Git & others (devtools)
+    * It’s a functional language
+    * Data types Including data frames & alts like tibbles
+    
+## R
 
-* Help and resources
-* Package development and distribution
-
-## R: Help!
-
-* https://www.statmethods.net/
-* Online forums (Stack Exchange, r-lists)
-* SpringerLink
-    * All R books for free (pdf format) or for minimal cost (printed)
-* Vignettes
-    * step-by-step instruction guides for packages
-
-## R Packages
-
-* Packages are bundles of code made by someone (or many people) for everyone to use
-    * If you can think of a stats problem, there is a package for it
-* Available primarily on CRAN
-    * But also github, r-forge
-
-## Shiny
-
+Some more about R here...
+    
 ## Tidyverse
 * something here about tidy
+* Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
 
-# Part 1: Rstudio
-
-## Part 1: RStudio
-
-* Settings, a quit tour through stuff, features
-* Examples on getting setup
-
-## RStudio Environment
-![](../external/images/rstudio_terminal_1_CONSOLE.png)
-
-## RStudio Environment 
-![](../external/images/rstudio_terminal_2_FILES.png)
-
-## RStudio Environment 
-![](../external/images/rstudio_terminal_3_ENV.png)
-
-## RStudio Environment 
-![](../external/images/rstudio_terminal_4_CODE.png)
-
-## RStudio Environment 
-![](../external/images/rstudio_terminal_5_DATA.png)
-
-## Benefits of RStudio
-
-* Built-in integration with version control (git or SVN)
-* Package and documentation generation
-* Reproducible science!
-    * R Markdown documents
-        * Save and execute code
-        * Generate high quality reports that can be shared
-    * Create presentations (like this one!)
-    * Even write papers
-
-## RStudio Resources
-![](../external/images/rstudio_dot_com_1_main.PNG)
-
-## RStudio Resources
-![](../external/images/rstudio_dot_com_2_learning.PNG)
-
-## RStudio Resources
-![](../external/images/rstudio_dot_com_3_cheats.PNG)
-
-# Part 2: Setup
-
-## Part 2: Project and Environment Setup
-
-* Hidden files & whatnot
-* Have a structure ready to go on Github
-* Explain/walk through
-* Discuss the helpful packages above
-
-
-## RStudio Setup
-
-* Download R and Rstudio
-* Add-on packages
-
-```{r install_packages, echo=T, eval=F}
-#to install from CRAN
-install.pacakges('devtools', depenedencies = TRUE)
-#to install from a file
-install.packages('/mypath/to/package/ADNIMERGE.tar.gz', 
-                 type='source', repos=NULL) 
-#to install from a git  (requires the devtools package)
-dev.tools::install_github(Gibbsdavidl/CatterPlots) 
-```
-* See https://jennybc.github.io/2014-05-12-ubc/r-setup.html for a detailed guide
-
-## Rstudio Setup: Projects & Git
-
-* Download git and link to RStudio 
-![](../external/images/setup_1_rstudio_git.PNG){width=75%} 
-
-## Rstudio Setup: Projects & Git
-
-* Create a new project File
-![](../external/images/setup_2_rstudio_project.PNG){width=75%} 
-
-## Format .gitignore
-
-* File types to ignore:
-    * `.Rproj.user`
-    * `.Rhistory`
-    * `.Ruserdata`
-    * `.Renviron`
-    * `.rda` & `.Rdata` (to avoid pushing potentially sensitive data files to git)
-    * `**` before each extentions will match directories anywhere in the repo
-    
-## Format environmental variables
-
-* Set environmental variables (ie, directory location of data) to make code generalizable across computers
-    * In your project folder create a `.Renviron` file and define variables
-
-![](../external/images/setup_3_rstudio_project_environ.PNG)
-
-## Organize your project folders and markdown
-
-*https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
-![](../external/images/setup_4_markdown_project.PNG)
-
-
-## Organize your project folders and markdown
-
-![](../external/images/setup_5_git.PNG)
-
-# Part 3: R et al
-
-## Part 3: R et al
+## R et al
 * A bit of background, including idiosyncrasies and unique things about R
     * Especially packages & three ways to install (somewhat covered above)
 			CRAN, Locally,  Git & others (devtools)
@@ -211,13 +283,17 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 	* Analyze
 		With MCA & covstatis
 		
-## Read in and create your datafram
+## Read in and create your dataframe
 
 * ADNI Dataset adnimerge package
     * Reduce full dataset to only those participants (rows) and variables (columns) you're interested in
 * Two methods to create your dataframe
     * using base R functions: `0_create_ADNI_data_base.R`
     * Using tidyverse functions: `1_create_ADNI_data_tidyverse.R`
+
+## Screenshots
+
+Explanation
     
 ## Exploring your data
 
@@ -225,19 +301,31 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
     * summarytools: `2_explore_summarytools.R`
     * inspectdf: `3_explore_inspectdf.R`
     * DataExplorer: `4_explore_DataExplorer_one_liner.R`
+
+## Code w/ eval=F
     
 ## Hard Break
 
 * DataExplorer is dangerous
+* Blind analyses can be *criminal*
+  * de Leeuw paper quote
+  * DEREK RANTS, PER USUAL.
+  
 
 ## Analyze you data
 
 * Linear models: `5_linear_model.R`
+
+## Screenshots / Code w/ eval=F
+
+## Get experimental
+
+* Explain motivation, not method
 * covSTATIS: `6_covstatis_example.R`
 
-# Part 4: RMarkdown
+# Part 2: RMarkdown
 
-## Part 4: RMarkdown
+## RMarkdown
 
 * What it is /why to use it
 * A short deviation for LaTeX, and new helpers: kable & kableExtra
@@ -261,18 +349,17 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 * Don't load unneccesary libraries
 * More at: https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
 
-# Part 5: Advanced R
+# Part 3: Advanced R
 
-## Part 5: Some advanced/other things we’re not covering
+## Some advanced/other things we’re not covering
 * package development
 * Shiny
 * SQL
 * C/C++
 * R2D3
 
-# Part 6: Extras
 
-## Part 6: A few of our favorite things
+## A few of our favorite things
 
 * Fun R do-dads
 

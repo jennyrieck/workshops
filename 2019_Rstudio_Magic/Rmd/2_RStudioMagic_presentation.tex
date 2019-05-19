@@ -1,5 +1,6 @@
 \PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
 \documentclass[
   ignorenonframetext,
@@ -74,9 +75,13 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={A whirlwind tour of Rstudio, R, and Rmarkdown for reproducible (and collaborative) science},
+  pdftitle={Reproducible (and collaborative) science through RStudio},
   pdfauthor={Jenny Rieck \& Derek Beaton},
-  pdfborder={0 0 0},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=blue,
   breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \newif\ifbibliography
@@ -140,8 +145,8 @@
 \makeatother
 
 
-\title{A whirlwind tour of Rstudio, R, and Rmarkdown for reproducible (and
-collaborative) science}
+\title{Reproducible (and collaborative) science through RStudio}
+\subtitle{A whirlwind tour with R, RMarkdown, Python, LaTeX, and more}
 \author{Jenny Rieck \& Derek Beaton}
 \date{May 19 2019}
 
@@ -154,56 +159,500 @@ collaborative) science}
 \begin{itemize}
 \tightlist
 \item
-  Part 0: Background and Community
+  Part 0: Introduction, background, \& RStudio
 \item
-  Part 1: Rstudio
+  Part 1: Setup \& R
 \item
-  Part 2: Project and environment setup
+  Part 2: RMarkdown \& more
 \item
-  Part 3: R (et al., eg Python)
-\item
-  Part 4: Rmarkdown
-\item
-  Part 5: Advanced R and beyond
-\item
-  Part 6: A few of our favorite things
+  Part 3: Advanced, beyond, \& our favorites
 \end{itemize}
 
 \end{frame}
 
-\hypertarget{part-0-background}{%
-\section{Part 0: Background}\label{part-0-background}}
+\hypertarget{part-0-introduction-background-rstudio}{%
+\section{Part 0: Introduction, Background, \&
+RStudio}\label{part-0-introduction-background-rstudio}}
 
-\begin{frame}{Part 0: Background and Community}
-\protect\hypertarget{part-0-background-and-community}{}
+\begin{frame}{To dive right in}
+\protect\hypertarget{to-dive-right-in}{}
+
+If you want to skip over the background \& RStudio, go straight to
+\protect\hyperlink{part-1-setup-r}{Part 1: Setup \& R}
+
+\end{frame}
+
+\begin{frame}[fragile]{Background}
+\protect\hypertarget{background}{}
 
 \begin{itemize}
 \tightlist
 \item
-  What this is \& isn't; a bunch of things we aren't covering but you
-  should be aware of
+  This is a taste and to bring you into a bigger world
 
   \begin{itemize}
   \tightlist
   \item
-    This is a taste and to bring you into a bigger world
+    R, Python, SQL, and JavaScript are critical data science
+    tools/languages
   \end{itemize}
 \item
-  Centralization, standards
-\item
-  Help
-\item
-  Including rigor \& reproducibility of packages
-\item
-  The ``tidyverse''
+  R (language and community) strongly emphasizes
 
   \begin{itemize}
   \tightlist
   \item
-    Learn it. But don't learn \emph{only} the tidyverse; you'll be lost
-    in base R
+    Centralization \& standards
+  \item
+    Rigor \& reproducibility (packages, RMarkdown)
+  \end{itemize}
+\item
+  An interesting language
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Functional
+  \item
+    With a sublanguage (or dialect?): the \texttt{tidyverse}
   \end{itemize}
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}{R is a community (actually many communities!)}
+\protect\hypertarget{r-is-a-community-actually-many-communities}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Help and resources
+\item
+  Package development and distribution
+\item
+  An ideal example
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Not quite always that way
+  \item
+    Strong communal presence
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{R: Help!}
+\protect\hypertarget{r-help}{}
+
+\begin{itemize}
+\tightlist
+\item
+  So many websites e.g., \url{https://www.statmethods.net/}
+\item
+  Online forums (Stack Exchange, r-lists)
+\item
+  SpringerLink
+
+  \begin{itemize}
+  \tightlist
+  \item
+    All R books for free (pdf format) or for minimal cost (printed)
+  \end{itemize}
+\item
+  Vignettes
+
+  \begin{itemize}
+  \tightlist
+  \item
+    step-by-step instruction guides for packages
+  \end{itemize}
+\item
+  Git
+
+  \begin{itemize}
+  \tightlist
+  \item
+    With open books (via bookdown)
+  \end{itemize}
+\item
+  Twitter \#rstats
+\item
+  RStudio (website)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Videos, cheat sheets
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{R Packages}
+\protect\hypertarget{r-packages}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Packages are bundles of code made by someone (or many people) for
+  everyone to use
+
+  \begin{itemize}
+  \tightlist
+  \item
+    There are packages for everything
+  \item
+    We'll cover some of the diversity throughout
+  \end{itemize}
+\item
+  Comprehensive \& Reproducible
+\item
+  Available primarily on CRAN
+
+  \begin{itemize}
+  \tightlist
+  \item
+    But also github (less so: r-forge)
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{RStudio}
+\protect\hypertarget{rstudio}{}
+
+\begin{itemize}
+\tightlist
+\item
+  IDE: Integrated development environment
+\item
+  RStudio: Does so much
+
+  \begin{itemize}
+  \tightlist
+  \item
+    We scratch the surface here
+  \end{itemize}
+\item
+  Quick walk through
+\item
+  Followed by specific set up
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Generally, but
+  \item
+    Also for this workshop
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{RStudio Environment}
+\protect\hypertarget{rstudio-environment}{}
+
+\includegraphics{../external/images/rstudio_0_terminal_code.PNG}
+
+\end{frame}
+
+\begin{frame}{RStudio Environment}
+\protect\hypertarget{rstudio-environment-1}{}
+
+\includegraphics{../external/images/rstudio_terminal_1_CONSOLE.png}
+
+\end{frame}
+
+\begin{frame}{RStudio Environment}
+\protect\hypertarget{rstudio-environment-2}{}
+
+\includegraphics{../external/images/rstudio_terminal_2_FILES.png}
+
+\end{frame}
+
+\begin{frame}{RStudio Environment}
+\protect\hypertarget{rstudio-environment-3}{}
+
+\includegraphics{../external/images/rstudio_terminal_3_ENV.png}
+
+\end{frame}
+
+\begin{frame}{RStudio Environment}
+\protect\hypertarget{rstudio-environment-4}{}
+
+\includegraphics{../external/images/rstudio_terminal_4_CODE.png}
+
+\end{frame}
+
+\begin{frame}{RStudio Environment}
+\protect\hypertarget{rstudio-environment-5}{}
+
+\includegraphics{../external/images/rstudio_terminal_5_DATA.png}
+
+\end{frame}
+
+\begin{frame}{Some benefits of RStudio}
+\protect\hypertarget{some-benefits-of-rstudio}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Built-in integration with version control (git or SVN)
+\item
+  Package and documentation generation
+\item
+  Reproducible science!
+
+  \begin{itemize}
+  \tightlist
+  \item
+    R Markdown documents
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Save and execute code
+    \item
+      Generate high quality reports that can be shared
+    \end{itemize}
+  \item
+    Create presentations (like this one!)
+  \item
+    Even write papers
+  \item
+    Python, D3 (JavaScript), SQL, Shiny, LaTeX, Git/SVN, HTML/CSS, and
+    so much more.
+  \end{itemize}
+\item
+  This workshop
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Will walk you through some of this (and more)
+  \item
+    See
+    \url{https://github.com/jennyrieck/workshops/tree/master/2019_Rstudio_Magic}
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{RStudio is more}
+\protect\hypertarget{rstudio-is-more}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Not just an IDE
+\item
+  A company
+\item
+  A community
+\item
+  A conference
+\item
+  A centralized resource
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{RStudio Resources}
+\protect\hypertarget{rstudio-resources}{}
+
+\includegraphics{../external/images/rstudio_dot_com_1_main.PNG}
+
+\end{frame}
+
+\begin{frame}{RStudio Resources}
+\protect\hypertarget{rstudio-resources-1}{}
+
+\includegraphics{../external/images/rstudio_dot_com_2_learning.PNG}
+
+\end{frame}
+
+\begin{frame}{RStudio Resources}
+\protect\hypertarget{rstudio-resources-2}{}
+
+\includegraphics{../external/images/rstudio_dot_com_3_cheats.PNG}
+
+\end{frame}
+
+\hypertarget{part-1-setup-r}{%
+\section{Part 1: Setup \& R}\label{part-1-setup-r}}
+
+\begin{frame}{Project and Environment Setup}
+\protect\hypertarget{project-and-environment-setup}{}
+
+Somethign\ldots{}?
+
+\end{frame}
+
+\begin{frame}{Project and Environment Setup}
+\protect\hypertarget{project-and-environment-setup-1}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Hidden files \& whatnot
+\item
+  Have a structure ready to go on Github
+\item
+  Explain/walk through
+\item
+  Discuss the helpful packages above
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{RStudio Setup}
+\protect\hypertarget{rstudio-setup}{}
+
+\begin{itemize}
+\tightlist
+\item
+  See \url{https://jennybc.github.io/2014-05-12-ubc/r-setup.html} for a
+  detailed guide
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{For safety \& collaboration}
+\protect\hypertarget{for-safety-collaboration}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Projects
+
+  \begin{itemize}
+  \tightlist
+  \item
+    SOMETHING?
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Git \& Projects}
+\protect\hypertarget{git-projects}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Git
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Download git and link executable within RStudio
+    \includegraphics[width=0.6\textwidth,height=\textheight]{../external/images/setup_1_rstudio_git.PNG}
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Projects through Git}
+\protect\hypertarget{projects-through-git}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Create a new project File
+  \includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/setup_2_rstudio_project.PNG}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Format .gitignore}
+\protect\hypertarget{format-.gitignore}{}
+
+\begin{itemize}
+\tightlist
+\item
+  File types to ignore via version control
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{**} before each extentions will match directories anywhere
+    in the repo
+    \includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/gitignore.PNG}
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Format environmental variables}
+\protect\hypertarget{format-environmental-variables}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Set environmental variables (ie, directory location of data) to make
+  code generalizable across computers
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In \textbf{your} project folder create a \texttt{.Renviron} file and
+    define variables
+  \item
+    Jenny's:
+  \end{itemize}
+
+  \includegraphics[width=0.6\textwidth,height=\textheight]{../external/images/setup_3_rstudio_project_environ.PNG}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Derek's:
+  \end{itemize}
+
+  \includegraphics[width=0.8\textwidth,height=\textheight]{../external/images/setup_3_rstudio_project_environ2.PNG}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Organize your project folders and markdown}
+\protect\hypertarget{organize-your-project-folders-and-markdown}{}
+
+*\url{https://emilyriederer.netlify.com/post/rmarkdown-driven-development/}
+\includegraphics{../external/images/setup_4_markdown_project.PNG}
+
+\end{frame}
+
+\begin{frame}{Organize your project folders and markdown}
+\protect\hypertarget{organize-your-project-folders-and-markdown-1}{}
+
+\includegraphics{../external/images/setup_5_git.PNG}
+
+\end{frame}
+
+\begin{frame}[fragile]{RStudio Setup}
+\protect\hypertarget{rstudio-setup-1}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Download R and Rstudio
+\item
+  Add-on packages
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#to install from CRAN}
+\KeywordTok{install.pacakges}\NormalTok{(}\StringTok{'devtools'}\NormalTok{, }\DataTypeTok{depenedencies =} \OtherTok{TRUE}\NormalTok{)}
+\CommentTok{#to install from a file}
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{'/mypath/to/package/ADNIMERGE.tar.gz'}\NormalTok{, }
+                 \DataTypeTok{type=}\StringTok{'source'}\NormalTok{, }\DataTypeTok{repos=}\OtherTok{NULL}\NormalTok{) }
+\CommentTok{#to install from a git  (requires the devtools package)}
+\NormalTok{dev.tools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(Gibbsdavidl}\OperatorTok{/}\NormalTok{CatterPlots) }
+\end{Highlighting}
+\end{Shaded}
 
 \end{frame}
 
@@ -271,97 +720,54 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
-\begin{frame}{R is a bit ugly}
-\protect\hypertarget{r-is-a-bit-ugly}{}
-
-\includegraphics{../external/images/intro_rgui.PNG}
-
-\end{frame}
-
-\begin{frame}{But R has many interfaces}
-\protect\hypertarget{but-r-has-many-interfaces}{}
+\begin{frame}{A little bit more about beer}
+\protect\hypertarget{a-little-bit-more-about-beer}{}
 
 \begin{itemize}
 \tightlist
 \item
-  Today we focus on RStudio (MatLab-like)
-\item
-  But see also Deducer, RCommander (SPSS-like)
-  \includegraphics{../external/images/intro_rgui_2.PNG}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{R is a community (actually many communities!)}
-\protect\hypertarget{r-is-a-community-actually-many-communities}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Help and resources
-\item
-  Package development and distribution
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{R: Help!}
-\protect\hypertarget{r-help}{}
-
-\begin{itemize}
-\tightlist
-\item
-  \url{https://www.statmethods.net/}
-\item
-  Online forums (Stack Exchange, r-lists)
-\item
-  SpringerLink
+  R is free (as in beer and speech)
 
   \begin{itemize}
   \tightlist
   \item
-    All R books for free (pdf format) or for minimal cost (printed)
-  \end{itemize}
-\item
-  Vignettes
-
-  \begin{itemize}
-  \tightlist
+    No cost, no restrictions
   \item
-    step-by-step instruction guides for packages
+    Revolution/MRAN
+  \item
+    etc\ldots{}
   \end{itemize}
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}{R Packages}
-\protect\hypertarget{r-packages}{}
+\begin{frame}{R et al}
+\protect\hypertarget{r-et-al}{}
 
 \begin{itemize}
 \tightlist
 \item
-  Packages are bundles of code made by someone (or many people) for
-  everyone to use
+  A bit of background, including idiosyncrasies and unique things about
+  R
 
   \begin{itemize}
   \tightlist
   \item
-    If you can think of a stats problem, there is a package for it
-  \end{itemize}
-\item
-  Available primarily on CRAN
-
-  \begin{itemize}
-  \tightlist
+    Especially packages \& three ways to install (somewhat covered
+    above) CRAN, Locally, Git \& others (devtools)
   \item
-    But also github, r-forge
+    It's a functional language
+  \item
+    Data types Including data frames \& alts like tibbles
   \end{itemize}
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}{Shiny}
-\protect\hypertarget{shiny}{}
+\begin{frame}{R}
+\protect\hypertarget{r}{}
+
+Some more about R here\ldots{}
 
 \end{frame}
 
@@ -372,261 +778,15 @@ look somewhat like S. We call the result ``R''.}
 \tightlist
 \item
   something here about tidy
+\item
+  Learn it. But don't learn \emph{only} the tidyverse; you'll be lost in
+  base R
 \end{itemize}
 
 \end{frame}
 
-\hypertarget{part-1-rstudio}{%
-\section{Part 1: Rstudio}\label{part-1-rstudio}}
-
-\begin{frame}{Part 1: RStudio}
-\protect\hypertarget{part-1-rstudio-1}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Settings, a quit tour through stuff, features
-\item
-  Examples on getting setup
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{RStudio Environment}
-\protect\hypertarget{rstudio-environment}{}
-
-\includegraphics{../external/images/rstudio_terminal_1_CONSOLE.png}
-
-\end{frame}
-
-\begin{frame}{RStudio Environment}
-\protect\hypertarget{rstudio-environment-1}{}
-
-\includegraphics{../external/images/rstudio_terminal_2_FILES.png}
-
-\end{frame}
-
-\begin{frame}{RStudio Environment}
-\protect\hypertarget{rstudio-environment-2}{}
-
-\includegraphics{../external/images/rstudio_terminal_3_ENV.png}
-
-\end{frame}
-
-\begin{frame}{RStudio Environment}
-\protect\hypertarget{rstudio-environment-3}{}
-
-\includegraphics{../external/images/rstudio_terminal_4_CODE.png}
-
-\end{frame}
-
-\begin{frame}{RStudio Environment}
-\protect\hypertarget{rstudio-environment-4}{}
-
-\includegraphics{../external/images/rstudio_terminal_5_DATA.png}
-
-\end{frame}
-
-\begin{frame}{Benefits of RStudio}
-\protect\hypertarget{benefits-of-rstudio}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Built-in integration with version control (git or SVN)
-\item
-  Package and documentation generation
-\item
-  Reproducible science!
-
-  \begin{itemize}
-  \tightlist
-  \item
-    R Markdown documents
-
-    \begin{itemize}
-    \tightlist
-    \item
-      Save and execute code
-    \item
-      Generate high quality reports that can be shared
-    \end{itemize}
-  \item
-    Create presentations (like this one!)
-  \item
-    Even write papers
-  \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{RStudio Resources}
-\protect\hypertarget{rstudio-resources}{}
-
-\includegraphics{../external/images/rstudio_dot_com_1_main.PNG}
-
-\end{frame}
-
-\begin{frame}{RStudio Resources}
-\protect\hypertarget{rstudio-resources-1}{}
-
-\includegraphics{../external/images/rstudio_dot_com_2_learning.PNG}
-
-\end{frame}
-
-\begin{frame}{RStudio Resources}
-\protect\hypertarget{rstudio-resources-2}{}
-
-\includegraphics{../external/images/rstudio_dot_com_3_cheats.PNG}
-
-\end{frame}
-
-\hypertarget{part-2-setup}{%
-\section{Part 2: Setup}\label{part-2-setup}}
-
-\begin{frame}{Part 2: Project and Environment Setup}
-\protect\hypertarget{part-2-project-and-environment-setup}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Hidden files \& whatnot
-\item
-  Have a structure ready to go on Github
-\item
-  Explain/walk through
-\item
-  Discuss the helpful packages above
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]{RStudio Setup}
-\protect\hypertarget{rstudio-setup}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Download R and Rstudio
-\item
-  Add-on packages
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{#to install from CRAN}
-\KeywordTok{install.pacakges}\NormalTok{(}\StringTok{'devtools'}\NormalTok{, }\DataTypeTok{depenedencies =} \OtherTok{TRUE}\NormalTok{)}
-\CommentTok{#to install from a file}
-\KeywordTok{install.packages}\NormalTok{(}\StringTok{'/mypath/to/package/ADNIMERGE.tar.gz'}\NormalTok{, }
-                 \DataTypeTok{type=}\StringTok{'source'}\NormalTok{, }\DataTypeTok{repos=}\OtherTok{NULL}\NormalTok{) }
-\CommentTok{#to install from a git  (requires the devtools package)}
-\NormalTok{dev.tools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(Gibbsdavidl}\OperatorTok{/}\NormalTok{CatterPlots) }
-\end{Highlighting}
-\end{Shaded}
-
-\begin{itemize}
-\tightlist
-\item
-  See \url{https://jennybc.github.io/2014-05-12-ubc/r-setup.html} for a
-  detailed guide
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Rstudio Setup: Projects \& Git}
-\protect\hypertarget{rstudio-setup-projects-git}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Download git and link to RStudio
-  \includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/setup_1_rstudio_git.PNG}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Rstudio Setup: Projects \& Git}
-\protect\hypertarget{rstudio-setup-projects-git-1}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Create a new project File
-  \includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/setup_2_rstudio_project.PNG}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]{Format .gitignore}
-\protect\hypertarget{format-.gitignore}{}
-
-\begin{itemize}
-\tightlist
-\item
-  File types to ignore:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{.Rproj.user}
-  \item
-    \texttt{.Rhistory}
-  \item
-    \texttt{.Ruserdata}
-  \item
-    \texttt{.Renviron}
-  \item
-    \texttt{.rda} \& \texttt{.Rdata} (to avoid pushing potentially
-    sensitive data files to git)
-  \item
-    \texttt{**} before each extentions will match directories anywhere
-    in the repo
-  \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]{Format environmental variables}
-\protect\hypertarget{format-environmental-variables}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Set environmental variables (ie, directory location of data) to make
-  code generalizable across computers
-
-  \begin{itemize}
-  \tightlist
-  \item
-    In your project folder create a \texttt{.Renviron} file and define
-    variables
-  \end{itemize}
-\end{itemize}
-
-\includegraphics{../external/images/setup_3_rstudio_project_environ.PNG}
-
-\end{frame}
-
-\begin{frame}{Organize your project folders and markdown}
-\protect\hypertarget{organize-your-project-folders-and-markdown}{}
-
-*\url{https://emilyriederer.netlify.com/post/rmarkdown-driven-development/}
-\includegraphics{../external/images/setup_4_markdown_project.PNG}
-
-\end{frame}
-
-\begin{frame}{Organize your project folders and markdown}
-\protect\hypertarget{organize-your-project-folders-and-markdown-1}{}
-
-\includegraphics{../external/images/setup_5_git.PNG}
-
-\end{frame}
-
-\hypertarget{part-3-r-et-al}{%
-\section{Part 3: R et al}\label{part-3-r-et-al}}
-
-\begin{frame}{Part 3: R et al}
-\protect\hypertarget{part-3-r-et-al-1}{}
+\begin{frame}{R et al}
+\protect\hypertarget{r-et-al-1}{}
 
 \begin{itemize}
 \tightlist
@@ -669,8 +829,8 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
-\begin{frame}[fragile]{Read in and create your datafram}
-\protect\hypertarget{read-in-and-create-your-datafram}{}
+\begin{frame}[fragile]{Read in and create your dataframe}
+\protect\hypertarget{read-in-and-create-your-dataframe}{}
 
 \begin{itemize}
 \tightlist
@@ -698,6 +858,13 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
+\begin{frame}{Screenshots}
+\protect\hypertarget{screenshots}{}
+
+Explanation
+
+\end{frame}
+
 \begin{frame}[fragile]{Exploring your data}
 \protect\hypertarget{exploring-your-data}{}
 
@@ -719,6 +886,11 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
+\begin{frame}{Code w/ eval=F}
+\protect\hypertarget{code-w-evalf}{}
+
+\end{frame}
+
 \begin{frame}{Hard Break}
 \protect\hypertarget{hard-break}{}
 
@@ -726,6 +898,16 @@ look somewhat like S. We call the result ``R''.}
 \tightlist
 \item
   DataExplorer is dangerous
+\item
+  Blind analyses can be \emph{criminal}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    de Leeuw paper quote
+  \item
+    DEREK RANTS, PER USUAL.
+  \end{itemize}
 \end{itemize}
 
 \end{frame}
@@ -737,17 +919,33 @@ look somewhat like S. We call the result ``R''.}
 \tightlist
 \item
   Linear models: \texttt{5\_linear\_model.R}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Screenshots / Code w/ eval=F}
+\protect\hypertarget{screenshots-code-w-evalf}{}
+
+\end{frame}
+
+\begin{frame}[fragile]{Get experimental}
+\protect\hypertarget{get-experimental}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Explain motivation, not method
 \item
   covSTATIS: \texttt{6\_covstatis\_example.R}
 \end{itemize}
 
 \end{frame}
 
-\hypertarget{part-4-rmarkdown}{%
-\section{Part 4: RMarkdown}\label{part-4-rmarkdown}}
+\hypertarget{part-2-rmarkdown}{%
+\section{Part 2: RMarkdown}\label{part-2-rmarkdown}}
 
-\begin{frame}{Part 4: RMarkdown}
-\protect\hypertarget{part-4-rmarkdown-1}{}
+\begin{frame}{RMarkdown}
+\protect\hypertarget{rmarkdown}{}
 
 \begin{itemize}
 \tightlist
@@ -808,11 +1006,11 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
-\hypertarget{part-5-advanced-r}{%
-\section{Part 5: Advanced R}\label{part-5-advanced-r}}
+\hypertarget{part-3-advanced-r}{%
+\section{Part 3: Advanced R}\label{part-3-advanced-r}}
 
-\begin{frame}{Part 5: Some advanced/other things we're not covering}
-\protect\hypertarget{part-5-some-advancedother-things-were-not-covering}{}
+\begin{frame}{Some advanced/other things we're not covering}
+\protect\hypertarget{some-advancedother-things-were-not-covering}{}
 
 \begin{itemize}
 \tightlist
@@ -830,11 +1028,8 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
-\hypertarget{part-6-extras}{%
-\section{Part 6: Extras}\label{part-6-extras}}
-
-\begin{frame}{Part 6: A few of our favorite things}
-\protect\hypertarget{part-6-a-few-of-our-favorite-things}{}
+\begin{frame}{A few of our favorite things}
+\protect\hypertarget{a-few-of-our-favorite-things}{}
 
 \begin{itemize}
 \tightlist
