@@ -10,7 +10,11 @@ load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
 
 ## 2.1 Frequency table
 ### set style to 'rmarkdown' for nicely formatted tables in rmd
-freq(amerge_subset[,c('DX', 'PTRACCAT')],style='simple', report.nas=T, totals = T, cumul = T, headings = F)
+frequency_table <- freq(amerge_subset[,c('DX', 'PTRACCAT')],style='simple', report.nas=T, totals = T, cumul = T, headings = F)
+  ## for markdown
+frequency_table
+  ## for a viewer window in RStudio
+view(frequency_table)
 
 ## 2.2 Cross-tab table with chi-square test
 ctable(amerge_subset$DX, amerge_subset$PTGENDER, prop='r', totals = T, chisq = T)

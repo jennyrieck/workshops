@@ -19,13 +19,10 @@ inspect_mem(amerge_subset, show_plot = T)
 inspect_na(amerge_subset, show_plot=T)
 
 ### 3.4 Inspect pairwise correlations of continuous variables
-inspect_cor(amerge_subset[,variable_type_map[,1]==1], show_plot=T)
+inspect_cor(amerge_subset[,variable_type_map[,"Continuous"]==1], show_plot=T)
 
 ### 3.5 Inspect feature imbalance of categorical variables
-inspect_imb(amerge_subset[,variable_type_map[,2]==1], show_plot = T)
+inspect_imb(amerge_subset[,variable_type_map[,"Categorical"]==1], show_plot = T)
 
-### 3.6 Inspect numeric summaries (combines summary and hist)
-inspect_num(amerge_subset[,variable_type_map[,1]==1], show_plot=T)
-
-### 3.7 Inspect categorical summaries
-inspect_cat(amerge_subset[,variable_type_map[,2]==1], show_plot = T)
+### 3.6 Inspect categorical summaries
+inspect_cat(amerge_subset[,variable_type_map[,"Categorical"]==1], show_plot = T)
