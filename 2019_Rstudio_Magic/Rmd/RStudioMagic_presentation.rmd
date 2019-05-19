@@ -77,13 +77,14 @@ knitr::opts_chunk$set(echo = FALSE)
 * Vignettes
     * step-by-step instruction guides for packages
 
-
 ## R Packages
 
 * Packages are bundles of code made by someone (or many people) for everyone to use
     * If you can think of a stats problem, there is a package for it
 * Available primarily on CRAN
     * But also github, r-forge
+
+## Shiny
 
 ## Tidyverse
 * something here about tidy
@@ -252,7 +253,7 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 ## RMarkdown Don(u)'ts
 
 * Don't hardcode values
-* Don't hardcode absolute fire paths
+* Don't hardcode absolute file paths
 * Don't do complicated database queries
 * Don't litter
     * avoid `eval=FALSE`
