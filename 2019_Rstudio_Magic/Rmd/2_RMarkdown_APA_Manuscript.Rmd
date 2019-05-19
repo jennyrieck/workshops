@@ -202,7 +202,7 @@ Like in the other example RMarkdown file, we call off to an `R` script
 
 ```{r call_covstatis, echo=FALSE}
 
-source( here::here("R","5_covstatis_example.R") )
+source( here::here("R","6_covstatis_example.R") )
 
 ```
 
