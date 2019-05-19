@@ -1,5 +1,5 @@
 ---
-title: "A whirlwind tour of Rstudio, R, and Rmarkdown Magic for behavioral and brain scientists"
+title: "A whirlwind tour of Rstudio, R, and Rmarkdown for reproducible (and collaborative) science"
 author: "Jenny Rieck & Derek Beaton"
 date: '`r format(Sys.Date(), "%B %d %Y")`'
 output: 
@@ -197,7 +197,7 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 
 ## Part 3: R et al
 * A bit of background, including idiosyncrasies and unique things about R
-    * Especially packages & three ways to install (somehwhat covered above)
+    * Especially packages & three ways to install (somewhat covered above)
 			CRAN, Locally,  Git & others (devtools)
     * It’s a functional language
     * Data types Including data frames & alts like tibbles
@@ -209,6 +209,30 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 	* Reimport?
 	* Analyze
 		With MCA & covstatis
+		
+## Read in and create your datafram
+
+* ADNI Dataset adnimerge package
+    * Reduce full dataset to only those participants (rows) and variables (columns) you're interested in
+* Two methods to create your dataframe
+    * using base R functions: `0_create_ADNI_data_base.R`
+    * Using tidyverse functions: `1_create_ADNI_data_tidyverse.R`
+    
+## Exploring your data
+
+* Many packages to help explore and describe your data:
+    * summarytools: `2_explore_summarytools.R`
+    * inspectdf: `3_explore_inspectdf.R`
+    * DataExplorer: `4_explore_DataExplorer_one_liner.R`
+    
+## Hard Break
+
+* DataExplorer is dangerous
+
+## Analyze you data
+
+* Linear models: `5_linear_model.R`
+* covSTATIS: `6_covstatis_example.R`
 
 # Part 4: RMarkdown
 
