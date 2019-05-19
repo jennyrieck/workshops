@@ -173,6 +173,11 @@ Somethign...?
   
   ![](../external/images/gitignore.PNG){width=75%} 
     
+    
+## Environmental variables
+
+SHOW THIS IN THE FOLDER STRUCTURE
+
 ## Format environmental variables
 
 * Set environmental variables (ie, directory location of data) to make code generalizable across computers
@@ -188,9 +193,16 @@ Somethign...?
 
 ## Organize your project folders and markdown
 
-*https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
 ![](../external/images/setup_4_markdown_project.PNG)
 
+https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
+
+
+## Organize your project folders and markdown
+
+* What works for you?
+* What works for your organization or team?
+* Maximize utility, minimize complexity
 
 ## Organize your project folders and markdown
 
