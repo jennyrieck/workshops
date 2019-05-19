@@ -1,0 +1,256 @@
+---
+title             : "RMarkdown based APA Manuscript with 'papaja'"
+shorttitle        : "RMD paper via papaja"
+
+author: 
+  - name          : "Jenny Rieck"
+    affiliation   : "1"
+  - name          : "Derek Beaton"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "Rotman Research Institute"
+
+authornote: |
+  We can include author notes for, e.g., attribution of data or expanding on roles/locations.
+
+abstract: |
+  This is a short example of a completely reproducible manuscript made entirely in RStudio with RMarkdown and various R scripts, functions, and packages. 
+  
+keywords          : "reproducible, manuscript, multivariate, APA, papaja, knitr, R, Rmarkdown"
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+linkcolor         : "blue"
+mask              : no
+draft             : no
+graphics          : yes
+
+documentclass     : "apa6"
+classoption       : "man"
+# Use papaja::apa6_docx for Word documents
+output            : 
+  papaja::apa6_pdf:
+    number_sections: false
+header-includes   : 
+  - \usepackage{float}
+  - \usepackage{bbold}
+  - \usepackage{subfig}
+  - \usepackage{graphicx}
+  - \usepackage[utf8]{inputenc}
+  - \usepackage[T1]{fontenc}
+  - \usepackage{booktabs}
+  - \usepackage{algorithm2e}
+  - \usepackage{caption}
+---
+
+
+```{r libraries, echo=FALSE, message=FALSE}
+
+require(papaja)
+require(kableExtra)
+require(gridExtra)
+require(tidyverse)
+require(ExPosition)
+require(knitr)
+require(reticulate)
+require(here)
+require(factoextra)
+
+if(!require(covstatis)){
+  devtools::install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
+  library(covstatis)
+}
+
+if(!require(ours)){
+  devtools::install_github("derekbeaton/OuRS", subdir = "/OuRS")
+  library(ours)
+}
+
+if(!require(GSVD)){
+  devtools::install_github("derekbeaton/GSVD")
+  library(GSVD)
+}
+
+
+
+```
+
+```{r r_and_rmarkdown_setup, echo=FALSE, message=FALSE}
+
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE, fig.pos='H', cache.extra = knitr::rand_seed)
+# Seed for random number generation
+set.seed(42)
+
+```
+
+```{r source_functions, echo=FALSE, message=FALSE}
+
+
+
+```
+
+```{r load_data, echo=FALSE, message=FALSE}
+
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset.rda"))
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
+
+```
+
+
+# Introduction
+
+The aim of this RMarkdown example is to show how to write a reproducible manuscript, which includes numerous bells-and-whistles---with contributions from `R`, `Python`, RMarkdown, and `LaTeX`. This "manuscript" will include only the best (nicest looking) parts from `1_a_Simple_RMarkdown_PDF.Rmd`
+
+In order to help make this manuscript look nicer, we are changing some of the YAML ("yet another markup language") header options, so that we remove line numbers, and allow for tables & figures to appear in text, as opposed to the end.
+
+
+# Methods
+
+
+We first make our data with R. This will be followed by a paragraph break because this text precedes a chunk.
+
+```{r make_example_table}
+
+example_table <- amerge_subset[,c("AGE","MOCA","CDRSB","WholeBrain","Hippocampus","MidTemp")]
+example_table_Dx <- amerge_subset[,c("DX","AGE","MOCA","CDRSB","WholeBrain","Hippocampus","MidTemp")]
+
+```
+
+Then call off to python for the `.describe()` method. This, too, will be followed by a paragraph break because this text precedes a chunk.
+
+```{python describe}
+perc = [.25, .50, .75] 
+desc = r.example_table.describe(percentiles = perc)
+```
+
+And then pass the `desc` object back to `R` and use the `kable()` and `kableExtra` packages to make a nice table of summary statistics for the measures of interest. In this particular part, we also show the code chunk. Furthermore, some particular packages---such as `papaja`---and certain advanced features from `LaTeX` require the use of `results='asis'` in chunk header.
+
+```{r python_describe_via_kable, echo=TRUE, results = 'asis'}
+apa_table(py$desc, 
+          caption= "A descriptive statistics table.",
+          note="This formatted through LaTeX via papaja::apa_table() from a python object from the .describe() method, loaded from data in R and written through RMarkdown.")
+```
+
+## Procedure
+
+Next we are going to use more features from `LaTeX`, including various additional `LaTeX` packages that we define in the YAML header. We can use a number of `LaTeX` features like inline calls, numbered equations, and, for eaxmple, algorithms. We will use each of those features to describe the covSTATIS method (see also [our covSTATIS project repository](https://github.com/jennyrieck/C-MARINeR)). Our description of covSTATIS is extremely truncated here and is only meant to illustrate features of writing a manuscript in RMarkdown. 
+
+CovSTATIS is a multi-table principal components analysis, specifically designed to integrate and analyze multiple correlation or covariance matrices. Each correlation matrix---${\bf R}_{[k]}$---is double-centered by way of a centering matrix as ${\boldsymbol \Xi} = \mathbf{I} - \mathbf{1}(I^{-1})\mathbf{1}^{T}$ as
+
+\begin{equation}
+{\bf S}_{[k]} = \frac{1}{2}{\boldsymbol \Xi}{\bf R}_{[k]}{\boldsymbol \Xi}.
+\label{eq:double_center}
+\end{equation}
+
+After we perform the double-centering in Eq. \@ref(eq:double_center), we then compute $\alpha$ weights of each matrix where first we vectorize each ${\bf S}_{[k]}$ and storing those each column vector in a new matrix as $\mathbf{Z} = [ \mathrm{vec\{ {\bf S}_{[1]}, \dots, {\bf S}_{[k]}, \dots, {\bf S}_{[K]}   \}} ]$ and then decompose $\mathbf{Z}$ with the singular value decomposition (SVD):
+
+\begin{equation}
+\mathbf{Z} = \mathbf{U}\boldsymbol{\Delta}\mathbf{V}^{T}.
+\end{equation}
+
+The $alpha$ weights are $\boldsymbol{\alpha} = \mathbf{v}_{1}  \times (\mathbf{v}_{1}^{T}\mathbf{1})^{-1}$. We then compute the compromise cross-product matrix as $\mathbf{S}_{[+]} = \sum\limits_{i=1}^K \alpha_{k}\mathbf{S}_{[k]}$, and finally decompose $\mathbf{S}_{[+]}$ with the eigenvalue decomposition (EVD) as
+
+\begin{equation}
+\mathbf{S}_{[+]} = \mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{T}.
+\end{equation}
+
+We can also outline these steps algorithmically as
+
+\RestyleAlgo{boxed}
+\begin{algorithm}
+\DontPrintSemicolon
+\SetAlgoLined
+\KwResult{Decomposition of the compromise matrix---$\mathbf{S}_{[+]}$---in covSTATIS}
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\Input{$[{\bf R}_{[1]} ... {\bf R}_{[k]} ... {\bf R}_{[K]}]$}
+\Output{$\mathbf{Q}$, $\boldsymbol{\Lambda}$}
+Define $\mathbf{S}_{[+]} = \mathbf{0}$
+\BlankLine
+\For{$k=1, \dots, K$}{
+    ${\bf S}_{[k]} \leftarrow \frac{1}{2}{\boldsymbol \Xi}{\bf R}_{[k]}{\boldsymbol \Xi}$
+}
+$\mathbf{Z} \leftarrow [ \mathrm{vec\{ {\bf S}_{[1]}, \dots, {\bf S}_{[k]}, \dots, {\bf S}_{[K]}   \}} ]$
+
+$\mathbf{U}\boldsymbol{\Delta}\mathbf{V}^{T} \leftarrow \mathrm{SVD(}\mathbf{Z}\mathrm{)}$
+
+$\boldsymbol{\alpha} \leftarrow \mathbf{v}_{1}  \times (\mathbf{v}_{1}^{T}\mathbf{1})^{-1}$
+
+\For{$k=1, \dots, K$}{
+    $\mathbf{S}_{[+]} \leftarrow \mathbf{S}_{[+]} + (\mathbf{S}_{[k]} \times \alpha_{[k]})$
+}
+
+$\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{T} \leftarrow \mathrm{EVD(}\mathbf{S}_{[+]}\mathrm{)}$
+\caption{CovSTATIS algorithm}
+\label{algo:covstatis}
+\end{algorithm}
+
+
+## Data analysis
+The `papaja` package includes the ability to generate a bibliography directly from all the loaded packages (via `cite_r()`). This document includes `r cite_r("r-references.bib")` for all our analyses.
+
+
+# Results
+
+Like in the other example RMarkdown file, we call off to an `R` script 
+
+```{r call_covstatis, echo=FALSE}
+
+source( here::here("R","6_covstatis_example.R") )
+
+```
+
+```{r scree, echo=FALSE, fig.cap="Scree plot of the covSTATIS compromise results.", fig.align='center'}
+
+percent_variance <- (covstatis_results$compromise_eigen$values / sum(covstatis_results$compromise_eigen$values))*100
+
+plot(percent_variance,type="l", ylab="Explained variance", xlab="Components", lty=1, lwd = 1)
+points(1:length(percent_variance), percent_variance, pch=20, col = "mediumorchid4", cex = 1.5)
+
+```
+
+```{r fig.width=7, fig.height=7, fig.align='center', fig.cap="Component maps with the compromise (purple) and each group's results (green) projected onto the compromise.", echo=FALSE}
+ 
+
+par.opts <- par(mfrow=c(2,2))
+
+plot_covstatis(covstatis_results$compromise_component_scores, simplify2array(covstatis_results$partial_component_scores), display.fis.names = T)
+
+for(i in 1:length(covstatis_results$partial_component_scores)){
+  this_partial <- array(simplify2array(covstatis_results$partial_component_scores)[,,i], dim=c(nrow(covstatis_results$compromise_component_scores),ncol(covstatis_results$compromise_component_scores),1))
+  
+  rownames(this_partial) <- rownames(covstatis_results$compromise_component_scores)
+  dimnames(this_partial)[[3]] <- names(covstatis_results$partial_component_scores)[i]
+    
+  plot_covstatis(covstatis_results$compromise_component_scores, this_partial, display.fis.names = T)
+  
+}
+
+par(par.opts)
+ 
+``` 
+
+# Discussion
+
+This example manuscript provides an illustrative view of how to write a reproducible paper in RMarkdown with the help of various external tools (e.g., `LaTeX`, `Python`) and `R`/RStudio tools. References can be included in two ways: through `LaTeX` bibliography files or through the use of additional `R` packages and Rstudio plugins, such as [`citr`](https://github.com/crsh/citr). 
+
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup
