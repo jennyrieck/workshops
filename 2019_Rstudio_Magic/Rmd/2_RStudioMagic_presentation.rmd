@@ -15,17 +15,17 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## The big outline
 
-* Part 0: Introduction, background, & RStudio
-* Part 1: Setup 
-* Part 2: R
-* Part 3: RMarkdown & more
+* Part 0: Background
+* Part 1: A bit about R
+* Part 2: RStudio & Project setup
+* Part 3: R, RMarkdown, & more
 * Part 4: Advanced, beyond, & our favorites
 
-# Part 0: Introduction, Background, & RStudio
+# Part 0: Background
 
 ## To dive right in
 
-If you want to skip over the background & RStudio, go straight to [Part 1: Setup & R]
+If you want to skip over the background & RStudio, go straight to [Part 2: RStudio & Project setup]
 
 ## Background
 
@@ -69,6 +69,87 @@ If you want to skip over the background & RStudio, go straight to [Part 1: Setup
 * Comprehensive & Reproducible
 * Available primarily on CRAN
   * But also github (less so: r-forge)
+  
+# Part 1: A bit about R
+
+## R Background
+
+* Created in 1992 by Gentleman & Ihaka
+
+ _[we] considered the problem of obtaining decent statistical software for our undergraduate Macintosh lab. After considering the options, we decided that the most satisfactory alternative was to write our own. […] Finally we added some syntactic sugar to make it look somewhat like S. We call the result “R”._
+
+
+## What is R?
+
+* R is general purpose programming
+  * Design around & for statistics
+  * "for and by statisticians"
+* R is a collection of tools 
+  * Pre-packaged software at your disposal
+* R is free (as in beer and speech)
+  * No cost, no restrictions
+  * E.g., Microsoft (nee Revolution) R
+* R is a functional language
+  * Turing complete
+  * Mathematical functions
+  * Pass expressions and functions to and from functions
+
+## R: Data types
+
+* Stored as *vectors*
+  * see `class()`
+* numeric
+  * real or decimal
+  * Includes `NaN`, `Inf`, `-Inf`
+* integer
+* complex
+* character
+* logical
+  * includes `NA`, `TRUE`, `FALSE`
+* factor
+  * factors are usually not your friends
+  * generally: stringsAsFactors = F or convert these
+
+## R: factor disasters
+
+```{r factors_are_not_friendly, echo=T}
+
+a_numeric_vector <- c(3, 0, 1, -2, 2, 5, 5, 2, 1)
+(a_numeric_vector + 1)
+(a_numeric2factor_vector <- as.factor(a_numeric_vector))
+(as.numeric(a_numeric2factor_vector))
+(as.numeric(as.character(a_numeric2factor_vector)))
+
+```
+
+## R: Data structures  
+
+* Starts counting from 1
+  * Not 0
+* vector[1]
+* matrix[1,1]
+* array[1,1,1]
+* list[[1]]
+  * Can contain mixtures of types
+  * or list$`name`
+* data.frame:
+  * Is technically a list but access in three ways
+  * data.frame[[1]][1]
+  * data.frame[1,1]
+  * data.frame$`name`
+  * tibbles: tidyverse data.frames
+    
+## R
+
+Some more about R here...
+Matlab cheat sheet
+Other cheat sheets
+    
+## Tidyverse
+* something here about tidy
+* Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
+
+# Part 2: RStudio & Project setup
 
 ## RStudio
 
@@ -79,6 +160,15 @@ If you want to skip over the background & RStudio, go straight to [Part 1: Setup
 * Followed by specific set up 
   * Generally, but
   * Also for this workshop
+  
+## RStudio Setup
+
+* Download R and Rstudio
+* Strongly recommend Microsoft R (https://mran.microsoft.com/open)
+  * Comes with Intel MKL
+* Plain R is fine (https://cran.r-project.org/)
+    * Can relink to faster libraries 
+* Download RStudio (https://www.rstudio.com/)  
 
 ## RStudio Environment
 
@@ -133,18 +223,11 @@ If you want to skip over the background & RStudio, go straight to [Part 1: Setup
 ## RStudio Resources
 ![](../external/images/rstudio_dot_com_3_cheats.PNG)
 
-# Part 1: Setup & R
 
 ## Project and Environment Setup
 
-Somethign...?
-
-## Project and Environment Setup
-
-* Hidden files & whatnot
-* Have a structure ready to go on Github
-* Explain/walk through
-* Discuss the helpful packages above
+* Special & hidden files
+* Having a structure
 
 
 ## RStudio Setup
@@ -153,27 +236,27 @@ Somethign...?
 
 ## For safety & collaboration 
 
-* Projects
-  * SOMETHING?
+* Project(s) files
+  * SOMETHING!
   
+## Projects through Git
+
+* Create a new project File
+![](../external/images/setup_2_rstudio_project.PNG){width=75%} 
+
+
 ## Git & Projects
 
 * Git
   * Download git and link executable within RStudio 
   ![](../external/images/setup_1_rstudio_git.PNG){width=60%} 
 
-## Projects through Git
-
-* Create a new project File
-![](../external/images/setup_2_rstudio_project.PNG){width=75%} 
-
 ## Format .gitignore
 
 * File types to ignore via version control
   * `**` before each extentions will match directories anywhere in the repo
   
-  ![](../external/images/gitignore.PNG){width=75%} 
-    
+  ![](../external/images/gitignore.PNG){width=75%}
     
 ## Environmental variables
 
@@ -217,14 +300,6 @@ https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
 
 ![](../external/images/RMDfolder.PNG)
 
-## RStudio Setup
-
-* Download R and Rstudio
-* Strongly recommend Microsoft R (https://mran.microsoft.com/open)
-  * Comes with Intel MKL
-* Plain R is fine (https://cran.r-project.org/)
-    * Can relink to faster libraries 
-* Download RStudio (https://www.rstudio.com/)
 
 ## Get the packages you need
 
@@ -240,98 +315,14 @@ install.packages('/mypath/to/package/ADNIMERGE.tar.gz',
                  type='source', repos=NULL) 
 ```
 
+## Some transition?
 
-# Part 2: R
-
-## R Background
-
-* Created in 1992 by Gentleman & Ihaka
-
- _[we] considered the problem of obtaining decent statistical software for our undergraduate Macintosh lab. After considering the options, we decided that the most satisfactory alternative was to write our own. […] Finally we added some syntactic sugar to make it look somewhat like S. We call the result “R”._
-
-
-## What is R?
-
-* R is general purpose programming
-  * Design around & for statistics
-  * "for and by statisticians"
-* R is a collection of tools 
-  * Pre-packaged software at your disposal
-* R is free (as in beer and speech)
-  * No cost, no restrictions
-  * E.g., Microsoft (nee Revolution) R
-* R is a functional language
-  * Turing complete
-  * Mathematical functions
-  * Pass expressions and functions to and from functions
-
-## R
-
-* Counting starts at 1, not 0
-* Data types (see `class()`)
-  * Stored as *vectors*
-  * numeric
-    * real or decimal
-    * Includes `NaN`, `Inf`, `-Inf`
-  * integer
-  * complex
-  * character
-  * logical
-    * includes `NA`, `TRUE`, `FALSE`
-  * factor
-    * factors are usually not your friends
-    * generally: stringsAsFactors = F or convert these
-
-## R: factor disasters
-
-```{r factors_are_not_friendly, echo=T}
-
-a_numeric_vector <- c(3, 0, 1, -2, 2, 5, 5, 2, 1)
-(a_numeric_vector + 1)
-(a_numeric2factor_vector <- as.factor(a_numeric_vector))
-(as.numeric(a_numeric2factor_vector))
-(as.numeric(as.character(a_numeric2factor_vector)))
-
-```
-
-## R  
-* Data structures
-  * vector[1]
-  * matrix[1,1]
-  * array[1,1,1]
-  * list[[1]]
-    * Can contain mixtures of types
-    * or list$`name`
-  * data.frame:
-    * Is technically a list but access in three ways
-    * data.frame[[1]][1]
-    * data.frame[1,1]
-    * data.frame$`name`
-    * tibbles: tidyverse data.frames
-    
-## R
-
-Some more about R here...
-    
-## Tidyverse
-* something here about tidy
-* Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
 
 
 ## R et al
-* A bit of background, including idiosyncrasies and unique things about R
-    * Especially packages & three ways to install (somewhat covered above)
-			CRAN, Locally,  Git & others (devtools)
-    * It’s a functional language
-    * Data types Including data frames & alts like tibbles
-* Read/explore
-    * explore .R scripts
-* Clean/export
-    * Show 0_Create from PCA/MCA with
-			Base, Tidyverse, Plyr (NOT dplyr), data.table
-	* Reimport?
-	* Analyze
-		With MCA & covstatis
+
+Here we dive into our stuff.
+We show a bit of the code here and there and explain syntax
 		
 ## Read in and create your dataframe
 

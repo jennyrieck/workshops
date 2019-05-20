@@ -159,28 +159,28 @@
 \begin{itemize}
 \tightlist
 \item
-  Part 0: Introduction, background, \& RStudio
+  Part 0: Background
 \item
-  Part 1: Setup
+  Part 1: A bit about R
 \item
-  Part 2: R
+  Part 2: RStudio \& Project setup
 \item
-  Part 3: RMarkdown \& more
+  Part 3: R, RMarkdown, \& more
 \item
   Part 4: Advanced, beyond, \& our favorites
 \end{itemize}
 
 \end{frame}
 
-\hypertarget{part-0-introduction-background-rstudio}{%
-\section{Part 0: Introduction, Background, \&
-RStudio}\label{part-0-introduction-background-rstudio}}
+\hypertarget{part-0-background}{%
+\section{Part 0: Background}\label{part-0-background}}
 
 \begin{frame}{To dive right in}
 \protect\hypertarget{to-dive-right-in}{}
 
 If you want to skip over the background \& RStudio, go straight to
-\protect\hyperlink{part-1-setup-r}{Part 1: Setup \& R}
+\protect\hyperlink{part-2-rstudio-project-setup}{Part 2: RStudio \&
+Project setup}
 
 \end{frame}
 
@@ -321,6 +321,247 @@ If you want to skip over the background \& RStudio, go straight to
 \end{itemize}
 
 \end{frame}
+
+\hypertarget{part-1-a-bit-about-r}{%
+\section{Part 1: A bit about R}\label{part-1-a-bit-about-r}}
+
+\begin{frame}{R Background}
+\protect\hypertarget{r-background}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Created in 1992 by Gentleman \& Ihaka
+\end{itemize}
+
+\emph{{[}we{]} considered the problem of obtaining decent statistical
+software for our undergraduate Macintosh lab. After considering the
+options, we decided that the most satisfactory alternative was to write
+our own. {[}\ldots{}{]} Finally we added some syntactic sugar to make it
+look somewhat like S. We call the result ``R''.}
+
+\end{frame}
+
+\begin{frame}{What is R?}
+\protect\hypertarget{what-is-r}{}
+
+\begin{itemize}
+\tightlist
+\item
+  R is general purpose programming
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Design around \& for statistics
+  \item
+    ``for and by statisticians''
+  \end{itemize}
+\item
+  R is a collection of tools
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Pre-packaged software at your disposal
+  \end{itemize}
+\item
+  R is free (as in beer and speech)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    No cost, no restrictions
+  \item
+    E.g., Microsoft (nee Revolution) R
+  \end{itemize}
+\item
+  R is a functional language
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Turing complete
+  \item
+    Mathematical functions
+  \item
+    Pass expressions and functions to and from functions
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{R: Data types}
+\protect\hypertarget{r-data-types}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Stored as \emph{vectors}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    see \texttt{class()}
+  \end{itemize}
+\item
+  numeric
+
+  \begin{itemize}
+  \tightlist
+  \item
+    real or decimal
+  \item
+    Includes \texttt{NaN}, \texttt{Inf}, \texttt{-Inf}
+  \end{itemize}
+\item
+  integer
+\item
+  complex
+\item
+  character
+\item
+  logical
+
+  \begin{itemize}
+  \tightlist
+  \item
+    includes \texttt{NA}, \texttt{TRUE}, \texttt{FALSE}
+  \end{itemize}
+\item
+  factor
+
+  \begin{itemize}
+  \tightlist
+  \item
+    factors are usually not your friends
+  \item
+    generally: stringsAsFactors = F or convert these
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{R: factor disasters}
+\protect\hypertarget{r-factor-disasters}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a_numeric_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{(a_numeric_vector }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4  1  2 -1  3  6  6  3  2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(a_numeric2factor_vector <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(a_numeric_vector))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3  0  1  -2 2  5  5  2  1 
+## Levels: -2 0 1 2 3 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(a_numeric2factor_vector))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5 2 3 1 4 6 6 4 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(a_numeric2factor_vector)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  3  0  1 -2  2  5  5  2  1
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{R: Data structures}
+\protect\hypertarget{r-data-structures}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Starts counting from 1
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Not 0
+  \end{itemize}
+\item
+  vector{[}1{]}
+\item
+  matrix{[}1,1{]}
+\item
+  array{[}1,1,1{]}
+\item
+  list{[}{[}1{]}{]}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Can contain mixtures of types
+  \item
+    or list\$\texttt{name}
+  \end{itemize}
+\item
+  data.frame:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Is technically a list but access in three ways
+  \item
+    data.frame{[}{[}1{]}{]}{[}1{]}
+  \item
+    data.frame{[}1,1{]}
+  \item
+    data.frame\$\texttt{name}
+  \item
+    tibbles: tidyverse data.frames
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{R}
+\protect\hypertarget{r}{}
+
+Some more about R here\ldots{} Matlab cheat sheet Other cheat sheets
+
+\end{frame}
+
+\begin{frame}{Tidyverse}
+\protect\hypertarget{tidyverse}{}
+
+\begin{itemize}
+\tightlist
+\item
+  something here about tidy
+\item
+  Learn it. But don't learn \emph{only} the tidyverse; you'll be lost in
+  base R
+\end{itemize}
+
+\end{frame}
+
+\hypertarget{part-2-rstudio-project-setup}{%
+\section{Part 2: RStudio \& Project
+setup}\label{part-2-rstudio-project-setup}}
 
 \begin{frame}{RStudio}
 \protect\hypertarget{rstudio}{}
@@ -482,29 +723,15 @@ If you want to skip over the background \& RStudio, go straight to
 
 \end{frame}
 
-\hypertarget{part-1-setup-r}{%
-\section{Part 1: Setup \& R}\label{part-1-setup-r}}
-
 \begin{frame}{Project and Environment Setup}
 \protect\hypertarget{project-and-environment-setup}{}
-
-Somethign\ldots{}?
-
-\end{frame}
-
-\begin{frame}{Project and Environment Setup}
-\protect\hypertarget{project-and-environment-setup-1}{}
 
 \begin{itemize}
 \tightlist
 \item
-  Hidden files \& whatnot
+  Special \& hidden files
 \item
-  Have a structure ready to go on Github
-\item
-  Explain/walk through
-\item
-  Discuss the helpful packages above
+  Having a structure
 \end{itemize}
 
 \end{frame}
@@ -527,13 +754,25 @@ Somethign\ldots{}?
 \begin{itemize}
 \tightlist
 \item
-  Projects
+  Project(s) files
 
   \begin{itemize}
   \tightlist
   \item
-    SOMETHING?
+    SOMETHING!
   \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Projects through Git}
+\protect\hypertarget{projects-through-git}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Create a new project File
+  \includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/setup_2_rstudio_project.PNG}
 \end{itemize}
 
 \end{frame}
@@ -552,18 +791,6 @@ Somethign\ldots{}?
     Download git and link executable within RStudio
     \includegraphics[width=0.6\textwidth,height=\textheight]{../external/images/setup_1_rstudio_git.PNG}
   \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Projects through Git}
-\protect\hypertarget{projects-through-git}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Create a new project File
-  \includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/setup_2_rstudio_project.PNG}
 \end{itemize}
 
 \end{frame}
@@ -725,268 +952,8 @@ Somethign\ldots{}?
 
 \end{frame}
 
-\hypertarget{part-2-r}{%
-\section{Part 2: R}\label{part-2-r}}
-
-\begin{frame}{R Background}
-\protect\hypertarget{r-background}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Created in 1992 by Gentleman \& Ihaka
-\end{itemize}
-
-\emph{{[}we{]} considered the problem of obtaining decent statistical
-software for our undergraduate Macintosh lab. After considering the
-options, we decided that the most satisfactory alternative was to write
-our own. {[}\ldots{}{]} Finally we added some syntactic sugar to make it
-look somewhat like S. We call the result ``R''.}
-
-\end{frame}
-
-\begin{frame}{What is R?}
-\protect\hypertarget{what-is-r}{}
-
-\begin{itemize}
-\tightlist
-\item
-  R is general purpose programming
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Design around \& for statistics
-  \item
-    ``for and by statisticians''
-  \end{itemize}
-\item
-  R is a collection of tools
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Pre-packaged software at your disposal
-  \end{itemize}
-\item
-  R is free (as in beer and speech)
-
-  \begin{itemize}
-  \tightlist
-  \item
-    No cost, no restrictions
-  \item
-    E.g., Microsoft (nee Revolution) R
-  \end{itemize}
-\item
-  R is a functional language
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Turing complete
-  \item
-    Mathematical functions
-  \item
-    Pass expressions and functions to and from functions
-  \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]{R}
-\protect\hypertarget{r}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Counting starts at 1, not 0
-\item
-  Data types (see \texttt{class()})
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Stored as \emph{vectors}
-  \item
-    numeric
-
-    \begin{itemize}
-    \tightlist
-    \item
-      real or decimal
-    \item
-      Includes \texttt{NaN}, \texttt{Inf}, \texttt{-Inf}
-    \end{itemize}
-  \item
-    integer
-  \item
-    complex
-  \item
-    character
-  \item
-    logical
-
-    \begin{itemize}
-    \tightlist
-    \item
-      includes \texttt{NA}, \texttt{TRUE}, \texttt{FALSE}
-    \end{itemize}
-  \item
-    factor
-
-    \begin{itemize}
-    \tightlist
-    \item
-      factors are usually not your friends
-    \item
-      generally: stringsAsFactors = F or convert these
-    \end{itemize}
-  \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]{R: factor disasters}
-\protect\hypertarget{r-factor-disasters}{}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a_numeric_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\NormalTok{(a_numeric_vector }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1]  4  1  2 -1  3  6  6  3  2
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{(a_numeric2factor_vector <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(a_numeric_vector))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3  0  1  -2 2  5  5  2  1 
-## Levels: -2 0 1 2 3 5
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(a_numeric2factor_vector))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 5 2 3 1 4 6 6 4 3
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(a_numeric2factor_vector)))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1]  3  0  1 -2  2  5  5  2  1
-\end{verbatim}
-
-\end{frame}
-
-\begin{frame}[fragile]{R: factor disasters}
-\protect\hypertarget{r-factor-disasters-1}{}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a_numeric_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\NormalTok{(a_numeric_vector }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1]  4  1  2 -1  3  6  6  3  2
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a_numeric2character_vector <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(a_numeric_vector)}
-
-\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(a_numeric2character_vector))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1]  3  0  1 -2  2  5  5  2  1
-\end{verbatim}
-
-\end{frame}
-
-\begin{frame}[fragile]{R}
-\protect\hypertarget{r-1}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Data structures
-
-  \begin{itemize}
-  \tightlist
-  \item
-    vector{[}1{]}
-  \item
-    matrix{[}1,1{]}
-  \item
-    array{[}1,1,1{]}
-  \item
-    list{[}{[}1{]}{]}
-
-    \begin{itemize}
-    \tightlist
-    \item
-      Can contain mixtures of types
-    \item
-      or list\$\texttt{name}
-    \end{itemize}
-  \item
-    data.frame:
-
-    \begin{itemize}
-    \tightlist
-    \item
-      Is technically a list but access in three ways
-    \item
-      data.frame{[}{[}1{]}{]}{[}1{]}
-    \item
-      data.frame{[}1,1{]}
-    \item
-      data.frame\$\texttt{name}
-    \item
-      tibbles: tidyverse data.frames
-    \end{itemize}
-  \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{R}
-\protect\hypertarget{r-2}{}
-
-Some more about R here\ldots{}
-
-\end{frame}
-
-\begin{frame}{Tidyverse}
-\protect\hypertarget{tidyverse}{}
-
-\begin{itemize}
-\tightlist
-\item
-  something here about tidy
-\item
-  Learn it. But don't learn \emph{only} the tidyverse; you'll be lost in
-  base R
-\end{itemize}
+\begin{frame}{Some transition?}
+\protect\hypertarget{some-transition}{}
 
 \end{frame}
 
