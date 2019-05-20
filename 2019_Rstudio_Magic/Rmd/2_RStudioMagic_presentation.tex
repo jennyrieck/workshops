@@ -148,7 +148,7 @@
 \title{Reproducible (and collaborative) science through RStudio}
 \subtitle{A whirlwind tour with R, RMarkdown, Python, LaTeX, and more}
 \author{Jenny Rieck \& Derek Beaton}
-\date{May 19 2019}
+\date{May 20 2019}
 
 \begin{document}
 \frame{\titlepage}
@@ -161,11 +161,13 @@
 \item
   Part 0: Introduction, background, \& RStudio
 \item
-  Part 1: Setup \& R
+  Part 1: Setup
 \item
-  Part 2: RMarkdown \& more
+  Part 2: R
 \item
-  Part 3: Advanced, beyond, \& our favorites
+  Part 3: RMarkdown \& more
+\item
+  Part 4: Advanced, beyond, \& our favorites
 \end{itemize}
 
 \end{frame}
@@ -586,6 +588,13 @@ Somethign\ldots{}?
 
 \end{frame}
 
+\begin{frame}{Environmental variables}
+\protect\hypertarget{environmental-variables}{}
+
+\includegraphics[width=0.6\textwidth,height=\textheight]{../external/images/Revniron.PNG}
+
+\end{frame}
+
 \begin{frame}[fragile]{Format environmental variables}
 \protect\hypertarget{format-environmental-variables}{}
 
@@ -647,32 +656,28 @@ Somethign\ldots{}?
 
 \end{frame}
 
-\begin{frame}{Organize your project folders and markdown}
-\protect\hypertarget{organize-your-project-folders-and-markdown-2}{}
-
-!!PICK UP HERE!! \includegraphics{../external/images/setup_5_git.PNG}
-
-\end{frame}
-
-\begin{frame}{Organize your project folders and markdown}
-\protect\hypertarget{organize-your-project-folders-and-markdown-3}{}
-
-SHOW R
+\begin{frame}{This works for us}
+\protect\hypertarget{this-works-for-us}{}
 
 \includegraphics{../external/images/setup_5_git.PNG}
 
 \end{frame}
 
-\begin{frame}{Organize your project folders and markdown}
-\protect\hypertarget{organize-your-project-folders-and-markdown-4}{}
+\begin{frame}{This works for us}
+\protect\hypertarget{this-works-for-us-1}{}
 
-SHOW RMD
-
-\includegraphics{../external/images/setup_5_git.PNG}
+\includegraphics{../external/images/Rfolder.PNG}
 
 \end{frame}
 
-\begin{frame}[fragile]{RStudio Setup}
+\begin{frame}{This works for us}
+\protect\hypertarget{this-works-for-us-2}{}
+
+\includegraphics{../external/images/RMDfolder.PNG}
+
+\end{frame}
+
+\begin{frame}{RStudio Setup}
 \protect\hypertarget{rstudio-setup-1}{}
 
 \begin{itemize}
@@ -680,22 +685,48 @@ SHOW RMD
 \item
   Download R and Rstudio
 \item
-  Add-on packages
+  Strongly recommend Microsoft R (\url{https://mran.microsoft.com/open})
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Comes with Intel MKL
+  \end{itemize}
+\item
+  Plain R is fine (\url{https://cran.r-project.org/})
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Can relink to faster libraries
+  \end{itemize}
+\item
+  Download RStudio (\url{https://www.rstudio.com/})
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Get the packages you need}
+\protect\hypertarget{get-the-packages-you-need}{}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{#to install from CRAN}
 \KeywordTok{install.pacakges}\NormalTok{(}\StringTok{'devtools'}\NormalTok{, }\DataTypeTok{depenedencies =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#to install from a git  (requires the devtools package)}
+\NormalTok{dev.tools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(Gibbsdavidl}\OperatorTok{/}\NormalTok{CatterPlots)}
+
 \CommentTok{#to install from a file}
 \KeywordTok{install.packages}\NormalTok{(}\StringTok{'/mypath/to/package/ADNIMERGE.tar.gz'}\NormalTok{, }
                  \DataTypeTok{type=}\StringTok{'source'}\NormalTok{, }\DataTypeTok{repos=}\OtherTok{NULL}\NormalTok{) }
-\CommentTok{#to install from a git  (requires the devtools package)}
-\NormalTok{dev.tools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(Gibbsdavidl}\OperatorTok{/}\NormalTok{CatterPlots) }
 \end{Highlighting}
 \end{Shaded}
 
 \end{frame}
+
+\hypertarget{part-2-r}{%
+\section{Part 2: R}\label{part-2-r}}
 
 \begin{frame}{R Background}
 \protect\hypertarget{r-background}{}
@@ -720,26 +751,14 @@ look somewhat like S. We call the result ``R''.}
 \begin{itemize}
 \tightlist
 \item
-  R is for stats and general purpose programming
-\item
-  R is a functional language
+  R is general purpose programming
 
   \begin{itemize}
   \tightlist
   \item
-    Turing complete -- can do anything other languages can do
-  \end{itemize}
-\item
-  R is an environment to inferface with the langauge
-
-  \begin{itemize}
-  \tightlist
+    Design around \& for statistics
   \item
-    Console based
-  \item
-    Type in commands
-  \item
-    No point-and-click
+    ``for and by statisticians''
   \end{itemize}
 \item
   R is a collection of tools
@@ -756,57 +775,202 @@ look somewhat like S. We call the result ``R''.}
   \tightlist
   \item
     No cost, no restrictions
+  \item
+    E.g., Microsoft (nee Revolution) R
+  \end{itemize}
+\item
+  R is a functional language
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Turing complete
+  \item
+    Mathematical functions
+  \item
+    Pass expressions and functions to and from functions
   \end{itemize}
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}{A little bit more about beer}
-\protect\hypertarget{a-little-bit-more-about-beer}{}
+\begin{frame}[fragile]{R}
+\protect\hypertarget{r}{}
 
 \begin{itemize}
 \tightlist
 \item
-  R is free (as in beer and speech)
+  Counting starts at 1, not 0
+\item
+  Data types (see \texttt{class()})
 
   \begin{itemize}
   \tightlist
   \item
-    No cost, no restrictions
+    Stored as \emph{vectors}
   \item
-    Revolution/MRAN
+    numeric
+
+    \begin{itemize}
+    \tightlist
+    \item
+      real or decimal
+    \item
+      Includes \texttt{NaN}, \texttt{Inf}, \texttt{-Inf}
+    \end{itemize}
   \item
-    etc\ldots{}
+    integer
+  \item
+    complex
+  \item
+    character
+  \item
+    logical
+
+    \begin{itemize}
+    \tightlist
+    \item
+      includes \texttt{NA}, \texttt{TRUE}, \texttt{FALSE}
+    \end{itemize}
+  \item
+    factor
+
+    \begin{itemize}
+    \tightlist
+    \item
+      factors are usually not your friends
+    \item
+      generally: stringsAsFactors = F or convert these
+    \end{itemize}
   \end{itemize}
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}{R et al}
-\protect\hypertarget{r-et-al}{}
+\begin{frame}[fragile]{R: factor disasters}
+\protect\hypertarget{r-factor-disasters}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a_numeric_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{(a_numeric_vector }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4  1  2 -1  3  6  6  3  2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(a_numeric2factor_vector <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(a_numeric_vector))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3  0  1  -2 2  5  5  2  1 
+## Levels: -2 0 1 2 3 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(a_numeric2factor_vector))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5 2 3 1 4 6 6 4 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(a_numeric2factor_vector)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  3  0  1 -2  2  5  5  2  1
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{R: factor disasters}
+\protect\hypertarget{r-factor-disasters-1}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a_numeric_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{(a_numeric_vector }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4  1  2 -1  3  6  6  3  2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a_numeric2character_vector <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(a_numeric_vector)}
+
+\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(a_numeric2character_vector))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  3  0  1 -2  2  5  5  2  1
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{R}
+\protect\hypertarget{r-1}{}
 
 \begin{itemize}
 \tightlist
 \item
-  A bit of background, including idiosyncrasies and unique things about
-  R
+  Data structures
 
   \begin{itemize}
   \tightlist
   \item
-    Especially packages \& three ways to install (somewhat covered
-    above) CRAN, Locally, Git \& others (devtools)
+    vector{[}1{]}
   \item
-    It's a functional language
+    matrix{[}1,1{]}
   \item
-    Data types Including data frames \& alts like tibbles
+    array{[}1,1,1{]}
+  \item
+    list{[}{[}1{]}{]}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Can contain mixtures of types
+    \item
+      or list\$\texttt{name}
+    \end{itemize}
+  \item
+    data.frame:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Is technically a list but access in three ways
+    \item
+      data.frame{[}{[}1{]}{]}{[}1{]}
+    \item
+      data.frame{[}1,1{]}
+    \item
+      data.frame\$\texttt{name}
+    \item
+      tibbles: tidyverse data.frames
+    \end{itemize}
   \end{itemize}
 \end{itemize}
 
 \end{frame}
 
 \begin{frame}{R}
-\protect\hypertarget{r}{}
+\protect\hypertarget{r-2}{}
 
 Some more about R here\ldots{}
 
@@ -827,7 +991,7 @@ Some more about R here\ldots{}
 \end{frame}
 
 \begin{frame}{R et al}
-\protect\hypertarget{r-et-al-1}{}
+\protect\hypertarget{r-et-al}{}
 
 \begin{itemize}
 \tightlist
@@ -982,8 +1146,8 @@ Explanation
 
 \end{frame}
 
-\hypertarget{part-2-rmarkdown}{%
-\section{Part 2: RMarkdown}\label{part-2-rmarkdown}}
+\hypertarget{part-3-rmarkdown}{%
+\section{Part 3: RMarkdown}\label{part-3-rmarkdown}}
 
 \begin{frame}{RMarkdown}
 \protect\hypertarget{rmarkdown}{}
@@ -1047,8 +1211,8 @@ Explanation
 
 \end{frame}
 
-\hypertarget{part-3-advanced-r}{%
-\section{Part 3: Advanced R}\label{part-3-advanced-r}}
+\hypertarget{part-4-advanced-r}{%
+\section{Part 4: Advanced R}\label{part-4-advanced-r}}
 
 \begin{frame}{Some advanced/other things we're not covering}
 \protect\hypertarget{some-advancedother-things-were-not-covering}{}

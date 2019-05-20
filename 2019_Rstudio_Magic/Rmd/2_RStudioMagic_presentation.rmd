@@ -16,9 +16,10 @@ knitr::opts_chunk$set(echo = FALSE)
 ## The big outline
 
 * Part 0: Introduction, background, & RStudio
-* Part 1: Setup & R
-* Part 2: RMarkdown & more
-* Part 3: Advanced, beyond, & our favorites
+* Part 1: Setup 
+* Part 2: R
+* Part 3: RMarkdown & more
+* Part 4: Advanced, beyond, & our favorites
 
 # Part 0: Introduction, Background, & RStudio
 
@@ -176,7 +177,7 @@ Somethign...?
     
 ## Environmental variables
 
-SHOW THIS IN THE FOLDER STRUCTURE
+![](../external/images/Revniron.PNG){width=60%}
 
 ## Format environmental variables
 
@@ -204,38 +205,43 @@ https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
 * What works for your organization or team?
 * Maximize utility, minimize complexity
 
-## Organize your project folders and markdown
-
-!!PICK UP HERE!!
-![](../external/images/setup_5_git.PNG)
-
-## Organize your project folders and markdown
-
-SHOW R
+## This works for us
 
 ![](../external/images/setup_5_git.PNG)
 
-## Organize your project folders and markdown
+## This works for us
 
+![](../external/images/Rfolder.PNG)
 
-SHOW RMD
+## This works for us
 
-![](../external/images/setup_5_git.PNG)
+![](../external/images/RMDfolder.PNG)
 
 ## RStudio Setup
 
 * Download R and Rstudio
-* Add-on packages
+* Strongly recommend Microsoft R (https://mran.microsoft.com/open)
+  * Comes with Intel MKL
+* Plain R is fine (https://cran.r-project.org/)
+    * Can relink to faster libraries 
+* Download RStudio (https://www.rstudio.com/)
+
+## Get the packages you need
 
 ```{r install_packages, echo=T, eval=F}
 #to install from CRAN
 install.pacakges('devtools', depenedencies = TRUE)
+
+#to install from a git  (requires the devtools package)
+dev.tools::install_github(Gibbsdavidl/CatterPlots)
+
 #to install from a file
 install.packages('/mypath/to/package/ADNIMERGE.tar.gz', 
                  type='source', repos=NULL) 
-#to install from a git  (requires the devtools package)
-dev.tools::install_github(Gibbsdavidl/CatterPlots) 
 ```
+
+
+# Part 2: R
 
 ## R Background
 
@@ -246,31 +252,62 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 
 ## What is R?
 
-* R is for stats and general purpose programming
-* R is a functional language
-    * Turing complete -- can do anything other languages can do
-* R is an environment to inferface with the langauge
-    * Console based
-    * Type in commands
-    * No point-and-click
+* R is general purpose programming
+  * Design around & for statistics
+  * "for and by statisticians"
 * R is a collection of tools 
-    * Pre-packaged software at your disposal
+  * Pre-packaged software at your disposal
 * R is free (as in beer and speech)
-    * No cost, no restrictions
-    
-## A little bit more about beer
+  * No cost, no restrictions
+  * E.g., Microsoft (nee Revolution) R
+* R is a functional language
+  * Turing complete
+  * Mathematical functions
+  * Pass expressions and functions to and from functions
 
-* R is free (as in beer and speech)
-    * No cost, no restrictions
-    * Revolution/MRAN
-    * etc...
+## R
 
-## R et al
-* A bit of background, including idiosyncrasies and unique things about R
-    * Especially packages & three ways to install (somewhat covered above)
-			CRAN, Locally,  Git & others (devtools)
-    * It’s a functional language
-    * Data types Including data frames & alts like tibbles
+* Counting starts at 1, not 0
+* Data types (see `class()`)
+  * Stored as *vectors*
+  * numeric
+    * real or decimal
+    * Includes `NaN`, `Inf`, `-Inf`
+  * integer
+  * complex
+  * character
+  * logical
+    * includes `NA`, `TRUE`, `FALSE`
+  * factor
+    * factors are usually not your friends
+    * generally: stringsAsFactors = F or convert these
+
+## R: factor disasters
+
+```{r factors_are_not_friendly, echo=T}
+
+a_numeric_vector <- c(3, 0, 1, -2, 2, 5, 5, 2, 1)
+(a_numeric_vector + 1)
+(a_numeric2factor_vector <- as.factor(a_numeric_vector))
+(as.numeric(a_numeric2factor_vector))
+(as.numeric(as.character(a_numeric2factor_vector)))
+
+```
+
+## R  
+* Data structures
+  * vector[1]
+  * matrix[1,1]
+  * array[1,1,1]
+  * list[[1]]
+    * Can contain mixtures of types
+    * or list$`name`
+  * data.frame:
+    * Is technically a list but access in three ways
+    * data.frame[[1]][1]
+    * data.frame[1,1]
+    * data.frame$`name`
+    * tibbles: tidyverse data.frames
     
 ## R
 
@@ -279,6 +316,7 @@ Some more about R here...
 ## Tidyverse
 * something here about tidy
 * Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
+
 
 ## R et al
 * A bit of background, including idiosyncrasies and unique things about R
@@ -335,7 +373,7 @@ Explanation
 * Explain motivation, not method
 * covSTATIS: `6_covstatis_example.R`
 
-# Part 2: RMarkdown
+# Part 3: RMarkdown
 
 ## RMarkdown
 
@@ -361,7 +399,7 @@ Explanation
 * Don't load unneccesary libraries
 * More at: https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
 
-# Part 3: Advanced R
+# Part 4: Advanced R
 
 ## Some advanced/other things we’re not covering
 * package development
