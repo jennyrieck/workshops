@@ -2,87 +2,47 @@
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
-\documentclass[
-  ignorenonframetext,
-]{beamer}
+\documentclass[ignorenonframetext,]{beamer}
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
 \beamertemplatenavigationsymbolsempty
-% Prevent slide breaks in the middle of a paragraph:
-\widowpenalties 1 10000
-\raggedbottom
-\setbeamertemplate{part page}{
-  \centering
-  \begin{beamercolorbox}[sep=16pt,center]{part title}
-    \usebeamerfont{part title}\insertpart\par
-  \end{beamercolorbox}
-}
-\setbeamertemplate{section page}{
-  \centering
-  \begin{beamercolorbox}[sep=12pt,center]{part title}
-    \usebeamerfont{section title}\insertsection\par
-  \end{beamercolorbox}
-}
-\setbeamertemplate{subsection page}{
-  \centering
-  \begin{beamercolorbox}[sep=8pt,center]{part title}
-    \usebeamerfont{subsection title}\insertsubsection\par
-  \end{beamercolorbox}
-}
-\AtBeginPart{
-  \frame{\partpage}
-}
-\AtBeginSection{
-  \ifbibliography
-  \else
-    \frame{\sectionpage}
-  \fi
-}
-\AtBeginSubsection{
-  \frame{\subsectionpage}
-}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provides euro and other symbols
 \else % if luatex or xelatex
   \usepackage{unicode-math}
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{hyperref}
 \hypersetup{
-  pdftitle={Reproducible (and collaborative) science through RStudio},
-  pdfauthor={Jenny Rieck \& Derek Beaton},
-  colorlinks=true,
-  linkcolor=Maroon,
-  filecolor=Maroon,
-  citecolor=Blue,
-  urlcolor=blue,
-  breaklinks=true}
+            pdftitle={Reproducible (and collaborative) science through RStudio},
+            pdfauthor={Jenny Rieck \& Derek Beaton},
+            colorlinks=true,
+            linkcolor=Maroon,
+            citecolor=Blue,
+            urlcolor=blue,
+            breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \newif\ifbibliography
 \usepackage{color}
@@ -134,10 +94,43 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+\centering
+\begin{beamercolorbox}[sep=16pt,center]{part title}
+  \usebeamerfont{part title}\insertpart\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+\centering
+\begin{beamercolorbox}[sep=12pt,center]{part title}
+  \usebeamerfont{section title}\insertsection\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+\centering
+\begin{beamercolorbox}[sep=8pt,center]{part title}
+  \usebeamerfont{subsection title}\insertsubsection\par
+\end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-2}
+\setcounter{secnumdepth}{0}
 
 % set default figure placement to htbp
 \makeatletter
@@ -146,6 +139,7 @@
 
 
 \title{Reproducible (and collaborative) science through RStudio}
+\providecommand{\subtitle}[1]{}
 \subtitle{A whirlwind tour with R, RMarkdown, Python, LaTeX, and more}
 \author{Jenny Rieck \& Derek Beaton}
 \date{May 20 2019}
@@ -594,6 +588,35 @@ setup}\label{part-2-rstudio-project-setup}}
 
 \end{frame}
 
+\begin{frame}{RStudio Setup}
+\protect\hypertarget{rstudio-setup}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Download R and Rstudio
+\item
+  Strongly recommend Microsoft R (\url{https://mran.microsoft.com/open})
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Comes with Intel MKL
+  \end{itemize}
+\item
+  Plain R is fine (\url{https://cran.r-project.org/})
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Can relink to faster libraries
+  \end{itemize}
+\item
+  Download RStudio (\url{https://www.rstudio.com/})
+\end{itemize}
+
+\end{frame}
+
 \begin{frame}{RStudio Environment}
 \protect\hypertarget{rstudio-environment}{}
 
@@ -737,7 +760,7 @@ setup}\label{part-2-rstudio-project-setup}}
 \end{frame}
 
 \begin{frame}{RStudio Setup}
-\protect\hypertarget{rstudio-setup}{}
+\protect\hypertarget{rstudio-setup-1}{}
 
 \begin{itemize}
 \tightlist
@@ -904,35 +927,6 @@ setup}\label{part-2-rstudio-project-setup}}
 
 \end{frame}
 
-\begin{frame}{RStudio Setup}
-\protect\hypertarget{rstudio-setup-1}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Download R and Rstudio
-\item
-  Strongly recommend Microsoft R (\url{https://mran.microsoft.com/open})
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Comes with Intel MKL
-  \end{itemize}
-\item
-  Plain R is fine (\url{https://cran.r-project.org/})
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Can relink to faster libraries
-  \end{itemize}
-\item
-  Download RStudio (\url{https://www.rstudio.com/})
-\end{itemize}
-
-\end{frame}
-
 \begin{frame}[fragile]{Get the packages you need}
 \protect\hypertarget{get-the-packages-you-need}{}
 
@@ -942,7 +936,7 @@ setup}\label{part-2-rstudio-project-setup}}
 \KeywordTok{install.pacakges}\NormalTok{(}\StringTok{'devtools'}\NormalTok{, }\DataTypeTok{depenedencies =} \OtherTok{TRUE}\NormalTok{)}
 
 \CommentTok{#to install from a git  (requires the devtools package)}
-\NormalTok{dev.tools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(Gibbsdavidl}\OperatorTok{/}\NormalTok{CatterPlots)}
+\NormalTok{devtools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(Gibbsdavidl}\OperatorTok{/}\NormalTok{CatterPlots)}
 
 \CommentTok{#to install from a file}
 \KeywordTok{install.packages}\NormalTok{(}\StringTok{'/mypath/to/package/ADNIMERGE.tar.gz'}\NormalTok{, }
@@ -960,44 +954,8 @@ setup}\label{part-2-rstudio-project-setup}}
 \begin{frame}{R et al}
 \protect\hypertarget{r-et-al}{}
 
-\begin{itemize}
-\tightlist
-\item
-  A bit of background, including idiosyncrasies and unique things about
-  R
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Especially packages \& three ways to install (somewhat covered
-    above) CRAN, Locally, Git \& others (devtools)
-  \item
-    It's a functional language
-  \item
-    Data types Including data frames \& alts like tibbles
-  \end{itemize}
-\item
-  Read/explore
-
-  \begin{itemize}
-  \tightlist
-  \item
-    explore .R scripts
-  \end{itemize}
-\item
-  Clean/export
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Show 0\_Create from PCA/MCA with Base, Tidyverse, Plyr (NOT dplyr),
-    data.table
-  \item
-    Reimport?
-  \item
-    Analyze With MCA \& covstatis
-  \end{itemize}
-\end{itemize}
+Here we dive into our stuff. We show a bit of the code here and there
+and explain syntax
 
 \end{frame}
 
@@ -1030,10 +988,20 @@ setup}\label{part-2-rstudio-project-setup}}
 
 \end{frame}
 
-\begin{frame}{Screenshots}
-\protect\hypertarget{screenshots}{}
+\begin{frame}{Create data 2 ways:}
+\protect\hypertarget{create-data-2-ways}{}
 
-Explanation
+\begin{block}{Base R}
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../external/images/create_data_1_base.PNG}
+
+\end{block}
+
+\begin{block}{tidyverse}
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../external/images/create_data_2_tidy.PNG}
+
+\end{block}
 
 \end{frame}
 
@@ -1220,7 +1188,7 @@ Explanation
   \url{https://github.com/Gibbsdavidl/CatterPlots}
 \end{itemize}
 
-\texttt{dev.tools::install\_github(Gibbsdavidl/CatterPlots)}
+\texttt{devtools::install\_github(Gibbsdavidl/CatterPlots)}
 
 \includegraphics[width=0.6\textwidth,height=\textheight]{../external/images/funR_1_catterplotter.png}
 
@@ -1250,9 +1218,9 @@ Explanation
   \url{https://github.com/karthik/wesanderson}
 \end{itemize}
 
-\texttt{dev.tools::install\_github(karthik/wesanderson)}
+\texttt{devtools::install\_github(karthik/wesanderson)}
 
-\includegraphics{../external/images/funR_3_wes_anderson.png}
+\includegraphics[width=0.75\textwidth,height=\textheight]{../external/images/funR_3_wes_anderson.png}
 
 \end{frame}
 
@@ -1269,7 +1237,7 @@ Explanation
   \begin{itemize}
   \tightlist
   \item
-    \texttt{dev.tools::install\_github(marcusvolz/strava)}
+    \texttt{devtools::install\_github(marcusvolz/strava)}
   \end{itemize}
 \end{itemize}
 

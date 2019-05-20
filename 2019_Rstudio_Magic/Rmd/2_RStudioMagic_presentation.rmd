@@ -308,7 +308,7 @@ https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
 install.pacakges('devtools', depenedencies = TRUE)
 
 #to install from a git  (requires the devtools package)
-dev.tools::install_github(Gibbsdavidl/CatterPlots)
+devtools::install_github(Gibbsdavidl/CatterPlots)
 
 #to install from a file
 install.packages('/mypath/to/package/ADNIMERGE.tar.gz', 
@@ -332,10 +332,15 @@ We show a bit of the code here and there and explain syntax
     * using base R functions: `0_create_ADNI_data_base.R`
     * Using tidyverse functions: `1_create_ADNI_data_tidyverse.R`
 
-## Screenshots
+## Create data 2 ways:
 
-Explanation
-    
+### base R
+![](../external/images/create_data_1_base.PNG){width=80%}
+
+### tidyverse
+
+![](../external/images/create_data_2_tidy.PNG){width=80%}
+
 ## Exploring your data
 
 * Many packages to help explore and describe your data:
@@ -409,7 +414,7 @@ Explanation
 
 * https://github.com/Gibbsdavidl/CatterPlots
 
-`dev.tools::install_github(Gibbsdavidl/CatterPlots)`
+`devtools::install_github(Gibbsdavidl/CatterPlots)`
 
 ![](../external/images/funR_1_catterplotter.png){width=60%}
 
@@ -425,15 +430,15 @@ Explanation
 
 * https://github.com/karthik/wesanderson
 
-`dev.tools::install_github(karthik/wesanderson)`
+`devtools::install_github(karthik/wesanderson)`
 
-![](../external/images/funR_3_wes_anderson.png)
+![](../external/images/funR_3_wes_anderson.png){width=75%}
 
 ## Mapping your Strava routes
 
 * https://www.r-bloggers.com/strava-rides-map-in-r/
 * ALSO https://marcusvolz.com/?p=4068
-    * `dev.tools::install_github(marcusvolz/strava)`
+    * `devtools::install_github(marcusvolz/strava)`
     
 ![](../external/images/funR_4_strava_combo.png)
 
