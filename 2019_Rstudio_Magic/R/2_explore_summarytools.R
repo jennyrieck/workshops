@@ -17,8 +17,11 @@ frequency_table
 view(frequency_table)
 
 ## 2.2 Cross-tab table with chi-square test
-ctable(amerge_subset$DX, amerge_subset$PTGENDER, prop='r', totals = T, chisq = T)
-ctable(amerge_subset$DX, amerge_subset$APOE4, prop='r', totals = F,chisq = T)
+cross_table_dx_gender<-ctable(amerge_subset$DX, amerge_subset$PTGENDER, prop='r', totals = T, chisq = T)
+view(cross_table_dx_gender)
+
+cross_table_dx_apoe<-ctable(amerge_subset$DX, amerge_subset$APOE4, prop='r', totals = F,chisq = T)
+view(cross_table_dx_apoe)
 
 ### for markdown with multiline headings
 #print(ctable(amerge_subset$DX, amerge_subset$PTGENDER, prop='r', totals = T), method = "render")
@@ -29,8 +32,11 @@ ctable(amerge_subset$DX, amerge_subset$APOE4, prop='r', totals = F,chisq = T)
 #  print(method = "render")
 
 ## 2.3 Descriptive univarite stats for continuous variables
-descr(amerge_subset[,variable_type_map[,1]==1])
-descr(amerge_subset[,variable_type_map[,1]==1], stats=c("mean", "sd", "min", "med", "max"),transpose = T, headings=F)
+full_descriptives<-descr(amerge_subset[,variable_type_map[,1]==1])
+view(full_descriptives)
+
+reduced_descriptives<-descr(amerge_subset[,variable_type_map[,1]==1], stats=c("mean", "sd", "min", "med", "max"),transpose = T, headings=F)
+view(reduced_descriptives)
 
 ## 2.4 Data frame summary
 view(dfSummary(amerge_subset))
@@ -38,5 +44,5 @@ view(dfSummary(amerge_subset))
 #dfSummary(amerge_subset, plain.ascii = FALSE, style = "grid",graph.magnif = 0.75, valid.col = FALSE, tmp.img.dir = "/tmp")
 
 ## 2.5 Descriptive stats by DX group
-stby(data = amerge_subset,INDICES = amerge_subset$DX,FUN = descr, stats = c("mean", "sd", "min", "med", "max"), transpose = TRUE)
-
+group_descriptives<-stby(data = amerge_subset,INDICES = amerge_subset$DX,FUN = descr, stats = c("mean", "sd", "min", "med", "max"), transpose = TRUE)
+view(group_descriptives)
