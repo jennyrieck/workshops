@@ -10,7 +10,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, tidy.opts=list(width.cutoff=40),tidy=TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## The big outline
@@ -30,13 +30,13 @@ If you want to skip over the background & RStudio, go straight to [Part 2: RStud
 ## Background
 
 * This is a taste and to bring you into a bigger world
-  * R, Python, SQL, and JavaScript are critical data science tools/languages
+* R, Python, SQL, and JavaScript are critical data science tools/languages
 * R (language and community) strongly emphasizes 
-  * Centralization & standards
-  * Rigor & reproducibility (packages, RMarkdown)
+* Centralization & standards
+* Rigor & reproducibility (packages, RMarkdown)
 * An interesting language
-  * Functional
-  * With a sublanguage (or dialect?): the `tidyverse`
+* Functional
+* With a sublanguage (or dialect?): the `tidyverse`
 
 
 ## R is a community (actually many communities!)
@@ -44,155 +44,124 @@ If you want to skip over the background & RStudio, go straight to [Part 2: RStud
 * Help and resources
 * Package development and distribution
 * An ideal example
-  * Not quite always that way
-  * Strong communal presence
+* Not quite always that way
+* Strong communal presence
 
 ## R: Help!
 
 * So many websites e.g., https://www.statmethods.net/
 * Online forums (Stack Exchange, r-lists)
 * SpringerLink
-  * All R books for free (pdf format) or for minimal cost (printed)
+* All R books for free (pdf format) or for minimal cost (printed)
 * Vignettes
-  * step-by-step instruction guides for packages
+* step-by-step instruction guides for packages
 * Git
-  * With open books (via bookdown)
+* With open books (via bookdown)
 * Twitter #rstats
 * RStudio (website)
-  * Videos, cheat sheets
+* Videos, cheat sheets
 
 ## R Packages
 
 * Packages are bundles of code made by someone (or many people) for everyone to use
-  * There are packages for everything
-  * We'll cover some of the diversity throughout
+* There are packages for everything
+* We'll cover some of the diversity throughout
 * Comprehensive & Reproducible
 * Available primarily on CRAN
-  * But also github (less so: r-forge)
-  
+* But also github (less so: r-forge)
+
 # Part 1: A bit about R
 
 ## R Background
 
 * Created in 1992 by Gentleman & Ihaka
 
- _[we] considered the problem of obtaining decent statistical software for our undergraduate Macintosh lab. After considering the options, we decided that the most satisfactory alternative was to write our own. […] Finally we added some syntactic sugar to make it look somewhat like S. We call the result “R”._
+_[we] considered the problem of obtaining decent statistical software for our undergraduate Macintosh lab. After considering the options, we decided that the most satisfactory alternative was to write our own. […] Finally we added some syntactic sugar to make it look somewhat like S. We call the result “R”._
 
 
 ## What is R?
 
 * R is general purpose programming
-  * Design around & for statistics
-  * "for and by statisticians"
+* Design around & for statistics
+* "for and by statisticians"
 * R is a collection of tools 
-  * Pre-packaged software at your disposal
+* Pre-packaged software at your disposal
 * R is free (as in beer and speech)
-  * No cost, no restrictions
-  * E.g., Microsoft (nee Revolution) R
+* No cost, no restrictions
+* E.g., Microsoft (nee Revolution) R
 * R is a functional language
-  * Turing complete
-  * Mathematical functions
-  * Pass expressions and functions to and from functions
+* Turing complete
+* Mathematical functions
+* Pass expressions and functions to and from functions
 
 ## R: Data types
 
 * Stored as *vectors*
-  * see `class()`
+* see `class()`
 * numeric
-  * real or decimal
-  * Includes `NaN`, `Inf`, `-Inf`
+* real or decimal
+* Includes `NaN`, `Inf`, `-Inf`
 * integer
 * complex
 * character
 * logical
-  * includes `NA`, `TRUE`, `FALSE`
+* includes `NA`, `TRUE`, `FALSE`
 * factor
-  * factors are usually not your friends
-  * generally: stringsAsFactors = F or convert these
+* factors are usually not your friends
+* generally: `stringsAsFactors = F` or convert these
 
 ## R: factor disasters
 
 ```{r factors_are_not_friendly, echo=T}
-
 a_numeric_vector <- c(3, 0, 1, -2, 2, 5, 5, 2, 1)
 (a_numeric_vector + 1)
 (a_numeric2factor_vector <- as.factor(a_numeric_vector))
 (as.numeric(a_numeric2factor_vector))
 (as.numeric(as.character(a_numeric2factor_vector)))
-
 ```
 
 ## R: Data structures  
 
 * Starts counting from 1
-  * Not 0
+* Not 0
 * vector[1]
 * matrix[1,1]
 * array[1,1,1]
 * list[[1]]
-  * Can contain mixtures of types
-  * or list$`name`
+* Can contain mixtures of types
+* or list$`name`
 * data.frame:
-  * Is technically a list but access in three ways
-  * data.frame[[1]][1]
-  * data.frame[1,1]
-  * data.frame$`name`
-  * tibbles: tidyverse data.frames
-    
-## R: Some syntax
+* Is technically a list but access in three ways
+* data.frame[[1]][1]
+* data.frame[1,1]
+* data.frame$`name`
+* tibbles: tidyverse data.frames
 
-```{r assigment, eval=FALSE, echo=TRUE, tidy=FALSE}
+## Cheatsheet for going from MatLab to R
 
-# allowed but not preferred
-a_variable = 10 + 1
+![](../external/images/r_cheatsheet_matlab.PNG)
+http://mathesaurus.sourceforge.net/octave-r.html
 
-# preferred
-a_variable <- 10 + 1
+## Cheatsheet for base R
+![](../external/images/r_cheatsheet_base.PNG)
 
-# a bonus
-10 + 1 -> a_variable
-
-```
-
-## R: Some syntax
-
-```{r dots_example, eval=FALSE, echo=TRUE}
-
-# allowed but not preferred
-a.variable = 10 + 1
-  ## dots have 2 meanings in R, 
-    ## with a 3rd in the tidyverse
-
-# preferred
-a_variable <- 10 + 1
-
-```
-
-## R: Some reservations
-
-* c, q, t, C, D, F, I, and T (via https://www.johndcook.com/blog/r_language_for_programmers/)
-* Except that these can be redefined
-  * With great power comes great responsibility (and danger)
-    
 ## Tidyverse
 
-* R is "base R"
-* `tidyverse`: "an opinionated collection of R packages designed for data science [that] share an underlying design philosophy, **grammar, and data structures.**"
-  * Started(?) with/because of `ggplot2`
-  * A sublanguage or dialect
-  * Can do so because R is functional language
-* Strongly built around a style:
-  * objects are nouns
-  * functions are verbs
-* Learn it! 
-  * But don’t learn *only* the tidyverse, you’ll be lost in base R
+* `tidyverse` is a collection of R packages for transforming and visualizing data
+* Core packages:
+* `ggplot2`, `dplyr`, `tidyr`, `readr`, `tibble`, `stringr`, `purrr`, `forcats`
+* Get them all with `install.packages("tidyverse")`
+* Piping `%>%` to create a sequence of actions
+```{r, pipe_example,eval=F, echo=T}
+iris_virginica <- iris %>% 
+  filter(Species=="virginica")
+```
+* For full tidy immersion see: https://style.tidyverse.org/
+* Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
+* For a comparison of base and tidy code see scripts `/R/0_create_ADNI_data_base.R` and `1_create_ADNI_data_tidy.R`
 
-## R cheat sheets
-
-* R to Matlab: https://cran.r-project.org/doc/contrib/Hiebeler-matlabR.pdf
-* R for programmers: https://www.johndcook.com/blog/r_language_for_programmers/
-* RStudio's giant list: https://www.rstudio.com/resources/cheatsheets/
-
+## tidyverse cheatsheet
+![](../external/images/r_cheatsheet_tidy.PNG)
 
 # Part 2: RStudio & Project setup
 
@@ -200,29 +169,23 @@ a_variable <- 10 + 1
 
 * IDE: Integrated development environment
 * RStudio: Does so much
-  * We scratch the surface here
+* We scratch the surface here
 * Quick walk through
 * Followed by specific set up 
-  * Generally, but
-  * Also for this workshop
-  
+* Generally, but
+* Also for this workshop
+
 ## RStudio Setup
 
-* Download R and Rstudio (https://www.rstudio.com/)
+* Download R and Rstudio
 * Strongly recommend Microsoft R (https://mran.microsoft.com/open)
-  * Comes with Intel MKL
+* Comes with Intel MKL
 * Plain R is fine (https://cran.r-project.org/)
-    * Can relink to faster libraries 
-* Download RStudio   
-* Download & Install
-  * Git ()
-  * `Python` ()
-  * Some form of `LaTeX` ()
+* Can relink to faster libraries 
+* Download RStudio (https://www.rstudio.com/)  
 
 ## RStudio Environment
-
-![](../external/images/rstudio_0_terminal_code.PNG)
-
+![](../external/images/rstudio_terminal_0.PNG)
 
 ## RStudio Environment
 ![](../external/images/rstudio_terminal_1_CONSOLE.png)
@@ -244,15 +207,15 @@ a_variable <- 10 + 1
 * Built-in integration with version control (git or SVN)
 * Package and documentation generation
 * Reproducible science!
-  * R Markdown documents
-    * Save and execute code
-    * Generate high quality reports that can be shared
-  * Create presentations (like this one!)
-  * Even write papers
-  * Python, D3 (JavaScript), SQL, Shiny, LaTeX, Git/SVN, HTML/CSS, and so much more.
+* R Markdown documents
+* Save and execute code
+* Generate high quality reports that can be shared
+* Create presentations (like this one!)
+* Even write papers
+* Python, D3 (JavaScript), SQL, Shiny, LaTeX, Git/SVN, HTML/CSS, and so much more.
 * This workshop
-  * Will walk you through some of this (and more)
-  * See https://github.com/jennyrieck/workshops/tree/master/2019_Rstudio_Magic
+* Will walk you through some of this (and more)
+* See https://github.com/jennyrieck/workshops/tree/master/2019_Rstudio_Magic
 
 ## RStudio is more
 
@@ -275,7 +238,6 @@ a_variable <- 10 + 1
 
 ## Project and Environment Setup
 
-* NEED CLEAN UP STARTING HERE.
 * Special & hidden files
 * Having a structure
 
@@ -287,8 +249,8 @@ a_variable <- 10 + 1
 ## For safety & collaboration 
 
 * Project(s) files
-  * SOMETHING!
-  
+* SOMETHING!
+
 ## Projects through Git
 
 * Create a new project File
@@ -298,32 +260,32 @@ a_variable <- 10 + 1
 ## Git & Projects
 
 * Git
-  * Download git and link executable within RStudio 
-  ![](../external/images/setup_1_rstudio_git.PNG){width=60%} 
+* Download git and link executable within RStudio 
+![](../external/images/setup_1_rstudio_git.PNG){width=60%} 
 
 ## Format .gitignore
 
 * File types to ignore via version control
-  * `**` before each extentions will match directories anywhere in the repo
-  
-  ![](../external/images/gitignore.PNG){width=75%}
-    
-## Environment variables
+* `**` before each extentions will match directories anywhere in the repo
+
+![](../external/images/gitignore.PNG){width=75%}
+
+## Environmental variables
 
 ![](../external/images/Revniron.PNG){width=60%}
 
 ## Format environmental variables
 
 * Set environmental variables (ie, directory location of data) to make code generalizable across computers
-  * Don't commit or share these
+* Don't commit or share these
 * In **your** project folder create a `.Renviron` file and define variables
-  * Jenny's:
-  
-  ![](../external/images/setup_3_rstudio_project_environ.PNG){width=60%}
-  
-  * Derek's:
-  
-  ![](../external/images/setup_3_rstudio_project_environ2.PNG){width=80%}
+* Jenny's:
+
+![](../external/images/setup_3_rstudio_project_environ.PNG){width=60%}
+
+* Derek's:
+
+![](../external/images/setup_3_rstudio_project_environ2.PNG){width=80%}
 
 ## Organize your project folders and markdown
 
@@ -364,68 +326,78 @@ devtools::install_github(Gibbsdavidl/CatterPlots)
 install.packages('/mypath/to/package/ADNIMERGE.tar.gz', 
                  type='source', repos=NULL) 
 ```
-		
+
+## Some transition?
+
+
+
+## R et al
+
+Here we dive into our stuff.
+We show a bit of the code here and there and explain syntax
+
 ## Read in and create your dataframe
 
 * ADNI Dataset adnimerge package
-    * Reduce full dataset to only those participants (rows) and variables (columns) you're interested in
+* Reduce full dataset to only those participants (rows) and variables (columns) you're interested in
 * Two methods to create your dataframe
-    * using base R functions: `0_create_ADNI_data_base.R`
-    * Using tidyverse functions: `1_create_ADNI_data_tidyverse.R`
+* using base R functions: `0_create_ADNI_data_base.R`
+* Using tidyverse functions: `1_create_ADNI_data_tidyverse.R`
 
-## ADNI & ADNIMERGE
-
-## Cleaning: Base
-
-```{r 0_adnimerge_base, eval=FALSE, echo=TRUE, tidy=FALSE}
-library(ADNIMERGE)
-adni.cols <- c('RID', 'VISCODE', 'DX', 'AGE', 'PTGENDER', 'PTEDUCAT', 'PTETHCAT', 'PTRACCAT', 'APOE4', 'FDG', 'AV45', 'CDRSB', 'ADAS13', 'MOCA', 'WholeBrain', 'Hippocampus', 'MidTemp', 'mPACCtrailsB')
-adni.rows <- c(adnimerge$VISCODE=='bl' & adnimerge$MOCA>=16)
-amerge_subset <- adnimerge[adni.rows,adni.cols]
-amerge_subset <- amerge_subset[complete.cases(amerge_subset),]
-amerge_subset$HMSCORE <- modhach$HMSCORE[match(amerge_subset$RID, modhach$RID)]
-
-```
-    
-## Cleaning: tidyverse
-
-```{r 1_adnimerge_tidy, eval=FALSE, echo=TRUE, tidy=FALSE}
-library(ADNIMERGE)
-adnimerge %>%
-  dplyr::select(RID, VISCODE, DX, AGE, PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, APOE4, FDG, AV45, CDRSB, ADAS13, MOCA, WholeBrain, Hippocampus, MidTemp, mPACCtrailsB) %>%
-  filter(VISCODE == "bl") %>%
-  filter(MOCA >= 16) %>%
-  drop_na() -> amerge_subset
-
-amerge_subset %<>% inner_join(modhach[,c("RID","HMSCORE")])
-```
-    
 ## Create data 2 ways:
 
 ### base R
-![](../external/images/create_data_1_base.PNG){width=80%}
+![](../external/images/r_create_data_1_base.PNG){width=80%}
 
 ### tidyverse
 
-![](../external/images/create_data_2_tidy.PNG){width=80%}
-
+![](../external/images/r_create_data_2_tidy.PNG){width=80%}
 
 ## Exploring your data
 
 * Many packages to help explore and describe your data:
-    * summarytools: `2_explore_summarytools.R`
-    * inspectdf: `3_explore_inspectdf.R`
-    * DataExplorer: `4_explore_DataExplorer_one_liner.R`
+* summarytools: `2_explore_summarytools.R`
+* inspectdf: `3_explore_inspectdf.R`
+* DataExplorer: `4_explore_DataExplorer_one_liner.R`
 
-## Code w/ eval=F
-    
+## Explore with `summarytools`
+
+Provides frequency tables, cross tables, and descriptive statistics for your dataset
+```{r summtools, echo=T, eval=F}
+## Cross table of Diagnosis by APOE statis with X2 test
+view(ctable(amerge_subset$DX, amerge_subset$APOE4, 
+            prop='r', totals = F,chisq = T))
+## Descriptive statistics for continuous variables 
+view(descr(amerge_subset[,variable_type_map[,1]==1], 
+           stats=c("mean", "sd", "min", "med", "max"),
+           transpose = T, headings=F))
+```
+![](../external/images/r_explore_1_summarytools_combo.PNG)
+
+## Explore with `inspectdf`
+
+* Something here
+
+## Explore with `DataExplorer`
+
+* *One line* of code to generate an rmarkdown report summarizing your data
+```{r dataexplor, echo=T, eval=F}
+DataExplorer::create_report(
+  amerge_subset[variable_type_map[,"Continuous"]==1], 
+  report_title = 'ADNI Data Report',
+  output_file='My_ADNI_Data_Report_CORRECT.html',
+  output_dir = Sys.getenv("ADNI_FOLDER"))
+```
+
+![](../external/images/r_explore_3_dataexplorer_rmd_1.PNG){width=85%}
+
 ## Hard Break
 
 * DataExplorer is dangerous
 * Blind analyses can be *criminal*
-  * de Leeuw paper quote
-  * DEREK RANTS, PER USUAL.
-  
+* de Leeuw paper quote
+* DEREK RANTS, PER USUAL.
+
 
 ## Analyze you data
 
@@ -438,19 +410,19 @@ amerge_subset %<>% inner_join(modhach[,c("RID","HMSCORE")])
 * Explain motivation, not method
 * covSTATIS: `6_covstatis_example.R`
 
-# Part 3: R, RMarkdown, & more
+# Part 3: RMarkdown
 
 ## RMarkdown
 
 * What it is /why to use it
 * A short deviation for LaTeX, and new helpers: kable & kableExtra
-	* A taxonomy and how to approach this
-	*Tying it all together through here
-		1: simple RMD
+* A taxonomy and how to approach this
+*Tying it all together through here
+1: simple RMD
 *Plot-based visuals
-		* Base, gt, ggplot, grobTable()/grid/gridExtra
-		* 2: Slides (these ones here)
-		* 3: Manuscripts!!
+* Base, gt, ggplot, grobTable()/grid/gridExtra
+* 2: Slides (these ones here)
+* 3: Manuscripts!!
 * Reporting/presentin
 
 ## RMarkdown Don(u)'ts
@@ -459,8 +431,8 @@ amerge_subset %<>% inner_join(modhach[,c("RID","HMSCORE")])
 * Don't hardcode absolute file paths
 * Don't do complicated database queries
 * Don't litter
-    * avoid `eval=FALSE`
-    * reduce repeated code by making functions
+* avoid `eval=FALSE`
+* reduce repeated code by making functions
 * Don't load unneccesary libraries
 * More at: https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
 
@@ -507,16 +479,16 @@ amerge_subset %<>% inner_join(modhach[,c("RID","HMSCORE")])
 
 * https://www.r-bloggers.com/strava-rides-map-in-r/
 * ALSO https://marcusvolz.com/?p=4068
-    * `devtools::install_github(marcusvolz/strava)`
-    
+* `devtools::install_github(marcusvolz/strava)`
+
 ![](../external/images/funR_4_strava_combo.png)
 
 ## Make aRt!
 
 * R Graph Gallery
-    * http://www.r-graph-gallery.com/
+* http://www.r-graph-gallery.com/
 * Rtist: Gaston Sanchez
-    * http://gastonsanchez.com/Rtist/
-    
+* http://gastonsanchez.com/Rtist/
+
 ![](../external/images/funR_5_aRt_pink_combo.png)
 
