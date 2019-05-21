@@ -10,7 +10,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, tidy.opts=list(width.cutoff=40),tidy=TRUE)
 ```
 
 ## The big outline
@@ -139,15 +139,60 @@ a_numeric_vector <- c(3, 0, 1, -2, 2, 5, 5, 2, 1)
   * data.frame$`name`
   * tibbles: tidyverse data.frames
     
-## R
+## R: Some syntax
 
-Some more about R here...
-Matlab cheat sheet
-Other cheat sheets
+```{r assigment, eval=FALSE, echo=TRUE, tidy=FALSE}
+
+# allowed but not preferred
+a_variable = 10 + 1
+
+# preferred
+a_variable <- 10 + 1
+
+# a bonus
+10 + 1 -> a_variable
+
+```
+
+## R: Some syntax
+
+```{r dots_example, eval=FALSE, echo=TRUE}
+
+# allowed but not preferred
+a.variable = 10 + 1
+  ## dots have 2 meanings in R, 
+    ## with a 3rd in the tidyverse
+
+# preferred
+a_variable <- 10 + 1
+
+```
+
+## R: Some reservations
+
+* c, q, t, C, D, F, I, and T (via https://www.johndcook.com/blog/r_language_for_programmers/)
+* Except that these can be redefined
+  * With great power comes great responsibility (and danger)
     
 ## Tidyverse
-* something here about tidy
-* Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
+
+* R is "base R"
+* `tidyverse`: "an opinionated collection of R packages designed for data science [that] share an underlying design philosophy, **grammar, and data structures.**"
+  * Started(?) with/because of `ggplot2`
+  * A sublanguage or dialect
+  * Can do so because R is functional language
+* Strongly built around a style:
+  * objects are nouns
+  * functions are verbs
+* Learn it! 
+  * But don’t learn *only* the tidyverse, you’ll be lost in base R
+
+## R cheat sheets
+
+* R to Matlab: https://cran.r-project.org/doc/contrib/Hiebeler-matlabR.pdf
+* R for programmers: https://www.johndcook.com/blog/r_language_for_programmers/
+* RStudio's giant list: https://www.rstudio.com/resources/cheatsheets/
+
 
 # Part 2: RStudio & Project setup
 
@@ -163,12 +208,16 @@ Other cheat sheets
   
 ## RStudio Setup
 
-* Download R and Rstudio
+* Download R and Rstudio (https://www.rstudio.com/)
 * Strongly recommend Microsoft R (https://mran.microsoft.com/open)
   * Comes with Intel MKL
 * Plain R is fine (https://cran.r-project.org/)
     * Can relink to faster libraries 
-* Download RStudio (https://www.rstudio.com/)  
+* Download RStudio   
+* Download & Install
+  * Git ()
+  * `Python` ()
+  * Some form of `LaTeX` ()
 
 ## RStudio Environment
 
@@ -226,6 +275,7 @@ Other cheat sheets
 
 ## Project and Environment Setup
 
+* NEED CLEAN UP STARTING HERE.
 * Special & hidden files
 * Having a structure
 
@@ -258,7 +308,7 @@ Other cheat sheets
   
   ![](../external/images/gitignore.PNG){width=75%}
     
-## Environmental variables
+## Environment variables
 
 ![](../external/images/Revniron.PNG){width=60%}
 
@@ -314,15 +364,6 @@ dev.tools::install_github(Gibbsdavidl/CatterPlots)
 install.packages('/mypath/to/package/ADNIMERGE.tar.gz', 
                  type='source', repos=NULL) 
 ```
-
-## Some transition?
-
-
-
-## R et al
-
-Here we dive into our stuff.
-We show a bit of the code here and there and explain syntax
 		
 ## Read in and create your dataframe
 
@@ -332,9 +373,32 @@ We show a bit of the code here and there and explain syntax
     * using base R functions: `0_create_ADNI_data_base.R`
     * Using tidyverse functions: `1_create_ADNI_data_tidyverse.R`
 
-## Screenshots
+## ADNI & ADNIMERGE
 
-Explanation
+## Cleaning: Base
+
+```{r 0_adnimerge_base, eval=FALSE, echo=TRUE, tidy=FALSE}
+library(ADNIMERGE)
+adni.cols <- c('RID', 'VISCODE', 'DX', 'AGE', 'PTGENDER', 'PTEDUCAT', 'PTETHCAT', 'PTRACCAT', 'APOE4', 'FDG', 'AV45', 'CDRSB', 'ADAS13', 'MOCA', 'WholeBrain', 'Hippocampus', 'MidTemp', 'mPACCtrailsB')
+adni.rows <- c(adnimerge$VISCODE=='bl' & adnimerge$MOCA>=16)
+amerge_subset <- adnimerge[adni.rows,adni.cols]
+amerge_subset <- amerge_subset[complete.cases(amerge_subset),]
+amerge_subset$HMSCORE <- modhach$HMSCORE[match(amerge_subset$RID, modhach$RID)]
+
+```
+    
+## Cleaning: tidyverse
+
+```{r 1_adnimerge_tidy, eval=FALSE, echo=TRUE, tidy=FALSE}
+library(ADNIMERGE)
+adnimerge %>%
+  dplyr::select(RID, VISCODE, DX, AGE, PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, APOE4, FDG, AV45, CDRSB, ADAS13, MOCA, WholeBrain, Hippocampus, MidTemp, mPACCtrailsB) %>%
+  filter(VISCODE == "bl") %>%
+  filter(MOCA >= 16) %>%
+  drop_na() -> amerge_subset
+
+amerge_subset %<>% inner_join(modhach[,c("RID","HMSCORE")])
+```
     
 ## Exploring your data
 
@@ -364,7 +428,7 @@ Explanation
 * Explain motivation, not method
 * covSTATIS: `6_covstatis_example.R`
 
-# Part 3: RMarkdown
+# Part 3: R, RMarkdown, & more
 
 ## RMarkdown
 

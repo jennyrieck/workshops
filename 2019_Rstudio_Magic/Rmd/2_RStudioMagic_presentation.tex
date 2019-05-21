@@ -148,7 +148,7 @@
 \title{Reproducible (and collaborative) science through RStudio}
 \subtitle{A whirlwind tour with R, RMarkdown, Python, LaTeX, and more}
 \author{Jenny Rieck \& Derek Beaton}
-\date{May 20 2019}
+\date{May 21 2019}
 
 \begin{document}
 \frame{\titlepage}
@@ -447,7 +447,8 @@ look somewhat like S. We call the result ``R''.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{a_numeric_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{a_numeric_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }
+    \DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
 \NormalTok{(a_numeric_vector }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -538,23 +539,118 @@ look somewhat like S. We call the result ``R''.}
 
 \end{frame}
 
-\begin{frame}{R}
-\protect\hypertarget{r}{}
+\begin{frame}[fragile]{R: Some syntax}
+\protect\hypertarget{r-some-syntax}{}
 
-Some more about R here\ldots{} Matlab cheat sheet Other cheat sheets
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# allowed but not preferred}
+\NormalTok{a_variable =}\StringTok{ }\DecValTok{10} \OperatorTok{+}\StringTok{ }\DecValTok{1}
+
+\CommentTok{# preferred}
+\NormalTok{a_variable <-}\StringTok{ }\DecValTok{10} \OperatorTok{+}\StringTok{ }\DecValTok{1}
+
+\CommentTok{# a bonus}
+\DecValTok{10} \OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{ ->}\StringTok{ }\NormalTok{a_variable}
+\end{Highlighting}
+\end{Shaded}
 
 \end{frame}
 
-\begin{frame}{Tidyverse}
+\begin{frame}[fragile]{R: Some syntax}
+\protect\hypertarget{r-some-syntax-1}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# allowed but not preferred}
+\NormalTok{a.variable =}\StringTok{ }\DecValTok{10} \OperatorTok{+}\StringTok{ }\DecValTok{1}
+\CommentTok{## dots have 2 meanings in R, with a 3rd}
+\CommentTok{## in the tidyverse}
+
+\CommentTok{# preferred}
+\NormalTok{a_variable <-}\StringTok{ }\DecValTok{10} \OperatorTok{+}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}{R: Some reservations}
+\protect\hypertarget{r-some-reservations}{}
+
+\begin{itemize}
+\tightlist
+\item
+  c, q, t, C, D, F, I, and T (via
+  \url{https://www.johndcook.com/blog/r_language_for_programmers/})
+\item
+  Except that these can be redefined
+
+  \begin{itemize}
+  \tightlist
+  \item
+    With great power comes great responsibility (and danger)
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Tidyverse}
 \protect\hypertarget{tidyverse}{}
 
 \begin{itemize}
 \tightlist
 \item
-  something here about tidy
+  R is ``base R''
 \item
-  Learn it. But don't learn \emph{only} the tidyverse; you'll be lost in
-  base R
+  \texttt{tidyverse}: ``an opinionated collection of R packages designed
+  for data science {[}that{]} share an underlying design philosophy,
+  \textbf{grammar, and data structures.}''
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Started(?) with/because of \texttt{ggplot2}
+  \item
+    A sublanguage or dialect
+  \item
+    Can do so because R is functional language
+  \end{itemize}
+\item
+  Strongly built around a style:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    objects are nouns
+  \item
+    functions are verbs
+  \end{itemize}
+\item
+  Learn it!
+
+  \begin{itemize}
+  \tightlist
+  \item
+    But don't learn \emph{only} the tidyverse, you'll be lost in base R
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{R cheat sheets}
+\protect\hypertarget{r-cheat-sheets}{}
+
+\begin{itemize}
+\tightlist
+\item
+  R to Matlab:
+  \url{https://cran.r-project.org/doc/contrib/Hiebeler-matlabR.pdf}
+\item
+  R for programmers:
+  \url{https://www.johndcook.com/blog/r_language_for_programmers/}
+\item
+  RStudio's giant list:
+  \url{https://www.rstudio.com/resources/cheatsheets/}
 \end{itemize}
 
 \end{frame}
@@ -590,6 +686,35 @@ setup}\label{part-2-rstudio-project-setup}}
   \item
     Also for this workshop
   \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{RStudio Setup}
+\protect\hypertarget{rstudio-setup}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Download R and Rstudio
+\item
+  Strongly recommend Microsoft R (\url{https://mran.microsoft.com/open})
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Comes with Intel MKL
+  \end{itemize}
+\item
+  Plain R is fine (\url{https://cran.r-project.org/})
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Can relink to faster libraries
+  \end{itemize}
+\item
+  Download RStudio (\url{https://www.rstudio.com/})
 \end{itemize}
 
 \end{frame}
@@ -729,6 +854,8 @@ setup}\label{part-2-rstudio-project-setup}}
 \begin{itemize}
 \tightlist
 \item
+  NEED CLEAN UP STARTING HERE.
+\item
   Special \& hidden files
 \item
   Having a structure
@@ -737,7 +864,7 @@ setup}\label{part-2-rstudio-project-setup}}
 \end{frame}
 
 \begin{frame}{RStudio Setup}
-\protect\hypertarget{rstudio-setup}{}
+\protect\hypertarget{rstudio-setup-1}{}
 
 \begin{itemize}
 \tightlist
@@ -815,8 +942,8 @@ setup}\label{part-2-rstudio-project-setup}}
 
 \end{frame}
 
-\begin{frame}{Environmental variables}
-\protect\hypertarget{environmental-variables}{}
+\begin{frame}{Environment variables}
+\protect\hypertarget{environment-variables}{}
 
 \includegraphics[width=0.6\textwidth,height=\textheight]{../external/images/Revniron.PNG}
 
@@ -904,100 +1031,23 @@ setup}\label{part-2-rstudio-project-setup}}
 
 \end{frame}
 
-\begin{frame}{RStudio Setup}
-\protect\hypertarget{rstudio-setup-1}{}
-
-\begin{itemize}
-\tightlist
-\item
-  Download R and Rstudio
-\item
-  Strongly recommend Microsoft R (\url{https://mran.microsoft.com/open})
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Comes with Intel MKL
-  \end{itemize}
-\item
-  Plain R is fine (\url{https://cran.r-project.org/})
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Can relink to faster libraries
-  \end{itemize}
-\item
-  Download RStudio (\url{https://www.rstudio.com/})
-\end{itemize}
-
-\end{frame}
-
 \begin{frame}[fragile]{Get the packages you need}
 \protect\hypertarget{get-the-packages-you-need}{}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#to install from CRAN}
-\KeywordTok{install.pacakges}\NormalTok{(}\StringTok{'devtools'}\NormalTok{, }\DataTypeTok{depenedencies =} \OtherTok{TRUE}\NormalTok{)}
+\CommentTok{# to install from CRAN}
+\KeywordTok{install.pacakges}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{depenedencies =} \OtherTok{TRUE}\NormalTok{)}
 
-\CommentTok{#to install from a git  (requires the devtools package)}
+\CommentTok{# to install from a git (requires the}
+\CommentTok{# devtools package)}
 \NormalTok{dev.tools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(Gibbsdavidl}\OperatorTok{/}\NormalTok{CatterPlots)}
 
-\CommentTok{#to install from a file}
-\KeywordTok{install.packages}\NormalTok{(}\StringTok{'/mypath/to/package/ADNIMERGE.tar.gz'}\NormalTok{, }
-                 \DataTypeTok{type=}\StringTok{'source'}\NormalTok{, }\DataTypeTok{repos=}\OtherTok{NULL}\NormalTok{) }
+\CommentTok{# to install from a file}
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"/mypath/to/package/ADNIMERGE.tar.gz"}\NormalTok{, }
+    \DataTypeTok{type =} \StringTok{"source"}\NormalTok{, }\DataTypeTok{repos =} \OtherTok{NULL}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\end{frame}
-
-\begin{frame}{Some transition?}
-\protect\hypertarget{some-transition}{}
-
-\end{frame}
-
-\begin{frame}{R et al}
-\protect\hypertarget{r-et-al}{}
-
-\begin{itemize}
-\tightlist
-\item
-  A bit of background, including idiosyncrasies and unique things about
-  R
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Especially packages \& three ways to install (somewhat covered
-    above) CRAN, Locally, Git \& others (devtools)
-  \item
-    It's a functional language
-  \item
-    Data types Including data frames \& alts like tibbles
-  \end{itemize}
-\item
-  Read/explore
-
-  \begin{itemize}
-  \tightlist
-  \item
-    explore .R scripts
-  \end{itemize}
-\item
-  Clean/export
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Show 0\_Create from PCA/MCA with Base, Tidyverse, Plyr (NOT dplyr),
-    data.table
-  \item
-    Reimport?
-  \item
-    Analyze With MCA \& covstatis
-  \end{itemize}
-\end{itemize}
 
 \end{frame}
 
@@ -1030,10 +1080,42 @@ setup}\label{part-2-rstudio-project-setup}}
 
 \end{frame}
 
-\begin{frame}{Screenshots}
-\protect\hypertarget{screenshots}{}
+\begin{frame}{ADNI \& ADNIMERGE}
+\protect\hypertarget{adni-adnimerge}{}
 
-Explanation
+\end{frame}
+
+\begin{frame}[fragile]{Cleaning: Base}
+\protect\hypertarget{cleaning-base}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ADNIMERGE)}
+\NormalTok{adni.cols <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'RID'}\NormalTok{, }\StringTok{'VISCODE'}\NormalTok{, }\StringTok{'DX'}\NormalTok{, }\StringTok{'AGE'}\NormalTok{, }\StringTok{'PTGENDER'}\NormalTok{, }\StringTok{'PTEDUCAT'}\NormalTok{, }\StringTok{'PTETHCAT'}\NormalTok{, }\StringTok{'PTRACCAT'}\NormalTok{, }\StringTok{'APOE4'}\NormalTok{, }\StringTok{'FDG'}\NormalTok{, }\StringTok{'AV45'}\NormalTok{, }\StringTok{'CDRSB'}\NormalTok{, }\StringTok{'ADAS13'}\NormalTok{, }\StringTok{'MOCA'}\NormalTok{, }\StringTok{'WholeBrain'}\NormalTok{, }\StringTok{'Hippocampus'}\NormalTok{, }\StringTok{'MidTemp'}\NormalTok{, }\StringTok{'mPACCtrailsB'}\NormalTok{)}
+\NormalTok{adni.rows <-}\StringTok{ }\KeywordTok{c}\NormalTok{(adnimerge}\OperatorTok{$}\NormalTok{VISCODE}\OperatorTok{==}\StringTok{'bl'} \OperatorTok{&}\StringTok{ }\NormalTok{adnimerge}\OperatorTok{$}\NormalTok{MOCA}\OperatorTok{>=}\DecValTok{16}\NormalTok{)}
+\NormalTok{amerge_subset <-}\StringTok{ }\NormalTok{adnimerge[adni.rows,adni.cols]}
+\NormalTok{amerge_subset <-}\StringTok{ }\NormalTok{amerge_subset[}\KeywordTok{complete.cases}\NormalTok{(amerge_subset),]}
+\NormalTok{amerge_subset}\OperatorTok{$}\NormalTok{HMSCORE <-}\StringTok{ }\NormalTok{modhach}\OperatorTok{$}\NormalTok{HMSCORE[}\KeywordTok{match}\NormalTok{(amerge_subset}\OperatorTok{$}\NormalTok{RID, modhach}\OperatorTok{$}\NormalTok{RID)]}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Cleaning: tidyverse}
+\protect\hypertarget{cleaning-tidyverse}{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ADNIMERGE)}
+\NormalTok{adnimerge }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(RID, VISCODE, DX, AGE, PTGENDER, PTEDUCAT, PTETHCAT, PTRACCAT, APOE4, FDG, AV45, CDRSB, ADAS13, MOCA, WholeBrain, Hippocampus, MidTemp, mPACCtrailsB) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(VISCODE }\OperatorTok{==}\StringTok{ "bl"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(MOCA }\OperatorTok{>=}\StringTok{ }\DecValTok{16}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{drop_na}\NormalTok{() ->}\StringTok{ }\NormalTok{amerge_subset}
+
+\NormalTok{amerge_subset }\OperatorTok{%<>%}\StringTok{ }\KeywordTok{inner_join}\NormalTok{(modhach[,}\KeywordTok{c}\NormalTok{(}\StringTok{"RID"}\NormalTok{,}\StringTok{"HMSCORE"}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
 
 \end{frame}
 
@@ -1113,8 +1195,8 @@ Explanation
 
 \end{frame}
 
-\hypertarget{part-3-rmarkdown}{%
-\section{Part 3: RMarkdown}\label{part-3-rmarkdown}}
+\hypertarget{part-3-r-rmarkdown-more}{%
+\section{Part 3: R, RMarkdown, \& more}\label{part-3-r-rmarkdown-more}}
 
 \begin{frame}{RMarkdown}
 \protect\hypertarget{rmarkdown}{}
