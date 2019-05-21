@@ -52,14 +52,14 @@ If you want to skip over the background & RStudio, go straight to [Part 2: RStud
 * So many websites e.g., https://www.statmethods.net/
 * Online forums (Stack Exchange, r-lists)
 * SpringerLink
-* All R books for free (pdf format) or for minimal cost (printed)
+  * All R books for free (pdf format) or for minimal cost (printed)
 * Vignettes
-* step-by-step instruction guides for packages
+  * step-by-step instruction guides for packages
 * Git
-* With open books (via bookdown)
+  * With open books (via bookdown)
 * Twitter #rstats
 * RStudio (website)
-* Videos, cheat sheets
+  * Videos, cheat sheets
 
 ## R Packages
 
@@ -67,8 +67,8 @@ If you want to skip over the background & RStudio, go straight to [Part 2: RStud
 * There are packages for everything
 * We'll cover some of the diversity throughout
 * Comprehensive & Reproducible
-* Available primarily on CRAN
-* But also github (less so: r-forge)
+  * Available primarily on CRAN
+  * But also github (less so: r-forge)
 
 # Part 1: A bit about R
 
@@ -82,33 +82,33 @@ _[we] considered the problem of obtaining decent statistical software for our un
 ## What is R?
 
 * R is general purpose programming
-* Design around & for statistics
-* "for and by statisticians"
+  * Design around & for statistics
+  * "for and by statisticians"
 * R is a collection of tools 
-* Pre-packaged software at your disposal
+  * Pre-packaged software at your disposal
 * R is free (as in beer and speech)
-* No cost, no restrictions
-* E.g., Microsoft (nee Revolution) R
+  * No cost, no restrictions
+  * E.g., Microsoft (nee Revolution) R
 * R is a functional language
-* Turing complete
-* Mathematical functions
-* Pass expressions and functions to and from functions
+  * Turing complete
+  * Mathematical functions
+  * Pass expressions and functions to and from functions
 
 ## R: Data types
 
 * Stored as *vectors*
-* see `class()`
+  * see `class()`
 * numeric
-* real or decimal
-* Includes `NaN`, `Inf`, `-Inf`
+  * real or decimal
+  * Includes `NaN`, `Inf`, `-Inf`
 * integer
 * complex
 * character
 * logical
-* includes `NA`, `TRUE`, `FALSE`
+  * includes `NA`, `TRUE`, `FALSE`
 * factor
-* factors are usually not your friends
-* generally: `stringsAsFactors = F` or convert these
+  * factors are usually not your friends
+  * generally: `stringsAsFactors = F` or convert these
 
 ## R: factor disasters
 
@@ -123,19 +123,19 @@ a_numeric_vector <- c(3, 0, 1, -2, 2, 5, 5, 2, 1)
 ## R: Data structures  
 
 * Starts counting from 1
-* Not 0
+  * Not 0
 * vector[1]
 * matrix[1,1]
 * array[1,1,1]
 * list[[1]]
-* Can contain mixtures of types
-* or list$`name`
+  * Can contain mixtures of types
+  * or list$`name`
 * data.frame:
-* Is technically a list but access in three ways
-* data.frame[[1]][1]
-* data.frame[1,1]
-* data.frame$`name`
-* tibbles: tidyverse data.frames
+  * Is technically a list but access in three ways
+  * data.frame[[1]][1]
+  * data.frame[1,1]
+  * data.frame$`name`
+  * tibbles: tidyverse data.frames
 
 ## Cheatsheet for going from MatLab to R
 
@@ -148,17 +148,17 @@ http://mathesaurus.sourceforge.net/octave-r.html
 ## Tidyverse
 
 * `tidyverse` is a collection of R packages for transforming and visualizing data
+  * For full tidy immersion see: https://style.tidyverse.org/
+  * Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
 * Core packages:
-* `ggplot2`, `dplyr`, `tidyr`, `readr`, `tibble`, `stringr`, `purrr`, `forcats`
+  * `ggplot2`, `dplyr`, `tidyr`, `readr`, `tibble`, `stringr`, `purrr`, `forcats`
 * Get them all with `install.packages("tidyverse")`
-* Piping `%>%` to create a sequence of actions
+* Pipes `%>%` via `magrittr` to create a sequence of actions
 ```{r, pipe_example,eval=F, echo=T}
 iris_virginica <- iris %>% 
   filter(Species=="virginica")
 ```
-* For full tidy immersion see: https://style.tidyverse.org/
-* Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
-* For a comparison of base and tidy code see scripts `/R/0_create_ADNI_data_base.R` and `1_create_ADNI_data_tidy.R`
+* Here For a comparison of base and tidy code see scripts `/R/0_create_ADNI_data_base.R` and `1_create_ADNI_data_tidy.R`
 
 ## tidyverse cheatsheet
 ![](../external/images/r_cheatsheet_tidy.PNG)
@@ -169,19 +169,19 @@ iris_virginica <- iris %>%
 
 * IDE: Integrated development environment
 * RStudio: Does so much
-* We scratch the surface here
+  * We scratch the surface here
 * Quick walk through
-* Followed by specific set up 
-* Generally, but
-* Also for this workshop
+  * Followed by specific set up 
+  * Generally, but
+  * Also for this workshop
 
 ## RStudio Setup
 
 * Download R and Rstudio
-* Strongly recommend Microsoft R (https://mran.microsoft.com/open)
-* Comes with Intel MKL
+  * Strongly recommend Microsoft R (https://mran.microsoft.com/open)
+  * Comes with Intel MKL
 * Plain R is fine (https://cran.r-project.org/)
-* Can relink to faster libraries 
+  * Can relink to faster libraries 
 * Download RStudio (https://www.rstudio.com/)  
 
 ## RStudio Environment
@@ -205,17 +205,15 @@ iris_virginica <- iris %>%
 ## Some benefits of RStudio
 
 * Built-in integration with version control (git or SVN)
-* Package and documentation generation
-* Reproducible science!
-* R Markdown documents
-* Save and execute code
-* Generate high quality reports that can be shared
-* Create presentations (like this one!)
-* Even write papers
+* R Markdown
+  * Save and execute code
+  * Generate high quality reports that can be shared
+  * Create presentations (like this one!)
+  * Even write papers
+  * This workshop
+    * See https://github.com/jennyrieck/workshops/tree/master/2019_Rstudio_Magic
 * Python, D3 (JavaScript), SQL, Shiny, LaTeX, Git/SVN, HTML/CSS, and so much more.
-* This workshop
-* Will walk you through some of this (and more)
-* See https://github.com/jennyrieck/workshops/tree/master/2019_Rstudio_Magic
+
 
 ## RStudio is more
 
@@ -248,12 +246,20 @@ iris_virginica <- iris %>%
 
 ## For safety & collaboration 
 
-* Project(s) files
-* SOMETHING!
+* RStudio projects
+  * "RStudio projects make it straightforward to divide your work into multiple contexts, each with their own working directory, workspace, history, and source documents."
+  * Allows for return to key states
+* .Rproj files
+  * Basically a text file with some parameters for start up
+  ![](../external/images/Rproj_inside.PNG){width=50%} 
 
-## Projects through Git
+## Projects
 
-* Create a new project File
+Create a new one for:
+
+* a folder
+* packages
+* (and from) git repos:
 ![](../external/images/setup_2_rstudio_project.PNG){width=75%} 
 
 
@@ -277,15 +283,15 @@ iris_virginica <- iris %>%
 ## Format environmental variables
 
 * Set environmental variables (ie, directory location of data) to make code generalizable across computers
-* Don't commit or share these
+  * Don't commit or share these
 * In **your** project folder create a `.Renviron` file and define variables
-* Jenny's:
+  * Jenny's:
 
-![](../external/images/setup_3_rstudio_project_environ.PNG){width=60%}
+  ![](../external/images/setup_3_rstudio_project_environ.PNG){width=60%}
 
-* Derek's:
+  * Derek's:
 
-![](../external/images/setup_3_rstudio_project_environ2.PNG){width=80%}
+  ![](../external/images/setup_3_rstudio_project_environ2.PNG){width=80%}
 
 ## Organize your project folders and markdown
 
@@ -315,6 +321,8 @@ https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
 
 ## Get the packages you need
 
+e.g.,
+
 ```{r install_packages, echo=T, eval=F}
 #to install from CRAN
 install.pacakges('devtools', depenedencies = TRUE)
@@ -327,22 +335,21 @@ install.packages('/mypath/to/package/ADNIMERGE.tar.gz',
                  type='source', repos=NULL) 
 ```
 
-## Some transition?
+(hint: you'll need more than this!)
 
+## Let's take a closer look at R
 
-
-## R et al
-
-Here we dive into our stuff.
-We show a bit of the code here and there and explain syntax
+* The Alzheimer's Disease Neuroimaging Initiative (ADNI). 
+* We use the `ADNIMERGE` R package
+  * Lots and lots of data prepared *for you*
+* We use this for all of our examples
 
 ## Read in and create your dataframe
 
-* ADNI Dataset adnimerge package
 * Reduce full dataset to only those participants (rows) and variables (columns) you're interested in
-* Two methods to create your dataframe
-* using base R functions: `0_create_ADNI_data_base.R`
-* Using tidyverse functions: `1_create_ADNI_data_tidyverse.R`
+* We two approaches here:
+  * base R: `0_create_ADNI_data_base.R`
+  * tidyverse: `1_create_ADNI_data_tidyverse.R`
 
 ## Create data 2 ways:
 
@@ -352,6 +359,8 @@ We show a bit of the code here and there and explain syntax
 ### tidyverse
 
 ![](../external/images/r_create_data_2_tidy.PNG){width=80%}
+
+## FIXES FROM HERE FORWARD.
 
 ## Exploring your data
 
@@ -425,13 +434,14 @@ DataExplorer::create_report(
 * 3: Manuscripts!!
 * Reporting/presentin
 
-## RMarkdown Don(u)'ts
+## RMarkdown Don'ts
 
 * Don't hardcode values
 * Don't hardcode absolute file paths
+  * see `here::here()`
 * Don't do complicated database queries
-* Don't litter
 * avoid `eval=FALSE`
+  * except to help illustrate code...
 * reduce repeated code by making functions
 * Don't load unneccesary libraries
 * More at: https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
