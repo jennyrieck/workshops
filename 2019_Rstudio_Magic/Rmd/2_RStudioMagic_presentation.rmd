@@ -626,4 +626,8 @@ ALSO https://marcusvolz.com/?p=4068
 * Conceptually based on Bioconductor
 * https://neuroconductor.org/
 
-![](../external/images/neuro_logo1.png){width=40%}
+![](../external/images/neuro_logo1.png){width=30%}
+
+## Neuroconductor
+
+![](../external/images/neuro_depend.png)
