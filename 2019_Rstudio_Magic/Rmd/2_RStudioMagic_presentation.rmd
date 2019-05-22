@@ -253,7 +253,7 @@ http://mathesaurus.sourceforge.net/octave-r.html
 
 ## RStudio is more
 
-* Not just an IDE
+* Not just an IDE (integrated development environment)
 * A company
 * A community
 * A conference
@@ -471,6 +471,11 @@ install.packages('/mypath/to/package/ADNIMERGE.tar.gz',
   * "coding categorical variables with the indicator matrix of
 dummy variables and considering them as Gaussian, for
 instance, is almost a crime."
+
+![](../external/images/categorical_nonsense.pdf)
+
+## See another workshop
+
 * See [Derek's PCA & multiple correspondence analysis workshop](https://github.com/derekbeaton/Workshops/tree/master/RTC/PCA_MCA_Resampling/)
   * Same data as this workshop
   * All in R & RMarkdown
