@@ -45,8 +45,8 @@ If you want to skip over the background & RStudio, go straight to [Part 2: RStud
 * Help and resources
 * Package development and distribution
 * An ideal example
-* Not quite always that way
-* Strong communal presence
+  * Not quite always that way
+  * Strong communal presence
 
 ## R: Help!
 
@@ -98,7 +98,6 @@ _[we] considered the problem of obtaining decent statistical software for our un
 ## Some syntax notes
 
 ## Assignment
-
 
 ```{r assigment, eval=FALSE, echo=TRUE, tidy=FALSE}
 # allowed but not preferred
@@ -548,48 +547,51 @@ instance, is almost a crime."
 
 ## CatterPlot for feline based graphics:
 
-* https://github.com/Gibbsdavidl/CatterPlots
-
 `devtools::install_github(Gibbsdavidl/CatterPlots)`
 
 ![](../external/images/funR_1_catterplotter.png){width=60%}
 
-## What's a pirate's favorite programming language?
+https://github.com/Gibbsdavidl/CatterPlots
 
-* https://cran.r-project.org/web/packages/yarrr/vignettes/pirateplot.html
+## What's a pirate's favorite programming language?
 
 `install.packages('yarrr')`
 
 ![](../external/images/funR_2_pirate.png){width=75%}
 
-## Color palettes to fit your ~mood~
+https://cran.r-project.org/web/packages/yarrr/vignettes/pirateplot.html
 
-* https://github.com/karthik/wesanderson
+## Color palettes to fit your mood
 
 `devtools::install_github(karthik/wesanderson)`
 
-![](../external/images/funR_3_wes_anderson.png){width=75%}
+![](../external/images/funR_3_wes_anderson.png){width=60%}
+
+https://github.com/karthik/wesanderson
 
 ## Mapping your Strava routes
 
-* https://www.r-bloggers.com/strava-rides-map-in-r/
-* ALSO https://marcusvolz.com/?p=4068
-* `devtools::install_github(marcusvolz/strava)`
+`devtools::install_github(marcusvolz/strava)`
 
 ![](../external/images/funR_4_strava_combo.png)
+
+https://www.r-bloggers.com/strava-rides-map-in-r/
+
+ALSO https://marcusvolz.com/?p=4068
+
 
 ## Make aRt!
 
 * R Graph Gallery
-* http://www.r-graph-gallery.com/
+  * http://www.r-graph-gallery.com/
 * Rtist: Gaston Sanchez
-* http://gastonsanchez.com/Rtist/
+  * http://gastonsanchez.com/Rtist/
 
 ![](../external/images/funR_5_aRt_pink_combo.png)
 
 ## Wouldn't be a brain hack without brains
 
-## R & Brain Imaing
+## R & Brain Imaging
 
 * Slow to take hold
   * Getting there
@@ -597,13 +599,13 @@ instance, is almost a crime."
   * Virtually every other field has an R community
   * Bioinformatics especially (see [Bioconductor](https://www.bioconductor.org/))
 
-## Reading & manipulatling
+## Reading & manipulating
 
 * The neuroimaging ecosystem is growing in R
-* `neuroim`
-* `ANTSR`
-* `oro.nifti` - been around a while
-* `RMINC`
+  * `neuroim`
+  * `ANTsR`
+  * `oro.nifti` - been around a while
+  * `RMINC`
 
 ## More brains
 
@@ -611,7 +613,7 @@ instance, is almost a crime."
 * [brainGraph](https://github.com/cwatson/brainGraph)
 * [ggSeg](https://github.com/LCBC-UiO/ggseg)
 
-![](../external/images/ggseglogo.png){width=50%}
+![](../external/images/ggseglogo.png){width=40%}
 
 
 ## Neuroconductor
@@ -619,4 +621,4 @@ instance, is almost a crime."
 * Conceptually based on Bioconductor
 * https://neuroconductor.org/
 
-![](../external/images/neuro_logo1.png){width=50%}
+![](../external/images/neuro_logo1.png){width=40%}
