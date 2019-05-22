@@ -18,8 +18,9 @@ knitr::opts_chunk$set(echo = FALSE)
 * Part 0: Background
 * Part 1: A bit about R
 * Part 2: RStudio & Project setup
-* Part 3: R, RMarkdown, & more
-* Part 4: Advanced, beyond, & our favorites
+* Part 3: R
+* Part 4: RMarkdown & more
+* Part 5: "Advanced" topics
 
 # Part 0: Background
 
@@ -30,13 +31,13 @@ If you want to skip over the background & RStudio, go straight to [Part 2: RStud
 ## Background
 
 * This is a taste and to bring you into a bigger world
-* R, Python, SQL, and JavaScript are critical data science tools/languages
+  * R, Python, SQL, and JavaScript are critical data science tools/languages
 * R (language and community) strongly emphasizes 
-* Centralization & standards
-* Rigor & reproducibility (packages, RMarkdown)
-* An interesting language
+  * Centralization & standards
+  * Rigor & reproducibility (packages, RMarkdown)
+  * An interesting language
 * Functional
-* With a sublanguage (or dialect?): the `tidyverse`
+  * With a sublanguage (or dialect?): the `tidyverse`
 
 
 ## R is a community (actually many communities!)
@@ -94,6 +95,39 @@ _[we] considered the problem of obtaining decent statistical software for our un
   * Mathematical functions
   * Pass expressions and functions to and from functions
 
+## Some syntax notes
+
+## Assignment
+
+
+```{r assigment, eval=FALSE, echo=TRUE, tidy=FALSE}
+# allowed but not preferred
+a_variable = 10 + 1
+# preferred
+a_variable <- 10 + 1
+# a bonus
+10 + 1 -> a_variable
+```
+
+## Dots
+
+```{r dots_example, eval=FALSE, echo=TRUE}
+# allowed but not preferred
+a.variable = 10 + 1
+  ## dots have 2 meanings in R, 
+    ## with a 3rd in the tidyverse
+
+# preferred
+a_variable <- 10 + 1
+```
+
+## "Reserved" characters
+
+* `c`, `q`, `t`, `C`, `D`, `I`, `F`, and `T` (via https://www.johndcook.com/blog/r_language_for_programmers/)
+* Except that these can be redefined
+  * With great power comes great responsibility (and danger)
+
+
 ## R: Data types
 
 * Stored as *vectors*
@@ -108,7 +142,8 @@ _[we] considered the problem of obtaining decent statistical software for our un
   * includes `NA`, `TRUE`, `FALSE`
 * factor
   * factors are usually not your friends
-  * generally: `stringsAsFactors = F` or convert these
+  * with `read.csv()`: `stringsAsFactors = F` or convert these
+  * or use `tibble`s in the tidyverse
 
 ## R: factor disasters
 
@@ -147,18 +182,20 @@ http://mathesaurus.sourceforge.net/octave-r.html
 
 ## Tidyverse
 
-* `tidyverse` is a collection of R packages for transforming and visualizing data
+* R is "base R"
+* `tidyverse`: "an opinionated collection of R packages designed for data science [that] share an underlying design philosophy, **grammar, and data structures.**"
+  * Started(?) with/because of `ggplot2`
+  * A sublanguage or dialect
+  * Can do so because R is functional language
   * For full tidy immersion see: https://style.tidyverse.org/
-  * Learn it. But don’t learn *only* the tidyverse; you’ll be lost in base R
+* Strongly built around a style:
+  * objects are nouns
+  * functions are verbs
 * Core packages:
-  * `ggplot2`, `dplyr`, `tidyr`, `readr`, `tibble`, `stringr`, `purrr`, `forcats`
+  * `ggplot2`, `dplyr`, `tidyr`, `readr`, `tibble`, `stringr`
 * Get them all with `install.packages("tidyverse")`
-* Pipes `%>%` via `magrittr` to create a sequence of actions
-```{r, pipe_example,eval=F, echo=T}
-iris_virginica <- iris %>% 
-  filter(Species=="virginica")
-```
-* Here For a comparison of base and tidy code see scripts `/R/0_create_ADNI_data_base.R` and `1_create_ADNI_data_tidy.R`
+* Learn it! 
+  * But don’t learn *only* the tidyverse, you’ll be lost in base R
 
 ## tidyverse cheatsheet
 ![](../external/images/r_cheatsheet_tidy.PNG)
@@ -337,6 +374,8 @@ install.packages('/mypath/to/package/ADNIMERGE.tar.gz',
 
 (hint: you'll need more than this!)
 
+# Part 3: R
+
 ## Let's take a closer look at R
 
 * The Alzheimer's Disease Neuroimaging Initiative (ADNI). 
@@ -344,116 +383,162 @@ install.packages('/mypath/to/package/ADNIMERGE.tar.gz',
   * Lots and lots of data prepared *for you*
 * We use this for all of our examples
 
-## Read in and create your dataframe
+## The R examples
 
-* Reduce full dataset to only those participants (rows) and variables (columns) you're interested in
-* We two approaches here:
-  * base R: `0_create_ADNI_data_base.R`
-  * tidyverse: `1_create_ADNI_data_tidyverse.R`
-
-## Create data 2 ways:
-
-### base R
-![](../external/images/r_create_data_1_base.PNG){width=80%}
-
-### tidyverse
-
-![](../external/images/r_create_data_2_tidy.PNG){width=80%}
-
-## FIXES FROM HERE FORWARD.
-
-## Exploring your data
-
-* Many packages to help explore and describe your data:
-* summarytools: `2_explore_summarytools.R`
-* inspectdf: `3_explore_inspectdf.R`
-* DataExplorer: `4_explore_DataExplorer_one_liner.R`
-
-## Explore with `summarytools`
-
-Provides frequency tables, cross tables, and descriptive statistics for your dataset
-```{r summtools, echo=T, eval=F}
-## Cross table of Diagnosis by APOE statis with X2 test
-view(ctable(amerge_subset$DX, amerge_subset$APOE4, 
-            prop='r', totals = F,chisq = T))
-## Descriptive statistics for continuous variables 
-view(descr(amerge_subset[,variable_type_map[,1]==1], 
-           stats=c("mean", "sd", "min", "med", "max"),
-           transpose = T, headings=F))
-```
-![](../external/images/r_explore_1_summarytools_combo.PNG)
-
-## Explore with `inspectdf`
-
-* Something here
-
-## Explore with `DataExplorer`
-
-* *One line* of code to generate an rmarkdown report summarizing your data
-```{r dataexplor, echo=T, eval=F}
-DataExplorer::create_report(
-  amerge_subset[variable_type_map[,"Continuous"]==1], 
-  report_title = 'ADNI Data Report',
-  output_file='My_ADNI_Data_Report_CORRECT.html',
-  output_dir = Sys.getenv("ADNI_FOLDER"))
-```
-
-![](../external/images/r_explore_3_dataexplorer_rmd_1.PNG){width=85%}
-
-## Hard Break
-
-* DataExplorer is dangerous
-* Blind analyses can be *criminal*
-* de Leeuw paper quote
-* DEREK RANTS, PER USUAL.
+* Making & prepping data
+  * `0_create_ADNI_data_base.R`
+  * `1_create_ADNI_data_tidyverse.R`
+* Exploring data
+  * `2_explore_summarytools.R`
+  * `3_explore_inspectdf.R`
+  * `4_explore_DataExplorer_one_liner.R`
+  * With a small rant from Derek
+* Some stats: Linear models
+  * `5_linear_model.R`
+* Experimental packages (covSTATIS via Github)
+  * `6_covstatis_example.R`
 
 
-## Analyze you data
+<!-- ## Read in and create your dataframe -->
 
-* Linear models: `5_linear_model.R`
+<!-- * Reduce full dataset to only those participants (rows) and variables (columns) you're interested in -->
+<!-- * We two approaches here: -->
+<!--   * base R: `0_create_ADNI_data_base.R` -->
+<!--   * tidyverse: `1_create_ADNI_data_tidyverse.R` -->
 
-## Screenshots / Code w/ eval=F
 
-## Get experimental
+<!-- ## Create data 2 ways: -->
 
-* Explain motivation, not method
-* covSTATIS: `6_covstatis_example.R`
+<!-- ### base R -->
+<!-- ![](../external/images/r_create_data_1_base.PNG){width=80%} -->
 
-# Part 3: RMarkdown
+<!-- ### tidyverse -->
+
+<!-- ![](../external/images/r_create_data_2_tidy.PNG){width=80%} -->
+
+<!-- ## Pipes -->
+
+<!-- * Pipes `%>%` via `magrittr` to create a sequence of actions -->
+<!-- ```{r, pipe_example,eval=F, echo=T} -->
+<!-- iris_virginica <- iris %>%  -->
+<!--   filter(Species=="virginica") -->
+<!-- ``` -->
+<!-- * Here For a comparison of base and tidy code see scripts `/R/0_create_ADNI_data_base.R` and `1_create_ADNI_data_tidy.R` -->
+
+
+<!-- ## FIXES FROM HERE FORWARD. -->
+
+<!-- ## Exploring your data -->
+
+<!-- * Many packages to help explore and describe your data: -->
+<!-- * summarytools: `2_explore_summarytools.R` -->
+<!-- * inspectdf: `3_explore_inspectdf.R` -->
+<!-- * DataExplorer: `4_explore_DataExplorer_one_liner.R` -->
+
+<!-- ## Explore with `summarytools` -->
+
+<!-- Provides frequency tables, cross tables, and descriptive statistics for your dataset -->
+<!-- ```{r summtools, echo=T, eval=F} -->
+<!-- ## Cross table of Diagnosis by APOE statis with X2 test -->
+<!-- view(ctable(amerge_subset$DX, amerge_subset$APOE4,  -->
+<!--             prop='r', totals = F,chisq = T)) -->
+<!-- ## Descriptive statistics for continuous variables  -->
+<!-- view(descr(amerge_subset[,variable_type_map[,1]==1],  -->
+<!--            stats=c("mean", "sd", "min", "med", "max"), -->
+<!--            transpose = T, headings=F)) -->
+<!-- ``` -->
+<!-- ![](../external/images/r_explore_1_summarytools_combo.PNG) -->
+
+<!-- ## Explore with `inspectdf` -->
+
+<!-- * Something here -->
+
+<!-- ## Explore with `DataExplorer` -->
+
+<!-- * *One line* of code to generate an rmarkdown report summarizing your data -->
+<!-- ```{r dataexplor, echo=T, eval=F} -->
+<!-- DataExplorer::create_report( -->
+<!--   amerge_subset[variable_type_map[,"Continuous"]==1],  -->
+<!--   report_title = 'ADNI Data Report', -->
+<!--   output_file='My_ADNI_Data_Report_CORRECT.html', -->
+<!--   output_dir = Sys.getenv("ADNI_FOLDER")) -->
+<!-- ``` -->
+
+<!-- ![](../external/images/r_explore_3_dataexplorer_rmd_1.PNG){width=85%} -->
+
+## Derek's rant break
+
+* DataExplorer committed a crime.
+  * "coding categorical variables with the indicator matrix of
+dummy variables and considering them as Gaussian, for
+instance, is almost a crime."
+* See [Derek's PCA & multiple correspondence analysis workshop](https://github.com/derekbeaton/Workshops/tree/master/RTC/PCA_MCA_Resampling/)
+  * Same data as this workshop
+  * All in R & RMarkdown
+
+
+<!-- ## Analyze you data -->
+
+<!-- * Linear models: `5_linear_model.R` -->
+
+
+<!-- ## Get experimental -->
+
+<!-- * Explain motivation, not method -->
+<!-- * covSTATIS: `6_covstatis_example.R` -->
+
+# Part 4: RMarkdown & more
 
 ## RMarkdown
 
-* What it is /why to use it
-* A short deviation for LaTeX, and new helpers: kable & kableExtra
-* A taxonomy and how to approach this
-*Tying it all together through here
-1: simple RMD
-*Plot-based visuals
-* Base, gt, ggplot, grobTable()/grid/gridExtra
-* 2: Slides (these ones here)
-* 3: Manuscripts!!
-* Reporting/presentin
+* Yuhui Xie: 
+  * https://bookdown.org/yihui/rmarkdown/
+* What it is & why to use it
+* Fancy helpers:
+  * `kable` & `kableExtra`
+  * `grid` & `gridExtra`
+* Deviations for:
+  * `LaTeX`
+  * `Python`
+* Tying it all together through here
 
 ## RMarkdown Don'ts
 
-* Don't hardcode values
-* Don't hardcode absolute file paths
+* Don't hardcode values or absolute file paths
   * see `here::here()`
-* Don't do complicated database queries
+  * Use projects (`.Rproj`)
+* Don't do complicated or expensive stuff 
+  * Database queries
+  * Resampling
 * avoid `eval=FALSE`
   * except to help illustrate code...
-* reduce repeated code by making functions
-* Don't load unneccesary libraries
-* More at: https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
+* Reduce repeated code
+  * One time: Script
+  * Two times: Function
+  * Three times: Package
 
-# Part 4: Advanced R
+## RMarkdown dos & don'ts
+
+* Suggestions & More:
+  * https://emilyriederer.netlify.com/post/rmarkdown-driven-development/
+* We're using this here
+
+## Let's take a look
+
+* `1_a_Simple_RMarkdown_PDF.Rmd`
+* `2_RStudioMagic_presentation.rmd`
+  * This presentation!
+* `3_RMarkdown_APA_Manuscript.Rmd`
+
+# Part 5: "Advanced" topics
 
 ## Some advanced/other things we’re not covering
+
 * package development
 * Shiny
 * SQL
 * C/C++
-* R2D3
+* R2D3 (JavaScript)
 
 
 ## A few of our favorite things
@@ -502,3 +587,36 @@ DataExplorer::create_report(
 
 ![](../external/images/funR_5_aRt_pink_combo.png)
 
+## Wouldn't be a brain hack without brains
+
+## R & Brain Imaing
+
+* Slow to take hold
+  * Getting there
+* Neuroimaging: one of the last fields in R
+  * Virtually every other field has an R community
+  * Bioinformatics especially (see [Bioconductor](https://www.bioconductor.org/))
+
+## Reading & manipulatling
+
+* The neuroimaging ecosystem is growing in R
+* `neuroim`
+* `ANTSR`
+* `oro.nifti` - been around a while
+* `RMINC`
+
+## More brains
+
+* [MRI in Shiny](https://community.rstudio.com/t/shiny-contest-submission-shinymri-view-mri-images-in-shiny/23995)
+* [brainGraph](https://github.com/cwatson/brainGraph)
+* [ggSeg](https://github.com/LCBC-UiO/ggseg)
+
+![](../external/images/ggseglogo.png){width=50%}
+
+
+## Neuroconductor
+
+* Conceptually based on Bioconductor
+* https://neuroconductor.org/
+
+![](../external/images/neuro_logo1.png){width=50%}

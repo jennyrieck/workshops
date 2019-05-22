@@ -1,3 +1,14 @@
+if(!require(covstatis)){
+  devtools::install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
+  library(covstatis)
+}
+
+if(!require(GSVD)){
+  devtools::install_github("derekbeaton/GSVD")
+  library(GSVD)
+}
+
+
 ## subset into group and specificallly continous columns
 
 control_continuous_data <- amerge_subset[amerge_subset$DX=="CN",which(variable_type_map[,"Continuous"]==1)]

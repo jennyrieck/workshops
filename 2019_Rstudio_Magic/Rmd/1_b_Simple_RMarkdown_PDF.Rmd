@@ -1,0 +1,370 @@
+---
+title: "Simple Markdown Example"
+subtitle: "PDF/LaTex version"
+author: 
+  - "Jenny Rieck"
+  - "Derek Beaton"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  pdf_document:
+    keep_tex: true
+urlcolor: blue
+---
+
+```{r libraries, echo=FALSE, message=FALSE}
+
+require(kableExtra)
+require(gridExtra)
+require(tidyverse)
+require(ExPosition)
+require(knitr)
+require(reticulate)
+require(here)
+require(factoextra)
+
+if(!require(covstatis)){
+  devtools::install_github("jennyrieck/C-MARINeR", subdir = "/code/covstatis")
+  library(covstatis)
+}
+
+if(!require(ours)){
+  devtools::install_github("derekbeaton/OuRS", subdir = "/OuRS")
+  library(ours)
+}
+
+if(!require(GSVD)){
+  devtools::install_github("derekbeaton/GSVD")
+  library(GSVD)
+}
+
+
+
+```
+
+```{r rmarkdown_setup, echo=FALSE, message=FALSE}
+
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE, fig.pos='H')
+
+```
+
+```{r source_functions, echo=FALSE, message=FALSE}
+
+
+
+```
+
+```{r load_data, echo=FALSE, message=FALSE}
+
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset.rda"))
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
+
+```
+
+# Introduction
+
+For reference, see [RMarkdown Driven Development](https://emilyriederer.netlify.com/post/rmarkdown-driven-development/) by Emily Riederer for a comprehensive overview of how to best structure RMarkdown for projects, packages, and other development-driven tasks. 
+
+In general for this RMarkdown file we follow Emily's fourth example with a directory structure, minimized redundancies, and heavy-duty code elsewhere. This RMarkdown, generally, serves as place to describe, analyze, and visualize our data. Thus, this text is shown at the top of the output, but actually appears after several `R` code chunks, which exist between the `Introduction` heading and YAML header information (which you see as title, authors, dates, etc...).
+
+Most of the RMarkdown files in this directory will show generally the same content, but help highlight the different ways you can use RMarkdown, `knitr`, `pandoc`, `LateX`, and various package built for those, such as `beamer` (`LateX`) for presentations, and [`papaja`](https://github.com/crsh/papaja) & [`rticles`](https://github.com/rstudio/rticles) (R/RMarkdown) for writing manuscripts that export to `LaTeX` or MS Word. If you decide to write MS Word documents through RMarkdown, you should also use the [`redoc` package](https://github.com/noamross/redoc). 
+
+## R chunks: A word of caution
+
+It is good practice to name your `R` chunks. If you do not, then the `R` chunks will still produce the intended material. However, when you do name them, you should ensure they have unique names (else, you will likely see some cryptic and not always informative error messages).
+
+
+# Tables
+
+There are multiple approaches and packages to help visualize tables or tabular information. Let's start by looking at a simple summary of all the continuous variables. First, we will visualize the summary table through two methods within R: `knitr::kable` and the `kablExtra` package, followed by `grid` and `gridExtra`. Next, we will use the same data and illustrate what happens when we pass it to Python through `reticulate`. 
+
+In this section we wil also show the code chunks that generate these tables and visuals, which are embedded in the RMarkdown document. 
+
+## knitr and kableExtra
+
+To make HTML and LaTeX tables in RMarkdown, one of the easiest and most common options is through `knitr`. The `knitr` package is, effectively, the tool to make RMarkdown documents go from R & RMarkdown (plus other code and LaTeX) into PDFs or HTML pages. We'll start with the `knitr::kable()`.
+
+
+```{r knitr_table_setup}
+
+example_table <- amerge_subset[,c("AGE","MOCA","CDRSB","WholeBrain","Hippocampus","MidTemp")]
+example_table_Dx <- amerge_subset[,c("DX","AGE","MOCA","CDRSB","WholeBrain","Hippocampus","MidTemp")]
+
+```
+
+```{r knitr_kable_example}
+
+kable(summary(example_table))
+
+```
+
+But that is not particularly nice looking. So we can use some parameters to make this table look better (which depend on having LaTeX).
+
+
+```{r knitr_kable_nicer_example}
+
+kable(summary(example_table), format="latex", booktabs=T) 
+
+```
+
+With `booktabs` and `latex` format, we've made the table look a little better. But can we make it look even better than that? We can with `kableExtra`. 
+
+```{r knitr_kableExtra_example}
+
+kable(summary(example_table), format="latex", booktabs=T) %>% kable_styling(font_size=10, position = "center")
+
+```
+
+We can take the table look even further with additional options, like "stripes".
+
+```{r knitr_kableExtra_better_example}
+
+kable(summary(example_table), format="latex", booktabs=T) %>% kable_styling(font_size=10, position = "center", latex_options = "striped")
+
+```
+
+Given that we have redundant information in the table (min/max, etc...) we can do a better job and make an even nicer table with an `apply()`, and then use multiple `kable` and `kableExtra` features to make a really nice table.
+
+```{r kniter_even_better_example}
+
+better_example_table <- apply(example_table, 2, summary)
+
+kable(better_example_table, format="latex", booktabs=T, digits=2) %>% 
+  kableExtra::add_header_above(c("Statistic" = 1, "Demographic" = 1, "Clinical" = 2, "Brain" = 3)) %>%
+  kable_styling(font_size=10, position = "center", latex_options = "striped") %>%
+  row_spec(0, angle = 15, bold=T)
+
+```
+
+
+## grid and gridExtra
+
+Sometimes we need tables to be graphics. This is where the `grid` and `gridExtra` packages come in. The `grid` package uses `grob`s to turn items---tables, figures, all sorts of things---into configurable parts of a figure.
+
+```{r grid_and_gridExtra}
+
+grid.table(better_example_table)
+
+```
+
+But it's clear we have a few extra things we should do to make this figure of a table look better.
+
+```{r grid_and_gridExtra_round}
+
+better_example_table_round <- apply(better_example_table, 2, format, digits=2, nsmall=2)
+
+grid.table(better_example_table_round)
+
+```
+
+However, the `grid` and `gridExtra` packages can be difficult to customize many of the pieces. Therefore it might be easier to stick to the `LaTeX` approaches with `kable` or it is well worth checking out the [`gt` package](https://github.com/rstudio/gt).
+
+
+## Python via reticulate
+
+What if you now love RMarkdown but are still really into Python? Not a problem. The [`reticulate` package](https://rstudio.github.io/reticulate/) has you covered. It's an R package to connect to your `Python` installation and bring the data or results back into `R`, but with some of the same features as you're used to in either `Python` or `R`. Let's start out with a *head to head* of `R`'s `head()` vs. `Python`'s `.head()`.
+
+In `R` we write the call in RMarkdown as if we would normally in `R`:
+
+```{r r_head_example}
+head(example_table)
+```
+
+Unlike the previous code chunks, we have to tell RMarkdown that the language it should expect is `python` instead of `R`. 
+
+```{python r_python_example}
+print(r.example_table.head())
+```
+
+For `Python` via `R` we also need to use the `.` (dot notation) because of `Python`'s object oriented approach.  From the `r` object, we get the `example_table` attribute and then perform the `head` method. That's because `Python` needs to know about the object coming from `R`. 
+
+
+### Here be .dragons
+
+For those more familiar with `R` style that stems from the [`S` language origin]() or [Google's style guide](), the `.` can be a substantial source of confusion both here and in the `tidyverse`. In base `R`, it is a valid character for user defined items. But in base `R` it is *also* used for objects and classes (see, e.g., `.print()`). In the `tidyverse` the `.` has a special purpose when alone (not amongst other characters), often as a placeholder for where to pass a variable as an argument into a function. 
+
+In `R`: use `.` either with caution or reckless abandon.
+
+
+### Passsssing back and foRth
+
+That subtitle is a stretch! With the `reticulate` package and `R` we can pass items between the the two languages/environments. And, depending on which language, we use that language's preferred/standard approach of referring to attributes or objects. In this next example we call into the `.describe()` method in `Python`, which is similar to `R`'s `summary()`, but allows/requires us to define certain parameters. We use the `r` object to pass `example_table` through to `Python` and call the `describe()` method. We can visualize the results directly using the `print()` method. 
+
+```{python describe_example}
+perc = [.25, .50, .75] 
+desc = r.example_table.describe(percentiles = perc)
+
+print(desc)
+
+```
+
+But like previous results shown in `R`, we can do a lot better with how we display the table. We can pass the `desc` object from `Python` back to `R` with the `$` notation (generally for lists or certain classes in `R`). When we retrieve an object from python (via `py$`), we can then do what we would usually do in `R`. Here, we go back to `kable()` and `kable_styling()` with some of the parameters to make very nice looking `LaTeX` tables.
+
+
+```{r python_describe_via_kable}
+kable(py$desc, digits = 2, format="latex", booktabs=T) %>% kable_styling(font_size=10, position = "center", latex_options = "striped")
+```
+
+Et voila!
+
+# Analyses
+
+In order to make work more reproducible, most analyses can---and should---be performed each time we knit an RMarkdown document. Here we show two examples of how to do this: (1) directly in an `R` chunk and (2) calling a separate file from an `R` chunk. To note, this latter option is best done early in the `RMarkdown` file but is located here for illustrative purposes.
+
+## Mixed data MCA
+
+Here we perform a small analyses of mixed data types (continuous, categorical, ordinal) through multiple correspondence analysis. For more information on this, see [this workshop](https://github.com/derekbeaton/Workshops/tree/master/RTC/PCA_MCA_Resampling). 
+
+```{r show_mca}
+
+continuous_data <- amerge_subset[,which(variable_type_map[,"Continuous"]==1)]
+ordinal_data <- amerge_subset[,which(variable_type_map[,"Ordinal"]==1 & variable_type_map[,"Categorical"]!=1)]
+categorical_data <- amerge_subset[,which(variable_type_map[,"Categorical"]==1)]
+  categorical_data <- categorical_data[,-c(which("DX" %in% colnames(categorical_data)))]
+
+continuous_escofier_data <- escofier.coding(continuous_data, scale=T)
+ordinal_thermometer_data <- thermometer.coding(ordinal_data)
+categorical_disjunctive_data <- make.data.nominal(categorical_data)
+mixed_data <- cbind(continuous_escofier_data,
+                    ordinal_thermometer_data,
+                    categorical_disjunctive_data)
+
+ca_results <- epCA(mixed_data, DESIGN = amerge_subset$DX, make_design_nominal = T, graphs=F)
+
+```
+
+This code is shown, but is directly show in the RMarkdown besides the code within the chunk. This is because the values are stored in their respective variables, and none of these are visuals (e.g., tables, figures).
+
+
+
+## CovSTATIS
+
+Finally, we will also perform an analysis called 'covSTATIS', which is a multi-table PCA technique that allows us to peform the analysis of multiple correlation or covariance matrices. Here we have one correlation matrix per group in the data (control, MCI, AD). For this analysis, we will actually use the `R` chunk to call off to a script in the correct folder. We introduce another package to help with reproducibility and sharing work across multiple places or individuals: the `here` package. However, for this example, we will actually *hide* the code chunk with parameters in the chunk header: `echo=FALSE`. thus, in order to see this, you'll have to look at the .Rmd file, as it will not appear in the .pdf file.
+
+```{r call_covstatis, echo=FALSE}
+
+source( here::here("R","6_covstatis_example.R") )
+
+```
+
+
+# Visualizations & Graphics
+
+RMarkdown also allows us to include graphics directly from the code. In the global settings for this document (see the top), we have to set a specific `knitr` flag (`fig.pos='H'`) which passes through to `LaTeX` to enforce that images appear in the document at their respective locations. Else, because of `LaTeX`'s magic, figures end up in slightly different places than expected (but still in order).
+
+In our first example, we performed MCA through the `ExPosition` package. We'd like to visualize these results, so, we will use a `ggplot2`-based package called `factoextra`, which provides standard visualizations for PCA-like techniques across multiple packages (e.g., `ExPosition`, `ade4`, `ca`, `FactoMineR`).
+
+First we show a scree plot (explained variance per component) completely as is. 
+
+```{r visualize_ca_scree}
+
+fviz_screeplot(ca_results, addlabels = TRUE)
+
+plus_minus <- ifelse(grepl("\\-",rownames(ca_results$ExPosition.Data$fj)),"-","+")
+ca_col <- fviz_ca_col(ca_results, alpha=0, labels=F, col.col = "white") +
+  geom_text(aes(label=rownames(ca_results$ExPosition.Data$fj), color=plus_minus)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        legend.position="none") +
+  xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) +
+  ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) +
+  xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) +
+  ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) +
+  ggtitle("CA:\nVariable Component Scores")
+
+```
+
+This image is a bit big. So, we can resize and align this figure, as well as provide a caption for it directly from the header of the RMarkdown chunk. For this, we need to use and set the following parameters: `fig.height=4`, `fig.width=4`, `fig.cap="Scree plot that shows the explained variance per component."`, and `fig.align="center"` parameters in the chunk header.
+
+```{r visualize_ca_scree_chunk_parameters, fig.height=4, fig.width=4, fig.cap="Scree plot that shows the explained variance per component.", fig.align="center"}
+
+fviz_screeplot(ca_results, addlabels = TRUE)
+
+```
+
+That's much nicer! Next we have another hidden chunk (i.e., `echo=FALSE`) that performs required set up for the subsequent visuals.
+
+
+```{r visualize_ca_plots, echo=FALSE}
+plus_minus <- ifelse(grepl("\\-",rownames(ca_results$ExPosition.Data$fj)),"-","+")
+
+ca_col <- fviz_ca_col(ca_results, alpha=0, labels=F, col.col = "white") +
+  geom_text(aes(label=rownames(ca_results$ExPosition.Data$fj), color=plus_minus)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        legend.position="none") +
+  xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) +
+  ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) +
+  xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) +
+  ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) +
+  ggtitle("CA:\nVariable Component Scores")
+
+
+ca_row <- fviz_ca_row(ca_results, alpha=0, labels=F, col.row = "white") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        legend.title = element_blank()) +
+  geom_point(aes(x=ca_results$ExPosition.Data$fi[,1], y = ca_results$ExPosition.Data$fi[,2], color=amerge_subset$DX)) +
+  xlim(c(ca_results$Plotting.Data$constraints$minx, ca_results$Plotting.Data$constraints$maxx)) +
+  ylim(c(ca_results$Plotting.Data$constraints$miny, ca_results$Plotting.Data$constraints$maxy)) +
+  xlab(paste0("Component 1. Explained variance: ", round(ca_results$ExPosition.Data$t[1], digits=2),"%")) +
+  ylab(paste0("Component 2. Explained variance: ", round(ca_results$ExPosition.Data$t[2], digits=2),"%")) +
+  ggtitle("CA:\nParticipants Component Scores")
+
+```
+
+The hidden code chunk makes graphics based on `factoextra` and `ggplot2`. To see this code, open this .Rmd file. From the chunks we can visualize multiple items, as opposed to just one at a time like we did with the tables and the screeplot. One way is to just directly call for the graphic in the chunk.
+
+```{r fig.width=4,fig.height=4, fig.align='center', fig.cap="Multiple ggplot2 graphics"}
+ 
+ ca_col
+ ca_row
+ 
+```
+
+But the above figure shows the code chunks and figures in order. To prevent this, we need to hide the chunk with `echo=FALSE`.
+
+```{r fig.width=4,fig.height=4, fig.align='center', fig.cap="Multiple ggplot2 graphics", echo=FALSE}
+ 
+ ca_col
+ ca_row
+ 
+```
+ 
+However, sometimes we may use "base" `R` or need much finer grained control over figure placements within the chunk. The subsequent chunk shows the results from the covSTATIS analysis, with the "compromise component scores" in each plot, but with each group in isolation with respect to the "compromise component scores", and then finally all items plotted at once.
+ 
+```{r fig.width=8, fig.height=8, fig.align='center', fig.cap="Using par() to make a layout of multiple base plots", echo=FALSE}
+ 
+
+par.opts <- par(mfrow=c(2,2))
+
+plot_covstatis(covstatis_results$compromise_component_scores, simplify2array(covstatis_results$partial_component_scores), display.fis.names = T)
+
+for(i in 1:length(covstatis_results$partial_component_scores)){
+  this_partial <- array(simplify2array(covstatis_results$partial_component_scores)[,,i], dim=c(nrow(covstatis_results$compromise_component_scores),ncol(covstatis_results$compromise_component_scores),1))
+  
+  rownames(this_partial) <- rownames(covstatis_results$compromise_component_scores)
+  dimnames(this_partial)[[3]] <- names(covstatis_results$partial_component_scores)[i]
+    
+  plot_covstatis(covstatis_results$compromise_component_scores, this_partial, display.fis.names = T)
+  
+}
+
+par(par.opts)
+ 
+``` 
+ 
+ 
+# Conclusions
+
+RMarkdown---and a number of other tools provided through RStudio---allow you to make relatively simple, integrated, and reproducible documents. This particular example includes a wide variety of tools (R, Python, multiple packages, in-chunk code, and external scripts), but relies only on relatively standard and simple RMarkdown options. 
+
+
