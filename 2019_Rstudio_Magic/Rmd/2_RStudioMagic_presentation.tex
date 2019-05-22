@@ -2,87 +2,47 @@
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
-\documentclass[
-  ignorenonframetext,
-]{beamer}
+\documentclass[ignorenonframetext,]{beamer}
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
 \beamertemplatenavigationsymbolsempty
-% Prevent slide breaks in the middle of a paragraph:
-\widowpenalties 1 10000
-\raggedbottom
-\setbeamertemplate{part page}{
-  \centering
-  \begin{beamercolorbox}[sep=16pt,center]{part title}
-    \usebeamerfont{part title}\insertpart\par
-  \end{beamercolorbox}
-}
-\setbeamertemplate{section page}{
-  \centering
-  \begin{beamercolorbox}[sep=12pt,center]{part title}
-    \usebeamerfont{section title}\insertsection\par
-  \end{beamercolorbox}
-}
-\setbeamertemplate{subsection page}{
-  \centering
-  \begin{beamercolorbox}[sep=8pt,center]{part title}
-    \usebeamerfont{subsection title}\insertsubsection\par
-  \end{beamercolorbox}
-}
-\AtBeginPart{
-  \frame{\partpage}
-}
-\AtBeginSection{
-  \ifbibliography
-  \else
-    \frame{\sectionpage}
-  \fi
-}
-\AtBeginSubsection{
-  \frame{\subsectionpage}
-}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provides euro and other symbols
 \else % if luatex or xelatex
   \usepackage{unicode-math}
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{hyperref}
 \hypersetup{
-  pdftitle={Reproducible (and collaborative) science through RStudio},
-  pdfauthor={Jenny Rieck \& Derek Beaton},
-  colorlinks=true,
-  linkcolor=Maroon,
-  filecolor=Maroon,
-  citecolor=Blue,
-  urlcolor=blue,
-  breaklinks=true}
+            pdftitle={Reproducible (and collaborative) science through RStudio},
+            pdfauthor={Jenny Rieck \& Derek Beaton},
+            colorlinks=true,
+            linkcolor=Maroon,
+            citecolor=Blue,
+            urlcolor=blue,
+            breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \newif\ifbibliography
 \usepackage{color}
@@ -134,10 +94,43 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+\centering
+\begin{beamercolorbox}[sep=16pt,center]{part title}
+  \usebeamerfont{part title}\insertpart\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+\centering
+\begin{beamercolorbox}[sep=12pt,center]{part title}
+  \usebeamerfont{section title}\insertsection\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+\centering
+\begin{beamercolorbox}[sep=8pt,center]{part title}
+  \usebeamerfont{subsection title}\insertsubsection\par
+\end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-2}
+\setcounter{secnumdepth}{0}
 
 % set default figure placement to htbp
 \makeatletter
@@ -146,6 +139,7 @@
 
 
 \title{Reproducible (and collaborative) science through RStudio}
+\providecommand{\subtitle}[1]{}
 \subtitle{A whirlwind tour with R, RMarkdown, Python, LaTeX, and more}
 \author{Jenny Rieck \& Derek Beaton}
 \date{May 22 2019}
@@ -417,8 +411,8 @@ look somewhat like S. We call the result ``R''.}
 \begin{Highlighting}[]
 \CommentTok{# allowed but not preferred}
 \NormalTok{a.variable =}\StringTok{ }\DecValTok{10} \OperatorTok{+}\StringTok{ }\DecValTok{1}
-  \CommentTok{## dots have 2 meanings in R, }
-    \CommentTok{## with a 3rd in the tidyverse}
+\NormalTok{  ## dots have 2 meanings in R, }
+\NormalTok{    ## with a 3rd in the tidyverse}
 
 \CommentTok{# preferred}
 \NormalTok{a_variable <-}\StringTok{ }\DecValTok{10} \OperatorTok{+}\StringTok{ }\DecValTok{1}
@@ -826,7 +820,7 @@ setup}\label{part-2-rstudio-project-setup}}
 \begin{itemize}
 \tightlist
 \item
-  Not just an IDE
+  Not just an IDE (integrated development environment)
 \item
   A company
 \item
@@ -1514,7 +1508,14 @@ ALSO \url{https://marcusvolz.com/?p=4068}
   \url{https://neuroconductor.org/}
 \end{itemize}
 
-\includegraphics[width=0.4\textwidth,height=\textheight]{../external/images/neuro_logo1.png}
+\includegraphics[width=0.3\textwidth,height=\textheight]{../external/images/neuro_logo1.png}
+
+\end{frame}
+
+\begin{frame}{Neuroconductor}
+\protect\hypertarget{neuroconductor-1}{}
+
+\includegraphics{../external/images/neuro_depend.png}
 
 \end{frame}
 
