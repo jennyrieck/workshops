@@ -15,6 +15,10 @@ amerge_subset <- amerge_subset[complete.cases(amerge_subset),]
 ## 0.2 Bring in modified hachinksi 
 amerge_subset$HMSCORE <- modhach$HMSCORE[match(amerge_subset$RID, modhach$RID)]
 
+## Let's look at the dataset we've curated!
+View(amerge_subset) ##importantly, capital V
+class(amerge_subset$RID)
+
 ## 0.3 Manually change variable classes (remove class 'labelled')
 amerge_subset$RID <- as.character(amerge_subset$RID)
 amerge_subset$VISCODE <- as.character(amerge_subset$VISCODE)
@@ -49,6 +53,9 @@ amerge_subset$PTRACCAT[amerge_subset$PTRACCAT!='Black' & amerge_subset$PTRACCAT!
 amerge_subset$CDRSB<-ifelse(amerge_subset$CDRSB>=5.5, 5.5, amerge_subset$CDRSB)
 amerge_subset$HMSCORE <- ifelse(amerge_subset$HMSCORE>=3, 3, amerge_subset$HMSCORE)
 
+### Let's look at the data again after cleanup
+View(amerge_subset)
+
 ################################
 ### Create variable type mapping
 ################################
@@ -75,5 +82,7 @@ variable_type_map[categorical_or_ordinal_items,"Categorical"] <- 1
 variable_type_map[categorical_or_ordinal_items,"Ordinal"] <- 1
 
 ## 0.8 Save our cleaned ADNI dataset and variale type mapping
-#save(amerge_subset, file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset.rda"))
-#save(variable_type_map, file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
+### Check our environmental variable
+head(Sys.getenv())
+save(amerge_subset, file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset.rda"))
+save(variable_type_map, file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
