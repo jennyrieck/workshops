@@ -8,6 +8,11 @@ if(!require(GSVD)){
   library(GSVD)
 }
 
+require(magrittr)
+
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","amerge_subset.rda"))
+load(file=paste0(Sys.getenv("ADNI_FOLDER"),"\\","variable_type_map.rda"))
+
 
 ## subset into group and specificallly continous columns
 
