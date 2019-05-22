@@ -361,7 +361,7 @@ e.g.,
 
 ```{r install_packages, echo=T, eval=F}
 #to install from CRAN
-install.pacakges('devtools', depenedencies = TRUE)
+install.packages('devtools', dependencies = TRUE)
 
 #to install from a git  (requires the devtools package)
 devtools::install_github(Gibbsdavidl/CatterPlots)
