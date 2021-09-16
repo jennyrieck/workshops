@@ -4,11 +4,11 @@ Jenny Rieck
 
 Workshop for Cajal course on Aging and Cognition 27 Sep 2021
 
-### Workshop outline
+## Workshop outline
 
-### Resources
+## Resources
 
-#### fMRI Software Tutorials
+### fMRI Software Tutorials
 * SPM
 	* [Andy's Short Course: SPM](https://andysbrainbook.readthedocs.io/en/latest/SPM/SPM_Overview.html#)
 * FSL
@@ -20,7 +20,7 @@ Workshop for Cajal course on Aging and Cognition 27 Sep 2021
 	* https://surfer.nmr.mgh.harvard.edu/fswiki/Tutorials
 	* [Andy's Short Course: FreeSurfer](https://andysbrainbook.readthedocs.io/en/latest/FreeSurfer/FreeSurfer_Introduction.html)
 
-#### Large-Scale and Open MRI Datasets for Aging and Dementia
+### Large-Scale and Open MRI Datasets for Aging and Dementia
 | Dataset      | Manuscript | Participants | Age Range | T1w | T2w | Diffusion | Rest fMRI | Task fMRI | Other Scans | Longitudinal |
 | :---        | :---   |:--- |  :----: | :----:| :----:| :----: | :----:| :----:| :----:| :----:|
 |[MIRIAD](https://www.ucl.ac.uk/drc/research/research-methods/minimal-interval-resonance-imaging-alzheimers-disease-miriad)	|[Malone, 2013](http://dx.doi.org/10.1016/j.neuroimage.2012.12.044)	|Controls, AD	|62–77	|X	|	|	|	|	|	|X	|
