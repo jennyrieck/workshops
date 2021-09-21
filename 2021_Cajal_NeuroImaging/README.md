@@ -6,7 +6,13 @@ Workshop for Cajal course on Aging and Cognition 27 Sep 2021
 
 ## Workshop outline
 
+* Part 1: Structural MRI
+* Part 2: Task-based functional MRI
+* Part 3: Resting state functional MRI
+
 ## Resources
+
+### Suggested Reading
 
 ### fMRI Software Tutorials
 * SPM
@@ -16,6 +22,7 @@ Workshop for Cajal course on Aging and Cognition 27 Sep 2021
 	* [Andy's Short Course: FSL](https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_Intro.html)
 * AFNI
 	* [Andy's Short Course: AFNI](https://andysbrainbook.readthedocs.io/en/latest/AFNI/AFNI_Overview.html)
+	* [AFNI bootcamp](https://cbmm.mit.edu/afni)
 * FreeSurfer
 	* https://surfer.nmr.mgh.harvard.edu/fswiki/Tutorials
 	* [Andy's Short Course: FreeSurfer](https://andysbrainbook.readthedocs.io/en/latest/FreeSurfer/FreeSurfer_Introduction.html)
