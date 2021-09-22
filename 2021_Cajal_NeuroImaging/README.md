@@ -19,10 +19,18 @@ Workshop for Cajal course on Aging and Cognition 27 Sep 2021
 * [Logothetis, 2008, What we can do and what we cannot do with fMRI](https://doi.org/10.1038/nature06976)
 * 
 
+#### Analysis approaches in fMRI
+* [General linear model](https://doi.org/10.1016/j.neuroimage.2012.01.133)
+* [Partial Least Squares](https://doi.org/10.1016/j.neuroimage.2010.07.034)
+* [Multivariate pattern analysis](https://doi.org/10.1016/j.neuroimage.2012.03.016)
+* [Representational similarity analysis](https://doi.org/10.3389/neuro.06.004.2008)
+* [Functional connectivity](https://doi.org/10.1016/j.tics.2017.09.006)
+
 #### Cognitive neuroscience of aging
 * [Framework for terms used in research](https://reserveandresilience.com/framework/)
 * [Grady, 2012 Cognitive Neuroscience of ageing](https://doi.org/10.1038/nrn3256)
 * [Cabeza et al., 2018, Maintenance, reserve and compensation](https://doi.org/10.1038/s41583-018-0068-2)
+* [Reuter-Lorenz & Park, 2014, Revisiting the scaffolding theory of aging and cognition](https://doi.org/10.1093/geronb/gbr017)
 
 
 ### fMRI Software Tutorials
