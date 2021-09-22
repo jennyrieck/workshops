@@ -14,6 +14,17 @@ Workshop for Cajal course on Aging and Cognition 27 Sep 2021
 
 ### Suggested Reading
 
+#### Basics of MRI-based research
+* [Logothetis, 2001, Neurophysiological investigation of basis of the fMRI signal](https://doi.org/10.1038/35084005)
+* [Logothetis, 2008, What we can do and what we cannot do with fMRI](https://doi.org/10.1038/nature06976)
+* 
+
+#### Cognitive neuroscience of aging
+* [Framework for terms used in research](https://reserveandresilience.com/framework/)
+* [Grady, 2012 Cognitive Neuroscience of ageing](https://doi.org/10.1038/nrn3256)
+* [Cabeza et al., 2018, Maintenance, reserve and compensation](https://doi.org/10.1038/s41583-018-0068-2)
+
+
 ### fMRI Software Tutorials
 * SPM
 	* [Andy's Short Course: SPM](https://andysbrainbook.readthedocs.io/en/latest/SPM/SPM_Overview.html#)
