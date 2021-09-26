@@ -2,42 +2,58 @@
 
 Jenny Rieck
 
-Workshop for Cajal course on Aging and Cognition 27 Sep 2021
+Workshop for Cajal Course on Aging and Cognition, 27 Sep 2021
 
-## Workshop outline
+## Workshop overview
 
-* Part 1: Structural MRI
+This three-part workshop will provide an introduction to different MRI-based techniques to examine structure and function of the brain. 
+
+* Part 1: Structural and diffusion-weighted MRI
 * Part 2: Task-based functional MRI
 * Part 3: Resting state functional MRI
 
+The workshop will cover:
+
+* An overview of how MRI is used to generate images of gray and white matter structure, water diffusivity, and blood oxygen level dependent (BOLD) signal in the brain
+* Steps involved in preprocessing MRI data, including identifying artifacts and conducting quality control
+* Common analysis techniques and considerations for each modality
+* Advantages and disadvantages of different experimental designs used in task-based functional MRI
+* Examples of how different structural and functional MRI analyses have been applied in aging and dementia research
+
 ## Resources
 
-### Suggested Reading
+### Suggested reading
 
 #### Basics of MRI-based research
-* [Logothetis, 2001, Neurophysiological investigation of basis of the fMRI signal](https://doi.org/10.1038/35084005)
+* [Bandettini, 2011, Seven topics in functional magentetic resonance imaging](https://pubmed.ncbi.nlm.nih.gov/19938211/)
 * [Logothetis, 2008, What we can do and what we cannot do with fMRI](https://doi.org/10.1038/nature06976)
-* 
+* [Soares, 2016, Hitchhicker's guide to fMRI](https://doi.org/10.3389/fnins.2016.00515)
+* [Catani & Thiebaut de Schotten, 2008, Diffusion tensor imaging tractography atlas for virtual in vivo dissections](https://doi.org/10.1016/j.cortex.2008.05.004)
 
-#### Analysis approaches in fMRI
+#### Analysis approaches in MRI
+* [FreeSurfer for cortical parcellation](https://doi.org/10.1016/j.neuroimage.2012.01.021)
 * [General linear model](https://doi.org/10.1016/j.neuroimage.2012.01.133)
-* [Partial Least Squares](https://doi.org/10.1016/j.neuroimage.2010.07.034)
-* [Multivariate pattern analysis](https://doi.org/10.1016/j.neuroimage.2012.03.016)
+* [Partial least squares](https://doi.org/10.1016/j.neuroimage.2010.07.034)
+* [Multivariate pattern analysis](https://doi.org/10.1016/10.1146/annurev-neuro-062012-170325)
 * [Representational similarity analysis](https://doi.org/10.3389/neuro.06.004.2008)
-* [Functional connectivity](https://doi.org/10.1016/j.tics.2017.09.006)
+* [Resting state methods](https://doi.org/10.3174/ajnr.A3263)
+* [Brain network metrics](https://doi.org/10.1016/j.tics.2017.09.006)
+* [Dynamic functional connectivity](https://doi.org/10.1016/j.neuroimage.2013.05.079)
+* [Graphy theory for complex brain networks](https://doi.org/10.1038/nrn2575)
 
 #### Cognitive neuroscience of aging
-* [Framework for terms used in research](https://reserveandresilience.com/framework/)
-* [Grady, 2012 Cognitive Neuroscience of ageing](https://doi.org/10.1038/nrn3256)
+* [Framework for terms used in cognitive aging neuroscience research](https://reserveandresilience.com/framework/)
 * [Cabeza et al., 2018, Maintenance, reserve and compensation](https://doi.org/10.1038/s41583-018-0068-2)
+* [Grady, 2012 Cognitive neuroscience of ageing](https://doi.org/10.1038/nrn3256)
 * [Reuter-Lorenz & Park, 2014, Revisiting the scaffolding theory of aging and cognition](https://doi.org/10.1093/geronb/gbr017)
+* [Sala-Llonch et al., 2015, Reorganization of brain networks in aging: a review of functional connectivity studies](https://doi.org/10.3389/fpsyg.2015.00663)
 
 
-### fMRI Software Tutorials
+### MRI Software Tutorials
 * SPM
 	* [Andy's Short Course: SPM](https://andysbrainbook.readthedocs.io/en/latest/SPM/SPM_Overview.html#)
 * FSL
-	* https://open.win.ox.ac.uk/pages/fslcourse/website/online_materials.html#preprac
+	* [FSL courses](https://open.win.ox.ac.uk/pages/fslcourse/website/online_materials.html#preprac)
 	* [Andy's Short Course: FSL](https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_Intro.html)
 * AFNI
 	* [Andy's Short Course: AFNI](https://andysbrainbook.readthedocs.io/en/latest/AFNI/AFNI_Overview.html)
