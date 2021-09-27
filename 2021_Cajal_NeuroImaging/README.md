@@ -8,9 +8,9 @@ Workshop for Cajal Course on Aging and Cognition, 27 Sep 2021
 
 This three-part workshop will provide an introduction to different MRI-based techniques to examine structure and function of the brain. 
 
-* Part 1: Structural and diffusion-weighted MRI
-* Part 2: Task-based functional MRI
-* Part 3: Resting state functional MRI
+* [Part 1: Structural and diffusion-weighted MRI](https://github.com/jennyrieck/workshops/blob/master/2021_Cajal_NeuroImaging/2021_Cajal_NeuroImaging_Workshop_Part1_structural_MRI.pdf)
+* [Part 2: Task-based functional MRI](https://github.com/jennyrieck/workshops/blob/master/2021_Cajal_NeuroImaging/2021_Cajal_NeuroImaging_Workshop_Part2_task_fMRI.pdf)
+* [Part 3: Resting state functional MRI](https://github.com/jennyrieck/workshops/blob/master/2021_Cajal_NeuroImaging/2021_Cajal_NeuroImaging_Workshop_Part3_rest_fMRI.pdf)
 
 The workshop will cover:
 
